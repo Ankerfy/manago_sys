@@ -1,143 +1,83 @@
 /* 颜色系统 */
 :root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-  --vt-c-white-bg: #f1f3f6;
-  --vt-c-white-bg-hover: #f4f4f5;
+     --vt-c-white: #ffffff;
+     --vt-c-white-soft: #f8f8f8;
+     --vt-c-white-mute: #f2f2f2;
+     --vt-c-white-bg: #f1f3f6;
+     --vt-c-white-bg-hover: #f4f4f5;
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
+     --vt-c-black: #181818;
+     --vt-c-black-soft: #222222;
+     --vt-c-black-mute: #282828;
 
-  --vt-c-indigo: #2c3e50;
-  /* 深蓝色，用于标题和主文字 */
+     --vt-c-indigo: #2c3e50;
+     --vt-c-icon: #3892ec;
+     --vt-c-transition-hover: #66a6ff;
+     --vt-c-transition-loading: #409eff;
+     --vt-s-shadow-loading-bar: 0 0 4px rgba(64, 158, 255, 0.8);
+     --vt-s-shadow-loading-peg: 0 0 10px #409eff,
+          0 0 5px #409eff;
 
-  --vt-c-icon: #3892ec;
-  /* 图标主色调（蓝色） */
+     --vt-c-divider-light: rgba(60, 60, 60, 0.12);
+     --vt-c-divider-light-hover: rgba(60, 60, 60, 0.29);
+     --vt-c-divider-dark: rgba(84, 84, 84, 0.48);
+     --vt-c-divider-dark-hover: rgba(84, 84, 84, 0.65);
 
-  --vt-c-transition-hover: #66a6ff;
-  /* 悬停过渡色（亮蓝） */
-  --vt-c-transition-loading: #409eff;
-  /* 加载状态色（Element Plus 主色） */
+     --vt-s-shadow-card: 0 2px 4px rgba(0, 0, 0, 0.1);
+     --vt-s-shadow-card-hover: 0 4px 8px rgba(0, 0, 0, 0.1),
+          0 8px 16px rgba(0, 0, 0, 0.15),
+          0 16px 32px rgba(0, 0, 0, 0.1);
 
-  --vt-c-divider-light: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-light-hover: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-dark: rgba(84, 84, 84, 0.48);
-  --vt-c-divider-dark-hover: rgba(84, 84, 84, 0.65);
-
-  --vt-s-shadow-card: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --vt-s-shadow-card-hover: 0 4px 8px rgba(0, 0, 0, 0.1),
-    0 8px 16px rgba(0, 0, 0, 0.15),
-    0 16px 32px rgba(0, 0, 0, 0.1);
-
-  --vt-s-shadow-loading-bar: 0 0 4px rgba(64, 158, 255, 0.8);
-  --vt-s-shadow-loading-peg: 0 0 10px #409eff,
-    0 0 5px #409eff;
-
-  --vt-c-text-light: var(--vt-c-indigo);
-  --vt-c-text-light-secondary: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark: #ffffff;
-  --vt-c-text-dark-secondary: rgba(235, 235, 235, 0.64);
-  --vt-c-text-menu-active: #ffd04b;
-  /* 菜单激活项文字色（黄色） */
+     --vt-c-text-light: var(--vt-c-indigo);
+     --vt-c-text-light-secondary: rgba(60, 60, 60, 0.66);
+     --vt-c-text-dark: #ffffff;
+     --vt-c-text-dark-secondary: rgba(235, 235, 235, 0.64);
+     --vt-c-text-menu-active: #ffd04b;
 }
 
 /* 样式系统 */
 :root {
-  /* ==========================================================================
-       🎯 1. 颜色系统（Color System）
-       ========================================================================== */
+     /* 背景颜色 */
+     --color-bg: var(--vt-c-white);
+     --color-bg-soft: var(--vt-c-white-soft);
+     --color-bg-mute: var(--vt-c-white-mute);
+     --color-bg-overlay: var(--vt-c-white-bg);
+     --color-bg-hover: var(--vt-c-white-bg-hover);
 
-  /* 背景颜色 */
-  --color-bg: var(--vt-c-white);
-  /* 主背景色 */
-  --color-bg-soft: var(--vt-c-white-soft);
-  /* 柔和背景色（如卡片） */
-  --color-bg-mute: var(--vt-c-white-mute);
-  /* 低饱和背景色（次要区域） */
-  --color-bg-overlay: var(--vt-c-white-bg);
-  /* 遮罩层背景 */
-  --color-bg-hover: var(--vt-c-white-bg-hover);
-  /* 悬停背景色 */
+     /* 边框与分割线 */
+     --color-border: var(--vt-c-divider-light);
+     --color-border-hover: var(--vt-c-divider-light-hover);
 
-  /* 边框与分割线 */
-  --color-border: var(--vt-c-divider-light);
-  /* 分割线/边框色（浅） */
-  --color-border-hover: var(--vt-c-divider-light-hover);
-  /* 悬停时边框色 */
+     /* 文字颜色 */
+     --color-heading: var(--vt-c-text-light);
+     --color-text: var(--vt-c-text-light);
+     --color-text-dark: var(--vt-c-text-dark);
+     --color-text-secondary: var(--vt-c-text-light-secondary);
+     --color-text-icon: var(--vt-c-icon);
 
-  /* 文字颜色 */
-  --color-heading: var(--vt-c-text-light);
-  /* 标题文字色 */
-  --color-text: var(--vt-c-text-light);
-  /* 主要文字色 */
-  --color-text-dark: var(--vt-c-text-dark);
-  /* 深色主题文字 */
-  --color-text-secondary: var(--vt-c-text-light-secondary);
-  /* 次要文字色 */
-  --color-text-icon: var(--vt-c-icon);
-  /* 图标颜色 */
+     /* 过渡与状态颜色 */
+     --color-transition-hover: var(--vt-c-transition-hover);
+     --color-transition-loading: var(--vt-c-transition-loading);
 
-  /* 过渡与状态颜色 */
-  --color-transition-hover: var(--vt-c-transition-hover);
-  /* 悬停过渡色（如按钮） */
-  --color-transition-loading: var(--vt-c-transition-loading);
-  /* 加载状态色 */
+     /* 卡片与元素状态 */
+     --color-shadow-card: var(--vt-s-shadow-card);
+     --color-shadow-card-hover: var(--vt-s-shadow-card-hover);
 
-  /* 卡片与元素状态 */
-  --color-shadow-card: var(--vt-s-shadow-card);
-  /* 卡片默认阴影 */
-  --color-shadow-card-hover: var(--vt-s-shadow-card-hover);
-  /* 卡片悬停阴影 */
+     /* 间距 */
+     --section-gap: 160px;
+     --lay-header-flex-width: 500px;
+     --lay-sidebar-width: 200px;
+     --lay-sidebar-collapsed-width: 63px;
 
+     /* 过渡与动画 */
+     --speed-timing: 0.5s;
+     --transition-speed: all 0.3s ease;
+     --transition-speed-slow: all 0.5s ease;
+     --transition-padding: padding var(--speed-timing) ease;
+     --transition-transform: transform var(--speed-timing) ease;
+     --transition-box-shadow: box-shadow var(--speed-timing) ease;
 
-  /* ==========================================================================
-       📏 2. 间距与布局（Spacing & Layout）
-       ========================================================================== */
-
-  --section-gap: 160px;
-  /* 页面区块之间的大间距 */
-
-
-  /* ==========================================================================
-       📐 3. 尺寸配置（Dimensions）
-       ========================================================================== */
-
-  --lay-header-flex-width: 500px;
-  /* 头部内容区域弹性宽度 */
-  --lay-sidebar-width: 200px;
-  /* 侧边栏展开宽度 */
-  --lay-sidebar-collapsed-width: 63px;
-  /* 侧边栏折叠后宽度 */
-
-
-  /* ==========================================================================
-       ⏱️ 4. 过渡与动画（Transitions & Animations）
-       ========================================================================== */
-
-  --speed-timing: 0.5s;
-  /* 基础动画时长 */
-
-  --transition-speed: all 0.3s ease;
-  /* 默认过渡效果 */
-  --transition-speed-slow: all 0.5s ease;
-  /* 慢速过渡（用于大组件） */
-
-  --transition-padding: padding var(--speed-timing) ease;
-  /* padding 过渡 */
-  --transition-transform: transform var(--speed-timing) ease;
-  /* transform 过渡 */
-  --transition-box-shadow: box-shadow var(--speed-timing) ease;
-  /* 阴影过渡 */
-
-
-  /* ==========================================================================
-       💡 5. 阴影效果（Shadows）
-       ========================================================================== */
-
-  --color-shadow-loading-bar: var(--vt-s-shadow-loading-bar);
-  /* 加载条阴影 */
-  --color-shadow-loading-peg: var(--vt-s-shadow-loading-peg);
-  /* 加载 peg 阴影 */
+     /* 阴影效果 */
+     --color-shadow-loading-bar: var(--vt-s-shadow-loading-bar);
+     --color-shadow-loading-peg: var(--vt-s-shadow-loading-peg);
 }
