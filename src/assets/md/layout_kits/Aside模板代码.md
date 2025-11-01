@@ -39,129 +39,127 @@ const picFit = 'contain'
 
     <!-- 菜单区域 -->
     <div class="sidebar-menu">
-      <div class="menu-coll-me">
-        <el-menu
-          :default-active="$route.path"
-          active-text-color="#ffd04b"
-          background-color="#545c64"
-          text-color="#fff"
-          class="el-menu-vertical-demo"
-          :collapse="isSidebarCollapse"
-          :collapse-transition="false"
-          :unique-opened="true"
-          router
-        >
-          <!-- 首页 -->
-          <el-menu-item index="/home">
-            <el-icon><House /></el-icon>
-            <template #title>首页</template>
+      <el-menu
+        :default-active="$route.path"
+        active-text-color="#ffd04b"
+        background-color="#545c64"
+        text-color="#fff"
+        class="el-menu-vertical-demo"
+        :collapse="isSidebarCollapse"
+        :collapse-transition="false"
+        :unique-opened="true"
+        router
+      >
+        <!-- 首页 -->
+        <el-menu-item index="/home">
+          <el-icon><House /></el-icon>
+          <template #title>首页</template>
+        </el-menu-item>
+
+        <!-- 仪表盘 -->
+        <el-sub-menu index="dashboard">
+          <template #title>
+            <el-icon><DataLine /></el-icon>
+            <span>仪表盘</span>
+          </template>
+          <el-menu-item index="/dashboard/overview">
+            <template #title>数据概览</template>
           </el-menu-item>
-
-          <!-- 仪表盘 -->
-          <el-sub-menu index="dashboard">
-            <template #title>
-              <el-icon><DataLine /></el-icon>
-              <span>仪表盘</span>
-            </template>
-            <el-menu-item index="/dashboard/overview">
-              <template #title>数据概览</template>
-            </el-menu-item>
-            <el-menu-item index="/dashboard/users">
-              <template #title>用户活跃度</template>
-            </el-menu-item>
-          </el-sub-menu>
-
-          <!-- 系统监控 -->
-          <el-sub-menu index="monitor">
-            <template #title>
-              <el-icon><Monitor /></el-icon>
-              <span>系统监控</span>
-            </template>
-            <el-menu-item index="/monitor/data">
-              <template #title>数据监控</template>
-            </el-menu-item>
-            <el-menu-item index="/monitor/view">
-              <template #title>数据可视化</template>
-            </el-menu-item>
-          </el-sub-menu>
-
-          <!-- 工作台 -->
-          <el-sub-menu index="workspace">
-            <template #title>
-              <el-icon><OfficeBuilding /></el-icon>
-              <span>工作台</span>
-            </template>
-            <el-menu-item index="/workspace/tasks">
-              <template #title>任务中心</template>
-            </el-menu-item>
-            <el-menu-item index="/workspace/calendar">
-              <template #title>日程安排</template>
-            </el-menu-item>
-          </el-sub-menu>
-
-          <!-- 娱乐资讯 -->
-          <el-sub-menu index="entertainment">
-            <template #title>
-              <el-icon><Film /></el-icon>
-              <span>娱乐资讯</span>
-            </template>
-            <el-menu-item index="/entertainment/news">
-              <template #title>最新资讯</template>
-            </el-menu-item>
-            <el-menu-item index="/entertainment/movies">
-              <template #title>影视推荐</template>
-            </el-menu-item>
-          </el-sub-menu>
-
-          <!-- 公告消息 -->
-          <el-sub-menu index="messages">
-            <template #title>
-              <el-icon><ChatLineSquare /></el-icon>
-              <span>公告消息</span>
-            </template>
-            <el-menu-item index="/messages/announcements">
-              <template #title>公告栏</template>
-            </el-menu-item>
-            <el-menu-item index="/messages/inbox">
-              <template #title>私信中心</template>
-            </el-menu-item>
-          </el-sub-menu>
-
-          <!-- 媒体中心 -->
-          <el-sub-menu index="media">
-            <template #title>
-              <el-icon><Headset /></el-icon>
-              <span>媒体中心</span>
-            </template>
-            <el-menu-item index="/media/music">
-              <template #title>在线音乐播放</template>
-            </el-menu-item>
-            <el-menu-item index="/media/video">
-              <template #title>随机视频播放</template>
-            </el-menu-item>
-          </el-sub-menu>
-
-          <!-- 地图天气 -->
-          <el-sub-menu index="geo">
-            <template #title>
-              <el-icon><Location /></el-icon>
-              <span>地图天气</span>
-            </template>
-            <el-menu-item index="/geo/map">
-              <template #title>地图数据</template>
-            </el-menu-item>
-            <el-menu-item index="/geo/weather">
-              <template #title>天气预报</template>
-            </el-menu-item>
-          </el-sub-menu>
-
-          <!-- 关于 -->
-          <el-menu-item index="/about">
-            <el-icon><InfoFilled /></el-icon>
-            <template #title>关于</template>
+          <el-menu-item index="/dashboard/users">
+            <template #title>用户活跃度</template>
           </el-menu-item>
-        </el-menu>
-      </div>
+        </el-sub-menu>
+
+        <!-- 系统监控 -->
+        <el-sub-menu index="monitor">
+          <template #title>
+            <el-icon><Monitor /></el-icon>
+            <span>系统监控</span>
+          </template>
+          <el-menu-item index="/monitor/data">
+            <template #title>数据监控</template>
+          </el-menu-item>
+          <el-menu-item index="/monitor/view">
+            <template #title>数据可视化</template>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <!-- 工作台 -->
+        <el-sub-menu index="workspace">
+          <template #title>
+            <el-icon><OfficeBuilding /></el-icon>
+            <span>工作台</span>
+          </template>
+          <el-menu-item index="/workspace/tasks">
+            <template #title>任务中心</template>
+          </el-menu-item>
+          <el-menu-item index="/workspace/calendar">
+            <template #title>日程安排</template>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <!-- 娱乐资讯 -->
+        <el-sub-menu index="entertainment">
+          <template #title>
+            <el-icon><Film /></el-icon>
+            <span>娱乐资讯</span>
+          </template>
+          <el-menu-item index="/entertainment/news">
+            <template #title>最新资讯</template>
+          </el-menu-item>
+          <el-menu-item index="/entertainment/movies">
+            <template #title>影视推荐</template>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <!-- 公告消息 -->
+        <el-sub-menu index="messages">
+          <template #title>
+            <el-icon><ChatLineSquare /></el-icon>
+            <span>公告消息</span>
+          </template>
+          <el-menu-item index="/messages/announcements">
+            <template #title>公告栏</template>
+          </el-menu-item>
+          <el-menu-item index="/messages/inbox">
+            <template #title>私信中心</template>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <!-- 媒体中心 -->
+        <el-sub-menu index="media">
+          <template #title>
+            <el-icon><Headset /></el-icon>
+            <span>媒体中心</span>
+          </template>
+          <el-menu-item index="/media/music">
+            <template #title>在线音乐播放</template>
+          </el-menu-item>
+          <el-menu-item index="/media/video">
+            <template #title>随机视频播放</template>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <!-- 地图天气 -->
+        <el-sub-menu index="geo">
+          <template #title>
+            <el-icon><Location /></el-icon>
+            <span>地图天气</span>
+          </template>
+          <el-menu-item index="/geo/map">
+            <template #title>地图数据</template>
+          </el-menu-item>
+          <el-menu-item index="/geo/weather">
+            <template #title>天气预报</template>
+          </el-menu-item>
+        </el-sub-menu>
+
+        <!-- 关于 -->
+        <el-menu-item index="/about">
+          <el-icon><InfoFilled /></el-icon>
+          <template #title>关于</template>
+        </el-menu-item>
+      </el-menu>
     </div>
   </div>
 </template>

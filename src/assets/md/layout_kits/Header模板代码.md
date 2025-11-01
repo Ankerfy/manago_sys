@@ -84,6 +84,9 @@ const handleRefresh = () => {
   /* margin-left: 10px; */
   gap: 15px;
 }
+.toolkits-left-icon > .el-icon {
+  cursor: pointer;
+}
 
 .toolkits-left-breadcrumb {
   padding: 5px;
