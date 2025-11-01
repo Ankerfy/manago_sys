@@ -87,6 +87,11 @@ const handleRefresh = () => {
 .toolkits-left-icon > .el-icon {
   cursor: pointer;
 }
+.toolkits-left-icon > .el-icon:hover {
+  color: var(--color-text-icon);
+  transition: all 0.3s ease;
+  background-color: var(--vt-c-white-bg);
+}
 
 .toolkits-left-breadcrumb {
   padding: 5px;
