@@ -1,0 +1,18 @@
+/* src/assets/css/nprogress-custom.css */
+#nprogress {
+  pointer-events: none;
+}
+
+#nprogress .bar {
+  background: var(--color-transition-loading);
+  height: 2.5px !important;
+  box-shadow: var(--color-shadow-loading-bar);
+}
+
+#nprogress .peg {
+  box-shadow: var(--color-shadow-loading-peg);
+}
+
+#nprogress .spinner {
+  display: none;
+}
