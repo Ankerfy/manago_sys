@@ -1,10 +1,12 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import LayAside from '@/components/layout/LayAside.vue'
 import LayHeader from '@/components/layout/LayHeader.vue'
 import LayCarousel from '@/components/layout/LayCarousel.vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
+import { useProgress } from '@/composables/useProgress'
 
 const loading = ref(true)
 
@@ -13,6 +15,20 @@ const appStore = useAppStore()
 const { isSidebarCollapse } = storeToRefs(appStore)
 
 const hotSearches = ['热搜1', '热搜2', '热搜3']
+
+// 刷新
+const routeKey = ref(useRoute.fullPath)
+const { start, finish } = useProgress()
+const handleRefresh = () => {
+  loading.value = true
+  start()
+  // 模拟数据加载时间
+  setTimeout(() => {
+    routeKey.value = useRoute.fullPath + '?t=' + Date.now()
+    loading.value = false
+    finish()
+  }, 1200)
+}
 
 // 模拟数据加载
 onMounted(() => {
@@ -32,7 +48,7 @@ onMounted(() => {
     <el-container class="lay-main-container">
       <!-- 头部 -->
       <el-header class="lay-header">
-        <LayHeader />
+        <LayHeader @refresh="handleRefresh" />
       </el-header>
       <!-- 热搜走马灯 -->
       <div class="lay-hot-search">
@@ -43,7 +59,7 @@ onMounted(() => {
         <!-- 页面加载时显示骨架屏 -->
         <el-skeleton v-if="loading" animated :rows="10" style="padding: 20px" />
         <!-- 页面加载完成后显示真实内容 -->
-        <RouterView v-else />
+        <RouterView v-else :key="routeKey" />
       </el-main>
     </el-container>
   </div>
