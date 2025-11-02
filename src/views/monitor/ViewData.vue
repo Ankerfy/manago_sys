@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div>View.vue</div>
+  <div>ViewData.vue</div>
 </template>
 
 <style scoped>

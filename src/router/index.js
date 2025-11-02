@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { startProgress as start, endProgress as end } from '@/utils/stagedProgress'
 
-const HomeView = () => import('@/components/layout/MainContent.vue')
+const Home = () => import('@/views/HomeView.vue')
 const DashboardOverview = () => import('@/views/dashboard/Overview.vue')
 const DashboardUsers = () => import('@/views/dashboard/Users.vue')
 const MonitorData = () => import('@/views/monitor/Data.vue')
-const MonitorView = () => import('@/views/monitor/View.vue')
+const MonitorView = () => import('@/views/monitor/ViewData.vue')
 const WorkspaceTasks = () => import('@/views/workspace/Tasks.vue')
 const WorkspaceCalendar = () => import('@/views/workspace/Calendar.vue')
 const EntertainmentNews = () => import('@/views/entertainment/News.vue')
@@ -16,7 +16,7 @@ const MediaMusic = () => import('@/views/media/Music.vue')
 const MediaVideo = () => import('@/views/media/Video.vue')
 const GeoMap = () => import('@/views/geo/Map.vue')
 const GeoWeather = () => import('@/views/geo/Weather.vue')
-const AboutView = () => import('@/views/AboutView.vue')
+const About = () => import('@/views/AboutView.vue')
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +28,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'Home',
-      component: HomeView,
+      component: Home,
       meta: { title: '首页', icon: 'House' },
     },
     {
@@ -174,7 +174,7 @@ const router = createRouter({
     {
       path: '/about',
       name: 'About',
-      component: AboutView,
+      component: About,
       meta: { title: '关于', icon: 'InfoFilled' },
     },
   ],
