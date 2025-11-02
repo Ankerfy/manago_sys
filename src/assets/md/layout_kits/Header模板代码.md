@@ -10,7 +10,7 @@ import { storeToRefs } from 'pinia'
 import SearchBox from '../SearchBox.vue'
 
 const emit = defineEmits(['refresh'])
-
+const isDark = ref(false)
 const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/202509231451856.jpg')
 
 // 获取折叠状态
