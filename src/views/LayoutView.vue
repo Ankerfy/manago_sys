@@ -9,12 +9,11 @@ import { storeToRefs } from 'pinia'
 import { useProgress } from '@/composables/useProgress'
 
 const loading = ref(true)
+const hotSearches = ['热搜1', '热搜2', '热搜3']
 
 // 获取折叠状态
 const appStore = useAppStore()
 const { isSidebarCollapse } = storeToRefs(appStore)
-
-const hotSearches = ['热搜1', '热搜2', '热搜3']
 
 // 刷新
 const routeKey = ref(useRoute.fullPath)

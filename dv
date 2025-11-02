@@ -1,0 +1,35 @@
+[33mcommit 8a7a2ec5bbeb8b9354bc375108211218cc2737c6[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Ankerfy <wgh12102277@163.com>
+Date:   Sun Nov 2 00:17:34 2025 +0800
+
+    图标悬浮样式调整
+
+[33mcommit 369ebd6a4d0ac49b5dbe52dfd4811cb9b23d00e9[m
+Author: Ankerfy <wgh12102277@163.com>
+Date:   Sun Nov 2 00:07:36 2025 +0800
+
+    刷新点击,进度条加载
+
+[33mcommit c5ee5da56e4274f9b2d924baaf51e3fcae6e45a0[m
+Author: Ankerfy <wgh12102277@163.com>
+Date:   Sat Nov 1 23:11:14 2025 +0800
+
+    样式变量表调整
+
+[33mcommit 033c2f7d7dec58e408197e32b1197599a6e52a49[m
+Author: Ankerfy <wgh12102277@163.com>
+Date:   Sat Nov 1 22:56:54 2025 +0800
+
+    结构、样式调整
+
+[33mcommit 0bc328ae3c672328aa496fe8314e9ddb555aa201[m
+Author: Ankerfy <wgh12102277@163.com>
+Date:   Sat Nov 1 22:11:09 2025 +0800
+
+    配置修改
+
+[33mcommit b5ea4f1f54c1cd2c0bd142202059d229116dd31c[m
+Author: Ankerfy <wgh12102277@163.com>
+Date:   Sat Nov 1 19:06:41 2025 +0800
+
+    Initial commit

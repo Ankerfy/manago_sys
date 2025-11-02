@@ -20,25 +20,26 @@
 
 ##### 1. 安装并配置 NProgress（<sapn style="color: red">已安装配置</sapn>）
 
-##### 2. 创建 `Header.vue` 组件（含刷新图标）
+##### 2. 创建 `LayHeader.vue` 组件（含刷新图标）
 
 ```vue
 <!-- src/components/Header.vue -->
 <template>
   <div class="header-toolbar">
-    <el-icon class="refresh-icon" @click="handleClick">
-      <Refresh />
+    <el-icon class="refresh-icon" @click="onRefreshClick">
+      <RefreshRight />
     </el-icon>
   </div>
 </template>
 
 <script setup>
-import { Refresh } from '@element-plus/icons-vue'
+// 全局引入图标库
+// import { RefreshRight } from '@element-plus/icons-vue'
 
 // 定义事件
 const emit = defineEmits(['refresh'])
 
-const handleClick = () => {
+const onRefreshClick = () => {
   emit('refresh')
 }
 </script>
@@ -54,13 +55,13 @@ const handleClick = () => {
   <el-container class="layout-container">
     <el-aside width="200px">
       <slot name="aside">
-        <Aside />
+        <LayAside />
       </slot>
     </el-aside>
 
     <el-container>
       <el-header>
-        <Header @refresh="handleRefresh" />
+        <LayHeader @refresh="handleRefresh" />
       </el-header>
 
       <!-- 主内容区 -->
@@ -80,12 +81,13 @@ const handleClick = () => {
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useProgress } from '@/composables/useProgress'
-import Header from './components/Header.vue'
-import Aside from './components/Aside.vue'
+import LayHeader from './components/LayHeader.vue'
+import LayAside from './components/LayAside.vue'
 
 // 路由切换时，刷新页面
 const routeKey = ref(useRoute.fullPath)
 const { start, finish } = useProgress()
+
 const handleRefresh = () => {
   loading.value = true
   start()
