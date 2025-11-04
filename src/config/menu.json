@@ -1,0 +1,119 @@
+{
+  "menuItems": [
+    {
+      "index": "/home",
+      "icon": "House",
+      "title": "首页"
+    },
+    {
+      "index": "dashboard",
+      "icon": "DataLine",
+      "title": "仪表盘",
+      "submenu": [
+        {
+          "index": "/dashboard/overview",
+          "title": "数据概览"
+        },
+        {
+          "index": "/dashboard/users",
+          "title": "用户活跃度"
+        }
+      ]
+    },
+    {
+      "index": "monitor",
+      "icon": "Monitor",
+      "title": "系统监控",
+      "submenu": [
+        {
+          "index": "/monitor/data",
+          "title": "数据监控"
+        },
+        {
+          "index": "/monitor/view",
+          "title": "数据可视化"
+        }
+      ]
+    },
+    {
+      "index": "workspace",
+      "icon": "OfficeBuilding",
+      "title": "工作台",
+      "submenu": [
+        {
+          "index": "/workspace/tasks",
+          "title": "任务中心"
+        },
+        {
+          "index": "/workspace/calendar",
+          "title": "日程安排"
+        }
+      ]
+    },
+    {
+      "index": "entertainment",
+      "icon": "Film",
+      "title": "娱乐资讯",
+      "submenu": [
+        {
+          "index": "/entertainment/news",
+          "title": "最新资讯"
+        },
+        {
+          "index": "/entertainment/movies",
+          "title": "影视推荐"
+        }
+      ]
+    },
+    {
+      "index": "messages",
+      "icon": "ChatLineSquare",
+      "title": "公告消息",
+      "submenu": [
+        {
+          "index": "/messages/announcements",
+          "title": "公告栏"
+        },
+        {
+          "index": "/messages/inbox",
+          "title": "私信中心"
+        }
+      ]
+    },
+    {
+      "index": "media",
+      "icon": "Headset",
+      "title": "媒体中心",
+      "submenu": [
+        {
+          "index": "/media/music",
+          "title": "在线音乐播放"
+        },
+        {
+          "index": "/media/video",
+          "title": "随机视频播放"
+        }
+      ]
+    },
+    {
+      "index": "geo",
+      "icon": "Location",
+      "title": "地图天气",
+      "submenu": [
+        {
+          "index": "/geo/map",
+          "title": "地图数据"
+        },
+        {
+          "index": "/geo/weather",
+          "title": "天气预报"
+        }
+      ]
+    },
+    {
+      "index": "/about",
+      "icon": "InfoFilled",
+      "title": "关于"
+    }
+  ]
+}

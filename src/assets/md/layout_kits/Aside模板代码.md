@@ -1,16 +1,13 @@
-当然可以！以下是根据你之前规划的**一、二级菜单结构、路由命名和组件设计**，对你的 `aside` 侧边栏菜单代码进行的 **完整重构版本**。
+#### ✅ [优化] `Aside` 侧边栏菜单代码（Vue 3 + `<script setup>` + Element Plus）
 
----
-
-### ✅ `Aside` 侧边栏菜单代码（Vue 3 + `<script setup>` + Element Plus）
-
-#### ✅ 配套 JS
+##### ✅ 配套 JS
 
 ```vue
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
+import MenuItem from '@/components/MenuItem.vue'
 
 // 获取折叠状态
 const appStore = useAppStore()
@@ -19,12 +16,31 @@ const { isSidebarCollapse } = storeToRefs(appStore)
 // Logo 图片地址
 const logoUrl = ref('')
 const picFit = 'contain'
+
+const menuItems = ref([])
+// 加载菜单配置
+async function loadMenuConfig() {
+  try {
+    const module = await import('@/config/menu.json')
+    const data = JSON.parse(JSON.stringify(module.menuItems))
+    menuItems.value = data
+
+    // console.log('menu.json:', module)
+    // console.log('data:', data)
+  } catch (error) {
+    console.error('Failed to load menu config:', error)
+  }
+}
+
+onMounted(() => {
+  loadMenuConfig()
+})
 </script>
 ```
 
 ---
 
-#### ✅ 模板html结构
+##### ✅ 模板html结构
 
 ```vue
 <template>
@@ -50,7 +66,83 @@ const picFit = 'contain'
         :unique-opened="true"
         router
       >
-        <!-- 首页 -->
+      <MenuItem v-for="(item, index) in menuItems" :key="index" :item="item" />
+    </div>
+  </div>
+</template>
+```
+
+---
+
+**优化：封装为`MenuItem`组件，菜单配置抽离为`src/config/menu.json`文件**
+
+##### MenuItem.vue 组件代码
+
+```vue
+<script setup>
+import {
+  House,
+  DataLine,
+  Monitor,
+  OfficeBuilding,
+  Film,
+  ChatLineSquare,
+  Headset,
+  Location,
+  InfoFilled,
+} from '@element-plus/icons-vue'
+
+const props = defineProps({
+  item: {
+    type: Object,
+    required: true,
+  },
+})
+
+// 图标映射表
+const iconMap = {
+  House,
+  DataLine,
+  Monitor,
+  OfficeBuilding,
+  Film,
+  ChatLineSquare,
+  Headset,
+  Location,
+  InfoFilled,
+}
+
+const getIconComponent = (iconName) => {
+  return iconMap[iconName] || null
+}
+</script>
+
+<template>
+  <!-- 单个菜单项 -->
+  <el-menu-item v-if="!item.submenu" :index="item.index">
+    <el-icon v-if="item.icon && iconMap[item.icon]">
+      <component :is="getIconComponent(item.icon)" />
+    </el-icon>
+    <template #title>{{ item.title }}</template>
+  </el-menu-item>
+
+  <!-- 子菜单 -->
+  <el-sub-menu v-else :index="item.index">
+    <template #title>
+      <el-icon v-if="item.icon && iconMap[item.icon]">
+        <component :is="getIconComponent(item.icon)" />
+      </el-icon>
+      <span>{{ item.title }}</span>
+    </template>
+    <menu-item v-for="(child, idx) in item.submenu" :key="idx" :item="child" />
+  </el-sub-menu>
+</template>
+```
+
+**原菜单配置**
+
+```vue
+<!-- 首页 -->
         <el-menu-item index="/home">
           <el-icon><House /></el-icon>
           <template #title>首页</template>
@@ -160,14 +252,11 @@ const picFit = 'contain'
           <template #title>关于</template>
         </el-menu-item>
       </el-menu>
-    </div>
-  </div>
-</template>
 ```
 
 ---
 
-#### ✅ 配套 CSS 样式
+##### ✅ 配套 CSS 样式
 
 ```CSS
 .sidebar {
@@ -223,7 +312,7 @@ const picFit = 'contain'
 
 ---
 
-### ✅ 关键修改说明
+#### ✅ 关键修改说明
 
 | 特性                              | 说明                                                                      |
 | --------------------------------- | ------------------------------------------------------------------------- |
@@ -233,20 +322,8 @@ const picFit = 'contain'
 | 🌟 菜单结构                       | 完全按照你规划的一、二级菜单组织，结构清晰                                |
 | 🌟 `unique-opened`                | 保持一次只展开一个子菜单，提升体验                                        |
 | 🌟 路由路径                       | 与之前设计的 `/dashboard/overview` 等完全一致，可直接对接 Vue Router      |
-
----
-
-### ✅ 后续配合建议
-
-1. **确保 Vue Router 配置正确**：
-
-   ```js
-   { path: '/home', name: 'Home', component: () => import('@/views/Home.vue') }
-   ```
-
-2. **确保组件文件存在**：
-   - 如 `@/views/Dashboard/Overview.vue`
-3. **全局注册图标组件（推荐）** 或 按需导入（如上）
+| 🌟 菜单配置抽离                   | 将菜单配置抽离成单独的 `menu.json` 文件                                   |
+| 🌟 菜单封装为`MenuItem`组件       | 读取`menu.json`文件，遍历并生成菜单项                                     |
 
 ---
 

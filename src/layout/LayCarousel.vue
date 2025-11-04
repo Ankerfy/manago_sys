@@ -6,7 +6,6 @@ import { ref } from 'vue'
   <!-- 热搜走马灯 -->
   <div class="hot-search">
     <div class="hot-search-icon">
-      <!-- <el-icon><Bell /></el-icon> -->
       <el-icon><BellFilled /></el-icon>
     </div>
     <div class="hot-search-content">
