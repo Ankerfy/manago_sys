@@ -25,7 +25,9 @@ const emit = defineEmits(['click'])
     :class="{ 'icon-button--disabled': disabled }"
     @click="emit('click')"
   >
-    <component :is="iconName" />
+    <el-tooltip class="box-item" effect="dark" :content="iconName" placement="bottom">
+      <component :is="iconName" />
+    </el-tooltip>
   </el-icon>
 </template>
 

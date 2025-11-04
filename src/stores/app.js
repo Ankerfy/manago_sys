@@ -8,6 +8,9 @@ export const useAppStore = defineStore('app', {
     language: 'zh'            // 语言
   }),
 
+  // 启用持久化
+  persist: true,
+
   actions: {
     toggleSidebar() {
       this.isSidebarCollapse = !this.isSidebarCollapse
