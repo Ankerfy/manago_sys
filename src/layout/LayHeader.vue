@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import SearchBox from '@/components/SearchBox.vue'
+import IconButton from '@/components/IconButton.vue'
 
 const emit = defineEmits(['refresh'])
 const isDark = ref(false)
@@ -11,14 +12,8 @@ const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/20
 // 切换折叠
 const appStore = useAppStore()
 const { isSidebarCollapse } = storeToRefs(appStore)
-const toggleSidebar = () => {
-  appStore.toggleSidebar()
-}
-
-// 刷新点击
-const onRefreshClick = () => {
-  emit('refresh')
-}
+const toggleSidebar = () => appStore.toggleSidebar()
+const onRefreshClick = () => emit('refresh') // 刷新点击
 
 // 搜索点击
 const onSearchClick = () => {
@@ -32,13 +27,8 @@ const onSearchClick = () => {
     <div class="nav-left">
       <div class="toolkits-left-icon">
         <!-- 控制折叠状态图标 -->
-        <el-icon @click="toggleSidebar()" :size="16">
-          <Fold v-if="!isSidebarCollapse" />
-          <Expand v-else />
-        </el-icon>
-        <el-icon @click="onRefreshClick()" :size="16">
-          <RefreshRight />
-        </el-icon>
+        <IconButton :icon-name="isSidebarCollapse ? 'Expand' : 'Fold'" @click="toggleSidebar()" />
+        <IconButton icon-name="RefreshRight" @click="onRefreshClick()" />
       </div>
 
       <!-- 面包屑 -->
@@ -59,25 +49,12 @@ const onSearchClick = () => {
       <!-- 工具项 -->
       <div class="toolkits-right-tools">
         <div class="tools-l">
-          <el-icon :size="16">
-            <House />
-          </el-icon>
-          <el-icon :size="16">
-            <Headset />
-          </el-icon>
-          <el-icon :size="16">
-            <Sunny v-if="isDark" />
-            <Moon v-else />
-          </el-icon>
-          <el-icon :size="16">
-            <FullScreen />
-          </el-icon>
-          <el-icon :size="16">
-            <Bell />
-          </el-icon>
-          <el-icon :size="16">
-            <Setting />
-          </el-icon>
+          <IconButton icon-name="House" />
+          <IconButton icon-name="Headset" />
+          <IconButton :icon-name="isDark ? 'Sunny' : 'Moon'" @click="isDark = !isDark" />
+          <IconButton icon-name="FullScreen" />
+          <IconButton icon-name="Bell" />
+          <IconButton icon-name="Setting" />
         </div>
         <!-- 头像 -->
         <div class="tools-r">
@@ -110,17 +87,6 @@ const onSearchClick = () => {
   display: flex;
   align-items: center;
   gap: 10px;
-}
-
-.toolkits-left-icon > .el-icon {
-  cursor: pointer;
-  padding: 5px;
-}
-.toolkits-left-icon > .el-icon:hover,
-.tools-l > .el-icon:hover {
-  color: var(--color-text-icon);
-  transition: all 0.3s ease;
-  background-color: var(--vt-c-white-bg);
 }
 
 .toolkits-left-breadcrumb {
@@ -157,10 +123,6 @@ const onSearchClick = () => {
   align-items: center;
   width: 80%;
   /* background-color: bisque; */
-}
-.tools-l > .el-icon {
-  cursor: pointer;
-  padding: 5px;
 }
 
 .tools-r {

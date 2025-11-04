@@ -15,7 +15,7 @@ import { ref } from 'vue'
         direction="vertical"
         :autoplay="true"
         :motion-blur="true"
-        interval="3800"
+        :interval="3800"
       >
         <el-carousel-item v-for="item in 5" :key="item.index">
           <span>Hello_World + {{ item }}</span>
