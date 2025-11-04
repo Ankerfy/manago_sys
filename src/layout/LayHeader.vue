@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
-import SearchBox from '../SearchBox.vue'
+import SearchBox from '@/components/SearchBox.vue'
 
 const emit = defineEmits(['refresh'])
 const isDark = ref(false)

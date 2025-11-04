@@ -1,9 +1,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import LayAside from '@/components/layout/LayAside.vue'
-import LayHeader from '@/components/layout/LayHeader.vue'
-import LayCarousel from '@/components/layout/LayCarousel.vue'
+import LayAside from '@/layout/LayAside.vue'
+import LayHeader from '@/layout/LayHeader.vue'
+import LayCarousel from '@/layout/LayCarousel.vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import { useProgress } from '@/composables/useProgress'
