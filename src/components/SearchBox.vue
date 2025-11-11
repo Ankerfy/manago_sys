@@ -1,6 +1,5 @@
 <script setup>
 import { Search } from '@element-plus/icons-vue'
-import { defineEmits } from 'vue'
 
 // 定义点击事件
 const emit = defineEmits(['click'])
