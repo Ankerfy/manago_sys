@@ -4,8 +4,11 @@ import { defineStore } from 'pinia'
 export const useAppStore = defineStore('app', {
   state: () => ({
     isSidebarCollapse: false, // 菜单折叠状态
+    darkMode: false,          // 深色模式
     theme: 'light',           // 主题模式
-    language: 'zh'            // 语言
+    language: 'zh',           // 语言
+    showPopover: false,       // 通知弹窗状态
+    showDrawer: false,        // 抽屉状态
   }),
 
   // 启用持久化
@@ -15,8 +18,17 @@ export const useAppStore = defineStore('app', {
     toggleSidebar() {
       this.isSidebarCollapse = !this.isSidebarCollapse
     },
+    toggleDarkMode() {
+      this.darkMode = !this.darkMode
+    },
     setTheme(theme) {
       this.theme = theme
+    },
+    togglePopover() {
+      this.showPopover = !this.showPopover
+    },
+    toggleDrawer() {
+      this.showDrawer = !this.showDrawer
     }
   },
 

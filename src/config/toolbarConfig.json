@@ -1,0 +1,56 @@
+{
+  "toolbarLeft": [
+    {
+      "id": "collapse",
+      "iconName": { "open": "Expand", "close": "Fold" },
+      "toolName": { "open": "展开", "close": "收起" },
+      "action": "toggleSidebar",
+      "isDynamic": true
+    },
+    {
+      "id": "refresh",
+      "iconName": "RefreshRight",
+      "toolName": "刷新",
+      "action": "onRefreshClick"
+    }
+  ],
+  "toolbarRight": [
+    {
+      "id": "home",
+      "iconName": "House",
+      "toolName": "首页",
+      "action": "goHome"
+    },
+    {
+      "id": "music",
+      "iconName": "Headset",
+      "toolName": "音乐",
+      "action": "goMusic"
+    },
+    {
+      "id": "theme",
+      "iconName": { "dark": "Sunny", "light": "Moon" },
+      "toolName": { "dark": "亮色模式", "light": "深色模式" },
+      "action": "toggleDarkMode",
+      "isDynamic": true
+    },
+    {
+      "id": "fullscreen",
+      "iconName": "FullScreen",
+      "toolName": "全屏模式",
+      "action": "toggleFullScreen"
+    },
+    {
+      "id": "notification",
+      "iconName": "Bell",
+      "toolName": "消息通知",
+      "action": "openNotification"
+    },
+    {
+      "id": "settings",
+      "iconName": "Setting",
+      "toolName": "设置",
+      "action": "openSettings"
+    }
+  ]
+}

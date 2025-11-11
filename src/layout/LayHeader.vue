@@ -1,34 +1,90 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
+import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
+import toolbarConfig from '@/config/toolbarConfig.json'
 import SearchBox from '@/components/SearchBox.vue'
 import IconButton from '@/components/IconButton.vue'
 
 const emit = defineEmits(['refresh'])
-const isDark = ref(false)
 const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/202509231451856.jpg')
 
 // 切换折叠
 const appStore = useAppStore()
-const { isSidebarCollapse } = storeToRefs(appStore)
-const toggleSidebar = () => appStore.toggleSidebar()
-const onRefreshClick = () => emit('refresh') // 刷新点击
+const { isSidebarCollapse, darkMode } = storeToRefs(appStore)
 
-// 搜索点击
+// 快捷工具
+const { actions } = useHeaderToolbar()
+
+const onRefreshClick = () => emit('refresh')
 const onSearchClick = () => {
   console.log('搜索被点击了')
   // 显示弹窗
 }
+
+const allActions = {
+  ...actions,
+  onRefreshClick,
+}
+
+// 解析工具项状态
+const resolveItemState = (item) => {
+  if (!item.isDynamic) {
+    return {
+      currentIcon: item.iconName,
+      currentToolName: item.toolName,
+    }
+  }
+
+  // 动态项
+  if (item.id === 'collapse') {
+    const isOpen = isSidebarCollapse.value
+    return {
+      currentIcon: isOpen ? item.iconName.open : item.iconName.close,
+      currentToolName: isOpen ? item.toolName.open : item.toolName.close,
+    }
+  }
+
+  if (item.id === 'theme') {
+    const isDark = darkMode.value
+    return {
+      currentIcon: isDark ? item.iconName.dark : item.iconName.light,
+      currentToolName: isDark ? item.toolName.dark : item.toolName.light,
+    }
+  }
+
+  return {
+    currentIcon: item.iconName,
+    currentToolName: item.toolName,
+  }
+}
+
+// 响应式处理
+const processedToolbar = computed(() => ({
+  left: toolbarConfig.toolbarLeft.map((item) => ({
+    ...item,
+    ...resolveItemState(item),
+  })),
+  right: toolbarConfig.toolbarRight.map((item) => ({
+    ...item,
+    ...resolveItemState(item),
+  })),
+}))
 </script>
 
 <template>
   <div class="menu-nav">
     <div class="nav-left">
       <div class="toolkits-left-icon">
-        <!-- 控制折叠状态图标 -->
-        <IconButton :icon-name="isSidebarCollapse ? 'Expand' : 'Fold'" @click="toggleSidebar()" />
-        <IconButton icon-name="RefreshRight" @click="onRefreshClick()" />
+        <!-- 菜单折叠、刷新 -->
+        <IconButton
+          v-for="item in processedToolbar.left"
+          :key="item.id"
+          :icon-name="item.currentIcon"
+          :tool-name="item.currentToolName"
+          @click="allActions[item.action]?.()"
+        />
       </div>
 
       <!-- 面包屑 -->
@@ -49,12 +105,13 @@ const onSearchClick = () => {
       <!-- 工具项 -->
       <div class="toolkits-right-tools">
         <div class="tools-l">
-          <IconButton icon-name="House" />
-          <IconButton icon-name="Headset" />
-          <IconButton :icon-name="isDark ? 'Sunny' : 'Moon'" @click="isDark = !isDark" />
-          <IconButton icon-name="FullScreen" />
-          <IconButton icon-name="Bell" />
-          <IconButton icon-name="Setting" />
+          <IconButton
+            v-for="item in processedToolbar.right"
+            :key="item.id"
+            :icon-name="item.currentIcon"
+            :tool-name="item.currentToolName"
+            @click="allActions[item.action]?.()"
+          />
         </div>
         <!-- 头像 -->
         <div class="tools-r">

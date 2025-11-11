@@ -1,6 +1,10 @@
 <!-- src/components/IconButton.vue -->
 <script setup>
 defineProps({
+  toolName: {
+    type: String,
+    default: 'Hello',
+  },
   iconName: {
     type: String,
     required: true,
@@ -20,7 +24,7 @@ const emit = defineEmits(['click'])
 
 <template>
   <!-- 图标提示 -->
-  <el-tooltip class="box-item" effect="dark" :content="iconName" placement="bottom">
+  <el-tooltip class="box-item" effect="dark" :content="toolName" placement="bottom">
     <el-icon
       class="icon-button"
       :size="size"
