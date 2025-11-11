@@ -19,16 +19,17 @@ const emit = defineEmits(['click'])
 </script>
 
 <template>
-  <el-icon
-    class="icon-button"
-    :size="size"
-    :class="{ 'icon-button--disabled': disabled }"
-    @click="emit('click')"
-  >
-    <el-tooltip class="box-item" effect="dark" :content="iconName" placement="bottom">
+  <!-- 图标提示 -->
+  <el-tooltip class="box-item" effect="dark" :content="iconName" placement="bottom">
+    <el-icon
+      class="icon-button"
+      :size="size"
+      :class="{ 'icon-button--disabled': disabled }"
+      @click="emit('click')"
+    >
       <component :is="iconName" />
-    </el-tooltip>
-  </el-icon>
+    </el-icon>
+  </el-tooltip>
 </template>
 
 <style scoped>
@@ -45,5 +46,10 @@ const emit = defineEmits(['click'])
 .icon-button--disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+/* 移除所有可能聚焦边框*/
+.icon-button:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 </style>
