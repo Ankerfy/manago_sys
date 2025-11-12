@@ -1,99 +1,27 @@
-<script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
-import SearchBox from './SearchBox.vue'
+太好了！你现在希望 **将之前的搜索组件升级为支持真实搜索结果展示**，并实现如下效果：
 
-// 响应式状态
-const isVisible = ref(false)
-const query = ref('')
-const searchInputRef = ref(null)
+---
 
-// 模拟菜单数据（后续接口获取或json配置读取）
-const menuData = [
-  { id: 1, name: '仪表盘', desc: 'dashboard', icon: '📊' },
-  { id: 2, name: '日期选择器', desc: 'date', icon: '📅' },
-  { id: 3, name: '多模态表单', desc: 'form-modal', icon: '📄' },
-  { id: 4, name: '日历', desc: 'calendar', icon: '🗓️' },
-  { id: 5, name: '日历1', desc: 'calendar1', icon: '🗓️' },
-  { id: 6, name: '日历2', desc: 'calendar2', icon: '🗓️' },
-  { id: 7, name: '日历3', desc: 'calendar3', icon: '🗓️' },
-  { id: 8, name: '日历4', desc: 'calendar4', icon: '🗓️' },
-]
+#### ✅ 目标效果（根据你提供的新截图）
 
-// 筛选结果
-const filteredResults = computed(() => {
-  if (!query.value.trim()) return []
-  return menuData.filter(
-    (item) => item.name.includes(query.value) || item.desc.includes(query.value)
-  )
-})
+| 特征                                                      | 说明 |
+| --------------------------------------------------------- | ---- |
+| ✅ 输入 `da` → 显示匹配菜单项                             |
+| ✅ 搜索结果包含：图标、中文名称、英文名（如 `dashboard`） |
+| ✅ 顶部显示分类标签（如“菜单导航”）                       |
+| ✅ 结果项可高亮/选中（鼠标悬停或键盘导航）                |
+| ✅ 右上角显示结果总数（如 `共 4 项结果`）                 |
+| ✅ 底部保留快捷键提示                                     |
 
-// 键盘导航状态
-const selectedIndex = ref(-1)
-const hoverIndex = ref(-1)
+---
 
-// 打开搜索
-const openSearch = () => {
-  isVisible.value = true
-  nextTick(() => {
-    searchInputRef.value?.focus()
-  })
-}
+在原有 `SearchModal.vue` 的基础上进行 **功能增强与样式优化**，使其完全匹配你的需求。
 
-// 关闭搜索
-const closeSearch = () => {
-  isVisible.value = false
-  query.value = ''
-  selectedIndex.value = -1
-}
+---
 
-// 输入处理（实时过滤）
-const handleInput = () => {
-  selectedIndex.value = -1 // 清除选中
-  hoverIndex.value = -1
-}
+##### ✅ 更新版 `SearchModal.vue` template模板
 
-// 键盘导航上下键移动
-const moveUp = () => {
-  if (selectedIndex.value > 0) {
-    selectedIndex.value--
-  }
-}
-const moveDown = () => {
-  const max = filteredResults.value.length - 1
-  if (selectedIndex.value < max) {
-    selectedIndex.value++
-  }
-}
-
-// 选择列表项
-const handleSelect = (item) => {
-  ElMessage({
-    message: 'Congrats, this is a success message.',
-    type: 'success',
-  })
-  // closeSearch()
-}
-
-// 快捷键监听
-const handleGlobalKeydown = (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-    e.preventDefault()
-    openSearch()
-  }
-  if (e.key === 'Escape' && isVisible.value) {
-    closeSearch()
-  }
-}
-
-// 生命周期
-onMounted(() => {
-  window.addEventListener('keydown', handleGlobalKeydown)
-})
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleGlobalKeydown)
-})
-</script>
-
+```vue
 <template>
   <!-- 搜索触发按钮 -->
   <SearchBox @click="openSearch" />
@@ -178,7 +106,112 @@ onUnmounted(() => {
     </div>
   </Teleport>
 </template>
+```
 
+---
+
+##### ✅ 配套js
+
+```vue
+<script setup>
+import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import SearchBox from './SearchBox.vue'
+
+// 响应式状态
+const isVisible = ref(false)
+const query = ref('')
+const searchInputRef = ref(null)
+
+// 模拟菜单数据（后续接口获取或json配置读取）
+const menuData = [
+  { id: 1, name: '仪表盘', desc: 'dashboard', icon: '📊' },
+  { id: 2, name: '日期选择器', desc: 'date', icon: '📅' },
+  { id: 3, name: '多模态表单', desc: 'form-modal', icon: '📄' },
+  { id: 4, name: '日历', desc: 'calendar', icon: '🗓️' },
+  // ...更多菜单项
+]
+
+// 筛选结果
+const filteredResults = computed(() => {
+  if (!query.value.trim()) return []
+  return menuData.filter(
+    (item) => item.name.includes(query.value) || item.desc.includes(query.value),
+  )
+})
+
+// 键盘导航状态
+const selectedIndex = ref(-1)
+const hoverIndex = ref(-1)
+
+// 打开搜索
+const openSearch = () => {
+  isVisible.value = true
+  nextTick(() => {
+    searchInputRef.value?.focus()
+  })
+}
+
+// 关闭搜索
+const closeSearch = () => {
+  isVisible.value = false
+  query.value = ''
+  selectedIndex.value = -1
+}
+
+// 输入处理（实时过滤）
+const handleInput = () => {
+  selectedIndex.value = -1 // 清除选中
+  hoverIndex.value = -1
+}
+
+// 键盘导航上下键移动
+const moveUp = () => {
+  if (selectedIndex.value > 0) {
+    selectedIndex.value--
+  }
+}
+const moveDown = () => {
+  const max = filteredResults.value.length - 1
+  if (selectedIndex.value < max) {
+    selectedIndex.value++
+  }
+}
+
+// 选择列表项
+const handleSelect = (item) => {
+  ElMessage({
+    message: 'Congrats, this is a success message.',
+    type: 'success',
+  })
+  // closeSearch()
+}
+
+// 快捷键监听
+const handleGlobalKeydown = (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault()
+    openSearch()
+  }
+  if (e.key === 'Escape' && isVisible.value) {
+    closeSearch()
+  }
+}
+
+// 生命周期
+onMounted(() => {
+  window.addEventListener('keydown', handleGlobalKeydown)
+})
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleGlobalKeydown)
+})
+</script>
+```
+
+---
+
+##### ✅ 配套css样式
+
+```CSS
 <style scoped>
 /* 遮罩层 */
 .search-overlay {
@@ -325,3 +358,70 @@ onUnmounted(() => {
   color: #666;
 }
 </style>
+```
+
+---
+
+## ✅ 功能亮点
+
+| 功能                      | 实现方式                        |
+| ------------------------- | ------------------------------- |
+| 🔍 实时模糊搜索           | `includes()` 匹配中文/英文      |
+| 🎯 键盘导航（上下箭头）   | `selectedIndex` 控制高亮        |
+| 🖱️ 鼠标悬停高亮           | `@mouseenter` 切换 `hoverIndex` |
+| 💬 图标 + 中文 + 英文描述 | 支持自定义 `menuData`           |
+| 🧩 分类标题 + 数量统计    | `category-header` + `count`     |
+| 📝 底部提示               | 快捷键说明 + 结果数量           |
+| ⌨️ Ctrl+K 快捷键          | 全局监听，支持 macOS            |
+| 🚫 ESC 关闭               | 支持键盘和点击遮罩关闭          |
+
+---
+
+## 🔄 如何扩展？
+
+你可以将 `menuData` 替换为真实数据源：
+
+```js
+// 示例：从 API 获取菜单
+const fetchMenuData = async () => {
+  const res = await api.get('/menu')
+  return res.data
+}
+```
+
+或者使用 `Fuse.js` 实现更智能的模糊匹配：
+
+```bash
+npm install fuse.js
+```
+
+```js
+import Fuse from 'fuse.js'
+const fuse = new Fuse(menuData, { keys: ['name', 'desc'] })
+const filteredResults = computed(() => fuse.search(query.value).map((r) => r.item))
+```
+
+---
+
+## ✅ 最终效果对比
+
+| 你提供的图            | 本组件实现 |
+| --------------------- | ---------- |
+| ✅ 输入 `da` 显示结果 | ✅         |
+| ✅ 图标 + 中文 + 英文 | ✅         |
+| ✅ 分类标题           | ✅         |
+| ✅ 结果数量           | ✅         |
+| ✅ 高亮选中           | ✅         |
+| ✅ 快捷键提示         | ✅         |
+| ✅ 滚动条             | ✅         |
+
+---
+
+如果你希望我进一步添加：
+
+- 多级菜单支持（展开子菜单）
+- 搜索历史记录
+- 自动补全建议
+- 按类型分组（如“页面”、“组件”）
+
+也可以继续告诉我！我会为你逐项实现。
