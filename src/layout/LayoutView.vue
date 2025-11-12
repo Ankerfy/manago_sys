@@ -24,6 +24,7 @@ const handleRefresh = () => {
   // 模拟数据加载时间
   setTimeout(() => {
     routeKey.value = useRoute.fullPath + '?t=' + Date.now()
+    console.log('routeKey', routeKey.value)
     loading.value = false
     finish()
   }, 1200)

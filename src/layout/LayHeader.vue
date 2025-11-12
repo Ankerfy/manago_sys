@@ -4,7 +4,7 @@ import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
-import SearchBox from '@/components/SearchBox.vue'
+import SearchModal from '@/components/SearchModal3.vue'
 import IconButton from '@/components/IconButton.vue'
 
 const emit = defineEmits(['refresh'])
@@ -18,10 +18,6 @@ const { isSidebarCollapse, darkMode } = storeToRefs(appStore)
 const { actions } = useHeaderToolbar()
 
 const onRefreshClick = () => emit('refresh')
-const onSearchClick = () => {
-  console.log('搜索被点击了')
-  // 显示弹窗
-}
 
 const allActions = {
   ...actions,
@@ -99,7 +95,7 @@ const processedToolbar = computed(() => ({
     <div class="nav-right">
       <!-- 搜索框 -->
       <div class="toolkits-right-search">
-        <SearchBox @click="onSearchClick" />
+        <SearchModal />
       </div>
 
       <!-- 工具项 -->
