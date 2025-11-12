@@ -226,6 +226,7 @@ onUnmounted(() => {
   justify-content: center;
   align-items: center;
   z-index: 9999;
+  top: -550px;
 }
 
 /* 搜索卡片 */
