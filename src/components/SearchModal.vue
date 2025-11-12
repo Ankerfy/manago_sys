@@ -1,11 +1,12 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import SearchBox from './SearchBox.vue'
 
 // 响应式状态
 const isVisible = ref(false)
 const query = ref('')
 const searchInputRef = ref(null)
+const resultItemRef = ref([]) // 获取每个结果DOM
 
 // 模拟菜单数据（后续接口获取或json配置读取）
 const menuData = [
@@ -13,10 +14,14 @@ const menuData = [
   { id: 2, name: '日期选择器', desc: 'date', icon: '📅' },
   { id: 3, name: '多模态表单', desc: 'form-modal', icon: '📄' },
   { id: 4, name: '日历', desc: 'calendar', icon: '🗓️' },
-  { id: 5, name: '日历1', desc: 'calendar1', icon: '🗓️' },
-  { id: 6, name: '日历2', desc: 'calendar2', icon: '🗓️' },
-  { id: 7, name: '日历3', desc: 'calendar3', icon: '🗓️' },
-  { id: 8, name: '日历4', desc: 'calendar4', icon: '🗓️' },
+  { id: 5, name: '用户管理', desc: 'users', icon: '👥' },
+  { id: 6, name: '设置', desc: 'settings', icon: '⚙️' },
+  { id: 7, name: '通知中心', desc: 'notifications', icon: '🔔' },
+  { id: 8, name: '帮助文档', desc: 'help', icon: '❓' },
+  { id: 9, name: '日历1', desc: 'calendar1', icon: '🗓️' },
+  { id: 10, name: '日历2', desc: 'calendar2', icon: '🗓️' },
+  { id: 11, name: '日历3', desc: 'calendar3', icon: '🗓️' },
+  { id: 12, name: '日历4', desc: 'calendar4', icon: '🗓️' },
 ]
 
 // 筛选结果
@@ -36,6 +41,7 @@ const openSearch = () => {
   isVisible.value = true
   nextTick(() => {
     searchInputRef.value?.focus()
+    selectedIndex.value = -1
   })
 }
 
@@ -52,21 +58,51 @@ const handleInput = () => {
   hoverIndex.value = -1
 }
 
-// 键盘导航上下键移动
-const moveUp = () => {
-  if (selectedIndex.value > 0) {
-    selectedIndex.value--
+// 滚动到选中项
+const scrollToSelected = () => {
+  if (selectedIndex.value < 0) return
+  const el = resultItemRef.value[selectedIndex.value]
+  if (el) {
+    el.scrollIntoView({
+      block: 'nearest',
+      behavior: 'smooth',
+    })
   }
 }
+watch(selectedIndex, scrollToSelected) // 监听选中项变化
+
+// 循环导航，向下
 const moveDown = () => {
-  const max = filteredResults.value.length - 1
-  if (selectedIndex.value < max) {
-    selectedIndex.value++
+  const len = filteredResults.value.length
+  if (len === 0) return
+  if (selectedIndex.value === -1) {
+    selectedIndex.value = 0
+  } else {
+    selectedIndex.value = (selectedIndex.value + 1) % len
+  }
+}
+
+// 循环导航，向上
+const moveUp = () => {
+  const len = filteredResults.value.length
+  if (len === 0) return
+  if (selectedIndex.value === -1) {
+    selectedIndex.value = len - 1
+  } else {
+    selectedIndex.value = (selectedIndex.value - 1 + len) % len
   }
 }
 
 // 选择列表项
 const handleSelect = (item) => {
+  if (!item) {
+    // 未选中，默认选中第一个
+    if (filteredResults.value.length > 0) {
+      item = filteredResults.value[selectedIndex.value === -1 ? 0 : selectedIndex.value]
+    } else {
+      return
+    }
+  }
   ElMessage({
     message: 'Congrats, this is a success message.',
     type: 'success',
@@ -148,6 +184,7 @@ onUnmounted(() => {
             <li
               v-for="(item, index) in filteredResults"
               :key="item.id"
+              :ref="(el) => (resultItemRef[index] = el)"
               :class="{ selected: selectedIndex === index }"
               @click="handleSelect(item)"
               @mouseenter="hoverIndex = index"
