@@ -50,6 +50,15 @@ const layoutModes = [
   { name: '分栏布局', desc: '(高效)' },
 ]
 
+const layoutIcons = [
+  IconLaySidebar,
+  IconLayTopbar,
+  IconLaySideMixed,
+  IconLayTopSide,
+  IconLayBlank,
+  IconLaySplit,
+]
+
 const selectLayout = (index) => {
   localSelectedLayout.value = index
 }
@@ -71,7 +80,8 @@ const resetLayout = () => {
         @click="selectLayout(index)"
       >
         <div class="layout-icon">
-          <IconLaySidebar />
+          <!-- 动态渲染对应的图标 -->
+          <component :is="layoutIcons[index]" />
         </div>
         <div class="layout-name">{{ layout.name }}</div>
         <div class="layout-desc">{{ layout.desc }}</div>
@@ -156,8 +166,11 @@ const resetLayout = () => {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+.layout-item:hover,
 .layout-item.active {
   border-color: #1890ff;
+  color: #1890ff;
+  transform: translateY(-2px);
   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
 }
 .layout-icon {

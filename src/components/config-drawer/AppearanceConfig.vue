@@ -148,8 +148,11 @@ const selectPreset = (index) => {
   background: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
+.preset-item:hover,
 .preset-item.active {
   border-color: #1890ff;
+  color: #1890ff;
+  transform: translateY(-2px);
   box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
 }
 .icon {
