@@ -6,8 +6,8 @@ import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
 import SearchModal from '@/components/SearchModal.vue'
 import IconButton from '@/components/IconButton.vue'
+import UserAvatarPopover from '@/components/UserAvatarPopover.vue'
 import ConfigDrawer from '@/components/config-drawer/ConfigDrawer.vue'
-// import ConfigDrawer from '@/components/ConfigDrawer2.vue'
 
 const emit = defineEmits(['refresh'])
 const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/202509231451856.jpg')
@@ -114,7 +114,8 @@ const processedToolbar = computed(() => ({
         </div>
         <!-- 头像 -->
         <div class="tools-r">
-          <el-avatar :size="32" :src="avatarUrl" />
+          <!-- <el-avatar :size="32" :src="avatarUrl" /> -->
+          <UserAvatarPopover :avatar-url="avatarUrl" avatar-size="32" />
         </div>
       </div>
 
