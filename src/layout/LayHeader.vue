@@ -6,13 +6,16 @@ import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
 import SearchModal from '@/components/SearchModal.vue'
 import IconButton from '@/components/IconButton.vue'
+import ConfigDrawer from '@/components/config-drawer/ConfigDrawer.vue'
+// import ConfigDrawer from '@/components/ConfigDrawer2.vue'
 
 const emit = defineEmits(['refresh'])
 const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/202509231451856.jpg')
 
 // 切换折叠
 const appStore = useAppStore()
-const { isSidebarCollapse, darkMode } = storeToRefs(appStore)
+const { isSidebarCollapse, darkMode, showPopover, showDrawer } = storeToRefs(appStore)
+const enableShortcuts = ref(true)
 
 // 快捷工具
 const { actions } = useHeaderToolbar()
@@ -113,6 +116,13 @@ const processedToolbar = computed(() => ({
         <div class="tools-r">
           <el-avatar :size="32" :src="avatarUrl" />
         </div>
+      </div>
+
+      <!-- 右侧抽屉、消息通知 -->
+      <div v-show="showPopover" class="toolkits-right-message"></div>
+      <div class="toolkits-right-drawer">
+        <!-- 抽屉组件 -->
+        <ConfigDrawer v-model="showDrawer" />
       </div>
     </div>
   </div>
