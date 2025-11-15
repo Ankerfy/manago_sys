@@ -4,7 +4,7 @@ import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
-import SearchModal from '@/components/SearchModal.vue'
+import SearchModal from '@/components/SearchModal2.vue'
 import IconButton from '@/components/IconButton.vue'
 
 const emit = defineEmits(['refresh'])

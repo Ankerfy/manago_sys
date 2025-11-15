@@ -1,69 +1,39 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
+import { ref, nextTick } from 'vue'
 import SearchBox from './SearchBox.vue'
-import menuData from '@/config/menuRoutes.json'
+import IconButton from './IconButton.vue'
+import rawMenuConfig from '@/config/menu.json'
 import router from '@/router'
+import { useGlobalSearch } from '@/composables/useGlobalSearch'
 
-// 响应式状态
-const isVisible = ref(false)
-const query = ref('')
+// 扁平化菜单
+const flattenMenu = (items, parent = null) => {
+  let result = []
+  for (const item of items) {
+    if (item.index?.startsWith('/')) {
+      result.push({
+        id: item.index,
+        name: item.title,
+        desc: item.index.split('/').pop(),
+        icon: item.icon || parent?.icon,
+        path: item.index,
+      })
+    }
+    if (item.submenu) {
+      result = result.concat(flattenMenu(item.submenu, item))
+    }
+  }
+  return result
+}
+
+const menuData = flattenMenu(rawMenuConfig.menuItems)
+
 const searchInputRef = ref(null)
-const resultItemRef = ref([]) // 获取每个结果DOM
+const resultItemRef = ref([])
 
-// 模拟菜单数据（后续接口获取或json配置读取）
-// const menuData = [
-//   { id: 1, name: '仪表盘', desc: 'dashboard', icon: '📊' },
-//   { id: 2, name: '日期选择器', desc: 'date', icon: '📅' },
-//   { id: 3, name: '多模态表单', desc: 'form-modal', icon: '📄' },
-//   { id: 4, name: '日历', desc: 'calendar', icon: '🗓️' },
-//   { id: 5, name: '用户管理', desc: 'users', icon: '👥' },
-//   { id: 6, name: '设置', desc: 'settings', icon: '⚙️' },
-//   { id: 7, name: '通知中心', desc: 'notifications', icon: '🔔' },
-//   { id: 8, name: '帮助文档', desc: 'help', icon: '❓' },
-//   { id: 9, name: '日历1', desc: 'calendar1', icon: '🗓️' },
-//   { id: 10, name: '日历2', desc: 'calendar2', icon: '🗓️' },
-//   { id: 11, name: '日历3', desc: 'calendar3', icon: '🗓️' },
-//   { id: 12, name: '日历4', desc: 'calendar4', icon: '🗓️' },
-// ]
-
-// 筛选结果
-const filteredResults = computed(() => {
-  if (!query.value.trim()) return []
-  return menuData.filter(
-    (item) => item.name.includes(query.value) || item.desc.includes(query.value)
-  )
-})
-
-// 键盘导航状态
-const selectedIndex = ref(-1)
-const hoverIndex = ref(-1)
-
-// 打开搜索
-const openSearch = () => {
-  isVisible.value = true
-  nextTick(() => {
-    searchInputRef.value?.focus()
-    selectedIndex.value = -1
-  })
-}
-
-// 关闭搜索
-const closeSearch = () => {
-  isVisible.value = false
-  query.value = ''
-  selectedIndex.value = -1
-}
-
-// 输入处理（实时过滤）
-const handleInput = () => {
-  selectedIndex.value = -1 // 清除选中
-  hoverIndex.value = -1
-}
-
-// 滚动到选中项
-const scrollToSelected = () => {
-  if (selectedIndex.value < 0) return
-  const el = resultItemRef.value[selectedIndex.value]
+// 滚动回调
+const scrollToIndex = (index) => {
+  const el = resultItemRef.value[index]
   if (el) {
     el.scrollIntoView({
       block: 'nearest',
@@ -71,69 +41,26 @@ const scrollToSelected = () => {
     })
   }
 }
-watch(selectedIndex, scrollToSelected) // 监听选中项变化
 
-// 循环导航，向下
-const moveDown = () => {
-  const len = filteredResults.value.length
-  if (len === 0) return
-  if (selectedIndex.value === -1) {
-    selectedIndex.value = 0
-  } else {
-    selectedIndex.value = (selectedIndex.value + 1) % len
-  }
-}
-
-// 循环导航，向上
-const moveUp = () => {
-  const len = filteredResults.value.length
-  if (len === 0) return
-  if (selectedIndex.value === -1) {
-    selectedIndex.value = len - 1
-  } else {
-    selectedIndex.value = (selectedIndex.value - 1 + len) % len
-  }
-}
-
-// 选择列表项
-const handleSelect = (item) => {
-  if (!item) {
-    // 未选中，默认选中第一个
-    if (filteredResults.value.length > 0) {
-      item = filteredResults.value[selectedIndex.value === -1 ? 0 : selectedIndex.value]
-    } else {
-      return
-    }
-  }
-  if (item?.path) {
-    router.push(item.path)
-    closeSearch()
-  }
-  // ElMessage({
-  //   message: 'Congrats, this is a success message.',
-  //   type: 'success',
-  // })
-  // closeSearch()
-}
-
-// 快捷键监听
-const handleGlobalKeydown = (e) => {
-  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
-    e.preventDefault()
-    openSearch()
-  }
-  if (e.key === 'Escape' && isVisible.value) {
-    closeSearch()
-  }
-}
-
-// 生命周期
-onMounted(() => {
-  window.addEventListener('keydown', handleGlobalKeydown)
-})
-onUnmounted(() => {
-  window.removeEventListener('keydown', handleGlobalKeydown)
-})
+const {
+  isVisible,
+  query,
+  selectedIndex,
+  filteredResults,
+  openSearch,
+  closeSearch,
+  handleInput,
+  moveUp,
+  moveDown,
+  handleSelect,
+} = useGlobalSearch(
+  menuData,
+  router,
+  () => {
+    searchInputRef.value?.focus()
+  },
+  scrollToIndex
+)
 </script>
 
 <template>
@@ -152,7 +79,8 @@ onUnmounted(() => {
       aria-modal="true"
     >
       <div class="search-card" @click.stop>
-        <!-- 搜索输入框 -->
+        <!-- 搜索输入框 @input="handleInput"
+            @keydown.enter="handleSelect" -->
         <div class="search-header">
           <div class="search-icon">🔍</div>
           <input
@@ -161,8 +89,6 @@ onUnmounted(() => {
             type="text"
             placeholder="搜索导航菜单..."
             class="search-input"
-            @input="handleInput"
-            @keydown.enter="handleSelect"
             @keydown.up.prevent="moveUp"
             @keydown.down.prevent="moveDown"
           />
@@ -185,7 +111,7 @@ onUnmounted(() => {
             <span class="count">({{ filteredResults.length }})</span>
           </div>
 
-          <!-- 结果列表 -->
+          <!-- 结果列表  -->
           <ul class="result-list">
             <li
               v-for="(item, index) in filteredResults"
@@ -196,7 +122,9 @@ onUnmounted(() => {
               @mouseenter="hoverIndex = index"
               @mouseleave="hoverIndex = -1"
             >
-              <div class="icon">{{ item.icon }}</div>
+              <div class="icon">
+                <IconButton :icon-name="item.icon" />
+              </div>
               <div class="title">{{ item.name }}</div>
               <div class="desc">{{ item.desc }}</div>
             </li>
