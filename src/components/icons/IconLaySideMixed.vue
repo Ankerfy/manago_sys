@@ -7,7 +7,7 @@
     fill="none"
   >
     <!-- 背景大矩形 -->
-    <rect x="0" y="0" width="48" height="48" rx="1" :fill="color" fill-opacity="0.9" />
+    <rect x="0" y="0" width="8" height="48" rx="1" :fill="color" fill-opacity="0.9" />
 
     <!-- 左侧窄条（菜单） -->
     <rect x="10" y="0" width="14" height="48" rx="1" :fill="color" fill-opacity="0.7" />

@@ -1,6 +1,6 @@
 <!-- @/components/UserAvatarPopover.vue -->
 <template>
-  <el-popover :width="width" :popper-style="popperStyle" trigger="hover">
+  <el-popover :width="width" :popper-style="popperStyle" trigger="click">
     <template #reference>
       <el-avatar :size="avatarSize" :src="avatarUrl" />
     </template>

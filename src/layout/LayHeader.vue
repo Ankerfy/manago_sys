@@ -115,7 +115,7 @@ const processedToolbar = computed(() => ({
         <!-- 头像 -->
         <div class="tools-r">
           <!-- <el-avatar :size="32" :src="avatarUrl" /> -->
-          <UserAvatarPopover :avatar-url="avatarUrl" avatar-size="32" />
+          <UserAvatarPopover :avatar-url="avatarUrl" :avatar-size="32" />
         </div>
       </div>
 
