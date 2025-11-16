@@ -1,4 +1,4 @@
-<!-- src/components/IconButton.vue -->
+<!-- @/components/IconButton.vue -->
 <script setup>
 defineProps({
   toolName: {
