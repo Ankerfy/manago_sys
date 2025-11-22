@@ -1,6 +1,5 @@
+<!-- @/components/cards/BaseCard.vue -->
 <script setup>
-// import { Warning, ArrowRight, CaretTop, CaretBottom } from '@element-plus/icons-vue'
-
 defineProps({
   title: String,
   tooltip: String,

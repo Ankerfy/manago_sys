@@ -1,3 +1,4 @@
+<!-- @/components/MenuItem.vue -->
 <script setup>
 import {
   House,

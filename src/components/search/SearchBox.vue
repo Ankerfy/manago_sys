@@ -1,3 +1,4 @@
+<!-- @/components/search/SearchBox.vue -->
 <script setup>
 import { Search } from '@element-plus/icons-vue'
 

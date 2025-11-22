@@ -1,4 +1,4 @@
-// src/stores/index.js
+// @/stores/index.js
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 

@@ -4,17 +4,17 @@ import { useAppStore } from '@/stores/app'
 import { storeToRefs } from 'pinia'
 import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
-import SearchModal from '@/components/SearchModal.vue'
+import SearchModal from '@/components/search/SearchModal.vue'
 import IconButton from '@/components/IconButton.vue'
 import UserAvatarPopover from '@/components/UserAvatarPopover.vue'
-import ConfigDrawer from '@/components/config-drawer/ConfigDrawer.vue'
+import ConfigPanel from '@/components/config-drawer/ConfigPanel.vue'
 
 const emit = defineEmits(['refresh'])
 const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/202509231451856.jpg')
 
 // 切换折叠
 const appStore = useAppStore()
-const { isSidebarCollapse, darkMode, showPopover, showDrawer } = storeToRefs(appStore)
+const { isSidebarCollapse, darkMode, showPopover, showPanel } = storeToRefs(appStore)
 const enableShortcuts = ref(true)
 
 // 快捷工具
@@ -123,7 +123,7 @@ const processedToolbar = computed(() => ({
       <div v-show="showPopover" class="toolkits-right-message"></div>
       <div class="toolkits-right-drawer">
         <!-- 抽屉组件 -->
-        <ConfigDrawer v-model="showDrawer" />
+        <ConfigPanel v-model="showPanel" />
       </div>
     </div>
   </div>

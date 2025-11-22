@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import SiteStatusCard from '@/components/SiteStatusCard.vue'
+import SiteStatusCard from '@/components/cards/SiteStatusCard.vue'
 
 const sites = [
   { protocol: 'https', domain: 'icy.ankerfy.dpdns.org' },

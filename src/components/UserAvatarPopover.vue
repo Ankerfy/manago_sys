@@ -1,21 +1,4 @@
 <!-- @/components/UserAvatarPopover.vue -->
-<template>
-  <el-popover :width="width" :popper-style="popperStyle" trigger="click">
-    <template #reference>
-      <el-avatar :size="avatarSize" :src="avatarUrl" />
-    </template>
-
-    <div class="user-avatar-popover__content">
-      <el-avatar :size="60" :src="avatarUrl" class="user-avatar-popover__big-avatar" />
-      <div class="user-avatar-popover__info">
-        <p class="user-avatar-popover__name">{{ userName }}</p>
-        <p class="user-avatar-popover__mention">{{ userMention }}</p>
-      </div>
-      <p class="user-avatar-popover__desc">{{ description }}</p>
-    </div>
-  </el-popover>
-</template>
-
 <script setup>
 import { computed } from 'vue'
 
@@ -52,6 +35,23 @@ const popperStyle = computed(() => ({
   padding: '20px',
 }))
 </script>
+
+<template>
+  <el-popover :width="width" :popper-style="popperStyle" trigger="click">
+    <template #reference>
+      <el-avatar :size="avatarSize" :src="avatarUrl" />
+    </template>
+
+    <div class="user-avatar-popover__content">
+      <el-avatar :size="60" :src="avatarUrl" class="user-avatar-popover__big-avatar" />
+      <div class="user-avatar-popover__info">
+        <p class="user-avatar-popover__name">{{ userName }}</p>
+        <p class="user-avatar-popover__mention">{{ userMention }}</p>
+      </div>
+      <p class="user-avatar-popover__desc">{{ description }}</p>
+    </div>
+  </el-popover>
+</template>
 
 <style scoped>
 .user-avatar-popover__content {

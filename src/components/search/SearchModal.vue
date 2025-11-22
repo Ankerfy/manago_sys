@@ -1,7 +1,8 @@
+<!-- @/components/search/SearchModal.vue -->
 <script setup>
 import { ref, nextTick } from 'vue'
 import SearchBox from './SearchBox.vue'
-import IconButton from './IconButton.vue'
+import IconButton from '@/components/IconButton.vue'
 import rawMenuConfig from '@/config/menu.json'
 import router from '@/router'
 import { useGlobalSearch } from '@/composables/useGlobalSearch'

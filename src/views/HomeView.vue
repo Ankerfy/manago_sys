@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import CountCard from '@/components/CountCard.vue'
+import UserCountCard from '@/components/cards/UserCountCard.vue'
 
 const value = ref('')
 </script>
@@ -9,7 +9,7 @@ const value = ref('')
   <!-- 统计数据 -->
   <div class="graid-container">
     <div class="flex count-graid">
-      <CountCard />
+      <UserCountCard />
     </div>
 
     <div class="flex justify-center dates-selector">

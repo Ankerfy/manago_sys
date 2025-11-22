@@ -1,4 +1,4 @@
-<!-- src/components/SimpleSiteStatusCard.vue -->
+<!-- @/components/cards/SimpleSiteStatusCard.vue -->
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import api from '@/api'

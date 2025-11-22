@@ -27,8 +27,8 @@ export const useHeaderToolbar = () => {
     },
     // 开/关通知弹窗
     openNotification: () => appStore.togglePopover(),
-    // 开/关抽屉
-    openSettings: () => appStore.toggleDrawer()
+    // 开/关主题面板
+    openSettings: () => appStore.togglePanel()
   }
 
   return {

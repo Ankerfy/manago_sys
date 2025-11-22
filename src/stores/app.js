@@ -1,4 +1,4 @@
-// src/stores/app.js
+// @/stores/app.js
 import { defineStore } from 'pinia'
 
 export const useAppStore = defineStore('app', {
@@ -8,7 +8,7 @@ export const useAppStore = defineStore('app', {
     theme: 'light',           // 主题模式 默认light
     language: 'zh',           // 语言
     showPopover: false,       // 通知弹窗状态
-    showDrawer: false,        // 抽屉状态
+    showPanel: false,        // 主题面板状态
   }),
 
   // 启用持久化，指定存储
@@ -31,8 +31,8 @@ export const useAppStore = defineStore('app', {
     togglePopover() {
       this.showPopover = !this.showPopover
     },
-    toggleDrawer() {
-      this.showDrawer = !this.showDrawer
+    togglePanel() {
+      this.showPanel = !this.showPanel
     }
   },
 

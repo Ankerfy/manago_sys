@@ -1,7 +1,8 @@
+<!-- @/components/cards/UserCountCard.vue -->
 <script setup>
-import StatCard from '@/components/StatCard.vue'
+import BaseCard from '@/components/cards/BaseCard.vue'
 
-const cards = [
+const mock_data = [
   {
     title: 'Daily active users',
     tooltip: 'Number of users who logged into the product in one day',
@@ -38,8 +39,15 @@ const cards = [
 <template>
   <div class="card-box">
     <el-row :gutter="16">
-      <el-col :xs="24" :sm="12" :md="6" v-for="(card, index) in cards" :key="index" class="mb-4">
-        <StatCard v-bind="card" />
+      <el-col
+        :xs="24"
+        :sm="12"
+        :md="6"
+        v-for="(content, index) in mock_data"
+        :key="index"
+        class="mb-4"
+      >
+        <BaseCard v-bind="content" />
       </el-col>
     </el-row>
   </div>
