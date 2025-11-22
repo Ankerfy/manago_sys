@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { startProgress as start, endProgress as end } from '@/utils/stagedProgress'
+import { useUIStore } from '@/stores'
 
 const Home = () => import('@/views/HomeView.vue')
 const DashboardOverview = () => import('@/views/dashboard/Overview.vue')
@@ -181,19 +181,13 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  // 定义进度阶段
-  const PROGRESS_STAGES = [
-    { value: 0.1, delay: 200 },
-    { value: 0.1, delay: 500 }, // 停顿
-    { value: 0.4, delay: 300 },
-    { value: 0.4, delay: 400 }, // 停顿
-    { value: 0.8, delay: 200 },
-    { value: 1.0, delay: 100 },
-  ]
+  const progress = useUIStore()
 
   try {
-    end()// 清空上一个进度
-    await start(PROGRESS_STAGES)
+    // 取消上一次进度
+    progress.finish()
+    // 启动新进度
+    await progress.start()
     next()
   } catch (error) {
     next()
@@ -201,7 +195,8 @@ router.beforeEach(async (to, from, next) => {
 })
 
 router.onError(() => {
-  end()
+  const progress = useUIStore()
+  progress.finish()
 })
 
 export default router

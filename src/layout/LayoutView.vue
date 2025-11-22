@@ -1,41 +1,36 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import LayAside from '@/layout/LayAside.vue'
 import LayHeader from '@/layout/LayHeader.vue'
 import LayCarousel from '@/layout/LayCarousel.vue'
-import { useAppStore } from '@/stores'
+import { useAppStore, useUIStore } from '@/stores'
 import { storeToRefs } from 'pinia'
-import { useProgress } from '@/composables/useProgress'
 
-const loading = ref(true)
 const hotSearches = ['热搜1', '热搜2', '热搜3']
 
-// 获取折叠状态
+// 获取折叠、加载状态
 const appStore = useAppStore()
+const uiStore = useUIStore()
 const { isSidebarCollapse } = storeToRefs(appStore)
+const { isLoading } = storeToRefs(uiStore)
 
 // 刷新
 const routeKey = ref(useRoute.fullPath)
-const { start, finish } = useProgress()
-const handleRefresh = () => {
-  loading.value = true
-  start()
+
+const handleRefresh = async () => {
+  uiStore.start()
+  await new Promise((resolve) => setTimeout(resolve, 1500))
+  routeKey.value = useRoute.fullPath + '?t=' + Date.now()
+  uiStore.finish()
+
   // 模拟数据加载时间
   setTimeout(() => {
     routeKey.value = useRoute.fullPath + '?t=' + Date.now()
     console.log('routeKey', routeKey.value)
-    loading.value = false
-    finish()
+    uiStore.finish()
   }, 1200)
 }
-
-// 模拟数据加载
-onMounted(() => {
-  setTimeout(() => {
-    loading.value = false
-  }, 1500)
-})
 </script>
 
 <template>
@@ -57,9 +52,9 @@ onMounted(() => {
       <!-- 主体内容 -->
       <el-main class="lay-main-content">
         <!-- 页面加载时显示骨架屏 -->
-        <el-skeleton v-if="loading" animated :rows="10" style="padding: 20px" />
+        <el-skeleton v-if="isLoading" animated :rows="10" style="padding: 20px" />
         <!-- 页面加载完成后显示真实内容 -->
-        <RouterView v-else :key="routeKey" />
+        <RouterView :key="routeKey" />
       </el-main>
     </el-container>
   </div>
