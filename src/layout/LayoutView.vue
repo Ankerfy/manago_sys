@@ -4,7 +4,7 @@ import { useRoute } from 'vue-router'
 import LayAside from '@/layout/LayAside.vue'
 import LayHeader from '@/layout/LayHeader.vue'
 import LayCarousel from '@/layout/LayCarousel.vue'
-import { useAppStore } from '@/stores/app'
+import { useAppStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useProgress } from '@/composables/useProgress'
 
@@ -146,4 +146,4 @@ onMounted(() => {
   overflow-y: auto;
   overflow-x: hidden;
 }
-</style>
+</style>@/stores/app-store

@@ -1,6 +1,6 @@
 <script setup>
 import { ref, computed } from 'vue'
-import { useAppStore } from '@/stores/app'
+import { useAppStore, useUIStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
@@ -14,7 +14,9 @@ const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/20
 
 // 切换折叠
 const appStore = useAppStore()
-const { isSidebarCollapse, darkMode, showPopover, showPanel } = storeToRefs(appStore)
+const uiStore = useUIStore()
+const { isSidebarCollapse, darkMode } = storeToRefs(appStore)
+const { showPopover, showPanel } = storeToRefs(uiStore)
 const enableShortcuts = ref(true)
 
 // 快捷工具
@@ -197,4 +199,4 @@ const processedToolbar = computed(() => ({
   padding: 0 10px;
   /* background-color: chocolate; */
 }
-</style>
+</style>@/stores/app-store

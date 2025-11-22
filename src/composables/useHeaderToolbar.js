@@ -1,11 +1,12 @@
 // @/composables/useHeaderToolbar.js
 import { useRouter } from 'vue-router'
-import { useAppStore } from '@/stores/app'
+import { useAppStore, useUIStore } from '@/stores'
 
 export const useHeaderToolbar = () => {
   // 路由和状态
   const router = useRouter()
   const appStore = useAppStore()
+  const uiStore = useUIStore()
 
   // 动作
   const actions = {
@@ -26,9 +27,9 @@ export const useHeaderToolbar = () => {
       }
     },
     // 开/关通知弹窗
-    openNotification: () => appStore.togglePopover(),
+    openNotification: () => uiStore.togglePopover(),
     // 开/关主题面板
-    openSettings: () => appStore.togglePanel()
+    openSettings: () => uiStore.togglePanel()
   }
 
   return {

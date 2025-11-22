@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useAppStore } from '@/stores/app'
+import { useAppStore } from '@/stores'
 import { storeToRefs } from 'pinia'
 import MenuItem from '@/components/MenuItem.vue'
 
@@ -108,4 +108,4 @@ onMounted(() => {
 .el-menu--collapse {
   transition: width 0.3s ease, left 0.3s ease;
 }
-</style>
+</style>@/stores/app-store

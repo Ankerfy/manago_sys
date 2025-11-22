@@ -1,8 +1,4 @@
 // @/stores/index.js
-import { createPinia } from 'pinia'
-import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
-
-const pinia = createPinia()
-pinia.use(piniaPluginPersistedstate)
-
-export default pinia
+// 所有 store 的统一出口
+export { useAppStore } from './app-store'
+export { useUIStore } from './ui-store' 

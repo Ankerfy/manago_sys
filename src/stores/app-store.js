@@ -1,18 +1,17 @@
-// @/stores/app.js
+// @/stores/app-store.js
 import { defineStore } from 'pinia'
 
-export const useAppStore = defineStore('app', {
+export const useAppStore = defineStore('AppStore', {
   state: () => ({
     isSidebarCollapse: false, // 菜单折叠状态
     darkMode: false,          // 深色模式
-    theme: 'light',           // 主题模式 默认light
+    theme: 'light',           // 主题外观 默认light
     language: 'zh',           // 语言
-    showPopover: false,       // 通知弹窗状态
-    showPanel: false,        // 主题面板状态
   }),
 
   // 启用持久化，指定存储
   persist: {
+    key: 'app-settings',
     paths: ['isSidebarCollapse', 'darkMode', 'theme', 'language'],
     storage: localStorage,
   },
@@ -28,12 +27,6 @@ export const useAppStore = defineStore('app', {
     setTheme(theme) {
       this.theme = theme
     },
-    togglePopover() {
-      this.showPopover = !this.showPopover
-    },
-    togglePanel() {
-      this.showPanel = !this.showPanel
-    }
   },
 
   getters: {

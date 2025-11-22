@@ -4,7 +4,7 @@ import './assets/css/nprogress-custom.css'
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import pinia from './stores'
+import pinia from './stores/pinia'
 import ElementPlus from 'element-plus'
 import * as Icons from '@element-plus/icons-vue'
 
