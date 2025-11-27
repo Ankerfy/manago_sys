@@ -54,7 +54,7 @@ const handleRefresh = async () => {
         <!-- 页面加载时显示骨架屏 -->
         <el-skeleton v-if="isLoading" animated :rows="10" style="padding: 20px" />
         <!-- 页面加载完成后显示真实内容 -->
-        <RouterView :key="routeKey" />
+        <RouterView v-else :key="routeKey" />
       </el-main>
     </el-container>
   </div>
