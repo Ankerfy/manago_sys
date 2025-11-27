@@ -1,6 +1,4 @@
-<script lang="ts" setup>
-import { ref } from 'vue'
-
+<script setup>
 const loading = ref(false)
 const currentDate = new Date().toDateString()
 </script>

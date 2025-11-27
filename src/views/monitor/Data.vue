@@ -1,5 +1,4 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import SiteStatusCard from '@/components/cards/SiteStatusCard.vue'
 
 const sites = [

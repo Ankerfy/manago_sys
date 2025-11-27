@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 import UserCountCard from '@/components/cards/UserCountCard.vue'
 
 const value = ref('')
