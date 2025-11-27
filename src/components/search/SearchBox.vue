@@ -1,7 +1,5 @@
 <!-- @/components/search/SearchBox.vue -->
 <script setup>
-import { Search } from '@element-plus/icons-vue'
-
 // 定义点击事件
 const emit = defineEmits(['click'])
 

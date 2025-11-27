@@ -1,6 +1,4 @@
 // @/stores/app-store.js
-import { defineStore } from 'pinia'
-
 export const useAppStore = defineStore('AppStore', {
   state: () => ({
     isSidebarCollapse: false, // 菜单折叠状态

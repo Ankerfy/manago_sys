@@ -1,6 +1,5 @@
 <!-- @/components/config-drawer/LayoutConfig.vue -->
 <script setup>
-import { ref, watch } from 'vue'
 import IconLaySidebar from '../icons/IconLaySidebar.vue'
 import IconLayTopbar from '../icons/IconLayTopbar.vue'
 import IconLaySideMixed from '../icons/IconLaySideMixed.vue'

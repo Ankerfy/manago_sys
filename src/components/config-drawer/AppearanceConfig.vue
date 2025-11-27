@@ -1,7 +1,5 @@
 <!-- @/components/config-drawer/AppearanceConfig.vue -->
 <script setup>
-import { ref, watch } from 'vue'
-
 const emit = defineEmits(['update:modelValue'])
 
 // 接收父组件传入的完整配置

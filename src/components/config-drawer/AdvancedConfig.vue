@@ -1,7 +1,5 @@
 <!-- @/components/config-drawer/AdvancedConfig.vue -->
 <script setup>
-import { ref, watch } from 'vue'
-
 const emit = defineEmits(['update:modelValue', 'reset-all'])
 
 const props = defineProps({

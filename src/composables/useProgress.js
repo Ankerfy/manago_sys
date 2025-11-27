@@ -1,5 +1,4 @@
 // @/composables/useProgress.js
-import { ref } from 'vue'
 import { useUIStore } from '@/stores'
 
 /**

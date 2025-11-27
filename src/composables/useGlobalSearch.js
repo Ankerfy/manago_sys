@@ -1,5 +1,4 @@
 // @/composables/useGlobalSearch.js
-import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 
 /**
  * 全局搜索逻辑封装

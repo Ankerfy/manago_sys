@@ -1,7 +1,5 @@
 <!-- @/components/UserAvatarPopover.vue -->
 <script setup>
-import { computed } from 'vue'
-
 const props = defineProps({
   avatarUrl: {
     type: String,

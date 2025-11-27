@@ -1,6 +1,5 @@
 <!-- @/components/config-drawer/ConfigPanel.vue -->
 <script setup>
-import { ref, reactive, watch } from 'vue'
 import AppearanceConfig from './AppearanceConfig.vue'
 import LayoutConfig from './LayoutConfig.vue'
 import AdvancedConfig from './AdvancedConfig.vue'

@@ -1,11 +1,8 @@
 <script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
 import LayAside from '@/layout/LayAside.vue'
 import LayHeader from '@/layout/LayHeader.vue'
 import LayCarousel from '@/layout/LayCarousel.vue'
 import { useAppStore, useUIStore } from '@/stores'
-import { storeToRefs } from 'pinia'
 
 const hotSearches = ['热搜1', '热搜2', '热搜3']
 

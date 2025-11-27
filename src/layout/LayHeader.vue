@@ -1,7 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
 import { useAppStore, useUIStore } from '@/stores'
-import { storeToRefs } from 'pinia'
 import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
 import SearchModal from '@/components/search/SearchModal.vue'

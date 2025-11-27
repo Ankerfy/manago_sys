@@ -1,7 +1,5 @@
 <script setup>
-import { ref, onMounted } from 'vue'
 import { useAppStore } from '@/stores'
-import { storeToRefs } from 'pinia'
 import MenuItem from '@/components/MenuItem.vue'
 
 // 获取折叠状态

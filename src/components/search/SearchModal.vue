@@ -1,6 +1,5 @@
 <!-- @/components/search/SearchModal.vue -->
 <script setup>
-import { ref, nextTick } from 'vue'
 import SearchBox from './SearchBox.vue'
 import IconButton from '@/components/IconButton.vue'
 import rawMenuConfig from '@/config/menu.json'
