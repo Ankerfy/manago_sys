@@ -13,20 +13,15 @@ const { isSidebarCollapse } = storeToRefs(appStore)
 const { isLoading } = storeToRefs(uiStore)
 
 // 刷新
-const routeKey = ref(useRoute.fullPath)
+const route = useRoute()
+const routeKey = ref(route.fullPath)
 
 const handleRefresh = async () => {
   uiStore.start()
-  await new Promise((resolve) => setTimeout(resolve, 1500))
-  routeKey.value = useRoute.fullPath + '?t=' + Date.now()
+  await new Promise((resolve) => setTimeout(resolve, 1200))
+  routeKey.value = route.fullPath + '?t=' + Date.now()
+  console.log('routeKey', routeKey.value)
   uiStore.finish()
-
-  // 模拟数据加载时间
-  setTimeout(() => {
-    routeKey.value = useRoute.fullPath + '?t=' + Date.now()
-    console.log('routeKey', routeKey.value)
-    uiStore.finish()
-  }, 1200)
 }
 </script>
 
