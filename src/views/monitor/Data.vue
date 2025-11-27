@@ -150,7 +150,6 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   background-color: #fcfcfc;
-  gap: 20px;
   margin-top: 10px;
   border-radius: 10px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
@@ -159,7 +158,7 @@ onMounted(() => {
 
 .site-status-card-container h4 {
   padding-left: 20px;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 .site-status-card {
@@ -177,31 +176,34 @@ onMounted(() => {
   padding: 16px;
   background: #fff;
   border-radius: 12px;
-  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); */
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   margin-top: 20px;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .node-monitor-section h4 {
   margin: 0 0 20px;
   color: #222;
   font-weight: 600;
-  font-size: 18px;
 }
 
 .uuid-generator label,
 .form-row label {
   display: block;
-  margin-bottom: 6px;
-  font-weight: 600;
+  margin-bottom: 10px;
+  font-weight: 500;
   color: #333;
+  font-size: 15px;
 }
 
 .input-group {
   display: flex;
-  gap: 12px;
+  gap: 16px;
   align-items: center;
+}
+
+.uuid-generator {
+  margin-bottom: 18px;
 }
 
 #uuid-input {
@@ -209,8 +211,6 @@ onMounted(() => {
   padding: 10px 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-family: monospace;
-  font-size: 14px;
   background-color: #f9f9f9;
 }
 
@@ -221,7 +221,6 @@ onMounted(() => {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
   transition: background-color 0.2s;
 }
 
@@ -240,22 +239,21 @@ onMounted(() => {
   padding: 10px 12px;
   border: 1px solid #ddd;
   border-radius: 6px;
-  font-size: 14px;
   box-sizing: border-box;
 }
 
-.form-row select:focus,
-.form-row input:focus {
+.form-row input:hover {
   outline: none;
   border-color: #007bff;
   box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  transition: all 0.8s;
 }
 
 /* 按钮组 */
 .action-buttons {
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
+  gap: 16px;
+  margin-top: 30px;
   justify-content: flex-end; /* 按钮靠右对齐（常见于表单底部） */
 }
 
@@ -264,9 +262,8 @@ onMounted(() => {
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 14px;
   font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.6s;
 }
 
 #copy-link-btn {
