@@ -12,9 +12,9 @@ const DEFAULT_PROGRESS_SATGES = [
 
 export const useUIStore = defineStore('UIStore', {
   state: () => ({
-    showPopover: false,       // 通知弹窗
-    showPanel: false,         // 主题面板
-    isLoading: false,         // 加载状态
+    showPopover: false, // 通知弹窗
+    showPanel: false, // 主题面板
+    isLoading: false, // 加载状态
   }),
 
   actions: {
@@ -36,6 +36,6 @@ export const useUIStore = defineStore('UIStore', {
     finish() {
       endProgress()
       this.isLoading = false
-    }
+    },
   },
 })

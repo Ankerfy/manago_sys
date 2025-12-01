@@ -22,8 +22,8 @@ NProgress.configure({
 const app = createApp(App)
 
 // 全局注册所有图标组件
-Object.keys(Icons).forEach((key) => {
-  app.component(key, Icons[key])
+Object.entries(Icons).forEach(([name, component]) => {
+  app.component(name, component)
 })
 
 app.use(pinia)

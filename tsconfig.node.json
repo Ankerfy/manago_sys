@@ -1,0 +1,14 @@
+// tsconfig.node.json
+{
+  "compilerOptions": {
+    "composite": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "types": ["node"] // 启用 Node.js 内置模块类型（如 path, fs）
+  },
+  "include": ["vite.config.ts", "package.json"],
+  "exclude": ["node_modules", "dist"]
+}
