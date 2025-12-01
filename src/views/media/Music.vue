@@ -2,7 +2,9 @@
 </script>
 
 <template>
-  <div>Music.vue</div>
+  <div class="music-box-outer">
+    <div class="music-box-inner">Music.vue</div>
+  </div>
 </template>
 
 <style scoped>

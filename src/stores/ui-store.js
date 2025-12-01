@@ -1,7 +1,7 @@
 // @/stores/ui-store.js
 import { startProgress, endProgress } from '@/utils/stagedProgress'
 
-export const DEFAULT_PROGRESS_SATGES = [
+const DEFAULT_PROGRESS_SATGES = [
   { value: 0.1, delay: 200 },
   { value: 0.1, delay: 500 }, // 停顿
   { value: 0.4, delay: 300 },
