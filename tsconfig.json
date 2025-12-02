@@ -1,37 +1,31 @@
 // tsconfig.json
 {
   "compilerOptions": {
-    // 目标与模块系统
     "target": "ES2020",
+    "useDefineForClassFields": true,
     "module": "ESNext",
-    "moduleResolution": "bundler",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-
-    // 严格类型检查
-    "strict": true,
     "skipLibCheck": true,
 
-    // 模块行为（现代前端推荐）
-    "verbatimModuleSyntax": true,
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
     "isolatedModules": true,
-    "moduleDetection": "force",
+    "noEmit": true,
+    "jsx": "preserve",
 
-    // 路径别名支持（配合 vite.config.ts）
+    "strict": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     },
-
-    // 其他实用选项
     "allowSyntheticDefaultImports": true,
-    "resolveJsonModule": true,
     "sourceMap": true,
-    "noEmit": true, // 由 Vite 处理编译，TS 只做类型检查
-
-    // 类型声明（Vite 环境变量、JSX 等）
     "types": ["vite/client"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "vite.config.ts"],
+  "include": ["src/**/*", "src/**/*.vue", "vite.config.ts"],
+  "exclude": ["node_modules", "dist"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

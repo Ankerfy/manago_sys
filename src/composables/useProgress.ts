@@ -1,5 +1,6 @@
-// @/composables/useProgress.js
+// @/composables/useProgress.ts
 import { useUIStore } from '@/stores'
+import type { ProgressStage } from '@/utils/stagedProgress'
 
 /**
  * Vue 3 组合式函数：用于在组件中便捷访问全局进度条状态
@@ -10,7 +11,8 @@ export function useProgress() {
 
   return {
     isLoading: store.isLoading,
-    start: store.start,
-    finish: store.finish,
+    // start: store.start,
+    start: (stages?: ProgressStage[]) => store.start(stages),
+    finish: () => store.finish,
   }
 }

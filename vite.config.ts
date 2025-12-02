@@ -1,5 +1,4 @@
 // https://vite.dev/config/
-// import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import path from 'node:path'
@@ -15,25 +14,24 @@ export default defineConfig({
     vue(),
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia'],
-      // dts: 'src/auto-import.d.ts',
+      dts: path.resolve(__dirname, 'src/auto-imports.d.ts'),
       resolvers: [ElementPlusResolver()],
       eslintrc: {
         enabled: true,
       },
     }),
     Components({
+      dts: path.resolve(__dirname, 'src/components.d.ts'),
       resolvers: [
         ElementPlusResolver({
           importStyle: 'css',
         }),
       ],
-      // dts: 'src/components.d.ts',
     }),
     vueDevTools(),
   ],
   resolve: {
     alias: {
-      // '@': fileURLToPath(new URL('./src', import.meta.url)),
       '@': path.resolve(__dirname, 'src'),
     },
   },

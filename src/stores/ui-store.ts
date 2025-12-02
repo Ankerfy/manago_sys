@@ -1,7 +1,8 @@
-// @/stores/ui-store.js
-import { startProgress, endProgress } from '@/utils/stagedProgress'
+// @/stores/ui-store.ts
+import { defineStore } from 'pinia'
+import { startProgress, endProgress, type ProgressStage } from '@/utils/stagedProgress'
 
-const DEFAULT_PROGRESS_SATGES = [
+const DEFAULT_PROGRESS_STAGES: ProgressStage[] = [
   { value: 0.1, delay: 200 },
   { value: 0.1, delay: 500 }, // 停顿
   { value: 0.4, delay: 300 },
@@ -10,8 +11,14 @@ const DEFAULT_PROGRESS_SATGES = [
   { value: 1.0, delay: 100 },
 ]
 
+interface UIState {
+  showPopover: boolean
+  showPanel: boolean
+  isLoading: boolean
+}
+
 export const useUIStore = defineStore('UIStore', {
-  state: () => ({
+  state: (): UIState => ({
     showPopover: false, // 通知弹窗
     showPanel: false, // 主题面板
     isLoading: false, // 加载状态
@@ -25,7 +32,7 @@ export const useUIStore = defineStore('UIStore', {
       this.showPanel = !this.showPanel
     },
     // 加载进度条
-    async start(stages = DEFAULT_PROGRESS_SATGES) {
+    async start(stages = DEFAULT_PROGRESS_STAGES) {
       this.isLoading = true
       try {
         await startProgress(stages)

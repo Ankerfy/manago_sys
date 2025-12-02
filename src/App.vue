@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { RouterLink, RouterView } from 'vue-router'
 import Layout from '@/layout/LayoutView.vue'
 </script>
@@ -9,5 +9,4 @@ import Layout from '@/layout/LayoutView.vue'
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

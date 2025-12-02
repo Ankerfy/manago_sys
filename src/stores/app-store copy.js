@@ -1,10 +1,10 @@
 // @/stores/app-store.js
 export const useAppStore = defineStore('AppStore', {
   state: () => ({
-    isSidebarCollapse: false, // 菜单折叠状态
-    darkMode: false,          // 深色模式
-    theme: 'light',           // 主题外观 默认light
-    language: 'zh',           // 语言
+    isSidebarCollapse: false,
+    darkMode: false,
+    theme: 'light',
+    language: 'zh',
   }),
 
   // 启用持久化，指定存储
@@ -31,9 +31,6 @@ export const useAppStore = defineStore('AppStore', {
     // 侧边栏宽度
     sidebarWidth: (state) => state.isSidebarCollapse ? 63 : 200,
     // 主内容区 margin-left
-    mainMarginLeft: (state) => `${state.isSidebarCollapse ? 63 : 200}px`,
-    // 用于其他计算
-    // mainMarginLeftNumber: (state) => state.isSidebarCollapse ? 63 : 200
-
-  }
+    mainMarginLeftNumber: (state) => state.isSidebarCollapse ? 63 : 200
+  },
 })

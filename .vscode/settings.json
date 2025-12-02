@@ -9,5 +9,12 @@
     "source.fixAll": "explicit"
   },
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[vue]": {
+    "editor.defaultFormatter": "Vue.volar"
+  },
+  "vue.inlayHints.missingProps": false,
+  "vue.inlayHints.inlineHandlerLeading": false,
+  "typescript.preferences.includePackageJsonAutoImports": "auto",
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
