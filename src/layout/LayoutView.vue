@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import LayAside from '@/layout/LayAside.vue'
 import LayHeader from '@/layout/LayHeader.vue'
 import LayCarousel from '@/layout/LayCarousel.vue'
@@ -18,8 +18,9 @@ const routeKey = ref(route.fullPath)
 
 const handleRefresh = async () => {
   uiStore.start()
-  await new Promise((resolve) => setTimeout(resolve, 1200))
-  routeKey.value = route.fullPath + '?t=' + Date.now()
+  await new Promise((resolve) => setTimeout(resolve, 2000))
+  // routeKey.value = route.fullPath + '?t=' + Date.now()
+  routeKey.value = `${route.fullPath}?t=${Date.now()}`
   console.log('routeKey', routeKey.value)
   uiStore.finish()
 }
@@ -56,7 +57,8 @@ const handleRefresh = async () => {
 /* 布局根容器 */
 .common-layout {
   min-height: 100vh;
-  position: relative; /* 重要：为 fixed 子元素提供上下文 */
+  position: relative;
+  /* 重要：为 fixed 子元素提供上下文 */
   background-color: var(--color-bg-overlay, #f8f8f8);
   --sidebar-width: 200px;
   --sidebar-collapsed-width: 63px;
@@ -76,6 +78,7 @@ const handleRefresh = async () => {
   background-color: #545c64;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
+
 .common-layout.sidebar-collapse .lay-sidebar {
   width: var(--sidebar-collapsed-width);
 }
@@ -86,6 +89,7 @@ const handleRefresh = async () => {
   margin-left: var(--sidebar-width);
   transition: margin-left var(--transition-speed) ease;
 }
+
 .common-layout.sidebar-collapse .lay-main-container {
   margin-left: var(--sidebar-collapsed-width);
 }
@@ -103,6 +107,7 @@ const handleRefresh = async () => {
   width: calc(100% - var(--sidebar-width));
   transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
 }
+
 .common-layout.sidebar-collapse .lay-header {
   left: var(--sidebar-collapsed-width);
   width: calc(100% - var(--sidebar-collapsed-width));
@@ -119,6 +124,7 @@ const handleRefresh = async () => {
   z-index: 98;
   transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
 }
+
 .common-layout.sidebar-collapse .lay-hot-search {
   left: var(--sidebar-collapsed-width);
   width: calc(100% - var(--sidebar-collapsed-width));

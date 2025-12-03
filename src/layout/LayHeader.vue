@@ -1,16 +1,19 @@
-<script setup>
+<script lang="ts" setup>
 import { useAppStore, useUIStore } from '@/stores'
-import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
+import { useHeaderToolbar, type HeaderAction } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
 import SearchModal from '@/components/search/SearchModal.vue'
 import IconButton from '@/components/IconButton.vue'
 import UserAvatarPopover from '@/components/UserAvatarPopover.vue'
 import ConfigPanel from '@/components/config-drawer/ConfigPanel.vue'
 
-const emit = defineEmits(['refresh'])
+interface Emits {
+  (e: 'refresh'): void
+}
+const emit = defineEmits<Emits>()
 const avatarUrl = ref('https://gcore.jsdelivr.net/gh/Ankerfy/blog_pics/images/202509231451856.jpg')
 
-// 切换折叠
+// Store相关
 const appStore = useAppStore()
 const uiStore = useUIStore()
 const { isSidebarCollapse, darkMode } = storeToRefs(appStore)
@@ -22,54 +25,79 @@ const { actions } = useHeaderToolbar()
 
 const onRefreshClick = () => emit('refresh')
 
-const allActions = {
+// 定义所有action键名
+type LocalAction = HeaderAction | 'onRefreshClick'
+
+const allActions: Record<LocalAction, () => void> = {
   ...actions,
   onRefreshClick,
 }
 
+// 定义toolbar配置项类型
+interface ToolbarItem {
+  id: string
+  iconName: string | { open?: string; close?: string; dark?: string; light?: string }
+  toolName: string | { open?: string; close?: string; dark?: string; light?: string }
+  isDynamic?: boolean
+  action?: LocalAction
+}
+
 // 解析工具项状态
-const resolveItemState = (item) => {
+const resolveItemState = (item: ToolbarItem) => {
   if (!item.isDynamic) {
     return {
-      currentIcon: item.iconName,
-      currentToolName: item.toolName,
+      currentIcon: typeof item.iconName === 'string' ? item.iconName : '',
+      currentToolName: typeof item.toolName === 'string' ? item.toolName : '',
     }
   }
 
   // 动态项
   if (item.id === 'collapse') {
     const isOpen = isSidebarCollapse.value
+    const iconNames = item.iconName as { open: string; close: string }
+    const toolNames = item.toolName as { open: string; close: string }
     return {
-      currentIcon: isOpen ? item.iconName.open : item.iconName.close,
-      currentToolName: isOpen ? item.toolName.open : item.toolName.close,
+      currentIcon: isOpen ? iconNames.open ?? '' : iconNames.close ?? '',
+      currentToolName: isOpen ? toolNames.open ?? '' : toolNames.close ?? '',
     }
   }
 
   if (item.id === 'theme') {
     const isDark = darkMode.value
+    const iconNames = item.iconName as { dark?: string; light?: string }
+    const toolNames = item.toolName as { dark?: string; light?: string }
     return {
-      currentIcon: isDark ? item.iconName.dark : item.iconName.light,
-      currentToolName: isDark ? item.toolName.dark : item.toolName.light,
+      currentIcon: isDark ? iconNames.dark ?? '' : iconNames.light ?? '',
+      currentToolName: isDark ? toolNames.dark ?? '' : toolNames.light ?? '',
     }
   }
 
   return {
-    currentIcon: item.iconName,
-    currentToolName: item.toolName,
+    currentIcon: typeof item.iconName === 'string' ? item.iconName : '',
+    currentToolName: typeof item.toolName === 'string' ? item.toolName : '',
   }
 }
 
 // 响应式处理
-const processedToolbar = computed(() => ({
-  left: toolbarConfig.toolbarLeft.map((item) => ({
-    ...item,
-    ...resolveItemState(item),
-  })),
-  right: toolbarConfig.toolbarRight.map((item) => ({
-    ...item,
-    ...resolveItemState(item),
-  })),
-}))
+const processedToolbar = computed(() => {
+  const safeLeft = Array.isArray(toolbarConfig.toolbarLeft)
+    ? (toolbarConfig.toolbarLeft as unknown as ToolbarItem[])
+    : []
+  const safeRight = Array.isArray(toolbarConfig.toolbarRight)
+    ? (toolbarConfig.toolbarRight as unknown as ToolbarItem[])
+    : []
+
+  return {
+    left: safeLeft.map((item) => ({
+      ...item,
+      ...resolveItemState(item),
+    })),
+    right: safeRight.map((item) => ({
+      ...item,
+      ...resolveItemState(item),
+    })),
+  }
+})
 </script>
 
 <template>
@@ -77,13 +105,8 @@ const processedToolbar = computed(() => ({
     <div class="nav-left">
       <div class="toolkits-left-icon">
         <!-- 菜单折叠、刷新 -->
-        <IconButton
-          v-for="item in processedToolbar.left"
-          :key="item.id"
-          :icon-name="item.currentIcon"
-          :tool-name="item.currentToolName"
-          @click="allActions[item.action]?.()"
-        />
+        <IconButton v-for="item in processedToolbar.left" :key="item.id" :icon-name="item.currentIcon"
+          :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
       </div>
 
       <!-- 面包屑 -->
@@ -104,13 +127,8 @@ const processedToolbar = computed(() => ({
       <!-- 工具项 -->
       <div class="toolkits-right-tools">
         <div class="tools-l">
-          <IconButton
-            v-for="item in processedToolbar.right"
-            :key="item.id"
-            :icon-name="item.currentIcon"
-            :tool-name="item.currentToolName"
-            @click="allActions[item.action]?.()"
-          />
+          <IconButton v-for="item in processedToolbar.right" :key="item.id" :icon-name="item.currentIcon"
+            :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
         </div>
         <!-- 头像 -->
         <div class="tools-r">

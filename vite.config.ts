@@ -37,6 +37,24 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: [
+            'vue',
+            'vue-router',
+            'pinia',
+            'axios',
+            'element-plus',
+            '@element-plus/icons-vue',
+            'nprogress',
+            'pinia-plugin-persistedstate',
+            '@vueuse/core',
+          ],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 800,
   },
 })
 
