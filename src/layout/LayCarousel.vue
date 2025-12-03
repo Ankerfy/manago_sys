@@ -1,21 +1,17 @@
-<script setup>
+<script lang="ts" setup>
 </script>
 
 <template>
   <!-- 热搜走马灯 -->
   <div class="hot-search">
     <div class="hot-search-icon">
-      <el-icon><BellFilled /></el-icon>
+      <el-icon>
+        <BellFilled />
+      </el-icon>
     </div>
     <div class="hot-search-content">
-      <el-carousel
-        height="40px"
-        direction="vertical"
-        :autoplay="true"
-        :motion-blur="true"
-        :interval="3800"
-      >
-        <el-carousel-item v-for="item in 5" :key="item.index">
+      <el-carousel height="40px" direction="vertical" :autoplay="true" :motion-blur="true" :interval="3800">
+        <el-carousel-item v-for="item in 5" :key="item">
           <span>Hello_World + {{ item }}</span>
         </el-carousel-item>
       </el-carousel>

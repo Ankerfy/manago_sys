@@ -1,4 +1,4 @@
-<script setup>
+<script lang="ts" setup>
 import { useAppStore } from '@/stores'
 import MenuItem from '@/components/MenuItem.vue'
 
@@ -39,17 +39,9 @@ onMounted(() => {
 
     <!-- 菜单区域 -->
     <div class="sidebar-menu">
-      <el-menu
-        :default-active="$route.path"
-        active-text-color="#ffd04b"
-        background-color="#545c64"
-        text-color="#fff"
-        class="el-menu-vertical-demo"
-        :collapse="isSidebarCollapse"
-        :collapse-transition="false"
-        :unique-opened="true"
-        router
-      >
+      <el-menu :default-active="$route.path" active-text-color="#ffd04b" background-color="#545c64" text-color="#fff"
+        class="el-menu-vertical-demo" :collapse="isSidebarCollapse" :collapse-transition="false" :unique-opened="true"
+        router>
         <MenuItem v-for="(item, index) in menuItems" :key="index" :item="item" />
       </el-menu>
     </div>
