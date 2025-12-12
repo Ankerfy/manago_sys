@@ -21,9 +21,9 @@ export const useHeaderToolbar = () => {
   const appStore = useAppStore()
   const uiStore = useUIStore()
 
-  // 动作
-  const actions = {
-    // 左部
+  // 动作对象，显式标注类型
+  const actions: HeaderActions = {
+    // 菜单折叠切换
     toggleSidebar: () => appStore.toggleSidebar(),
     goHome: () => router.push('/home'),
     goMusic: () => router.push('/media/music'),

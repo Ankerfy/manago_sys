@@ -1,11 +1,17 @@
 <script lang="ts" setup>
 import { useAppStore, useUIStore } from '@/stores'
-import { useHeaderToolbar, type HeaderAction } from '@/composables/useHeaderToolbar'
+import { useHeaderToolbar } from '@/composables/useHeaderToolbar'
 import toolbarConfig from '@/config/toolbarConfig.json'
 import SearchModal from '@/components/search/SearchModal.vue'
 import IconButton from '@/components/IconButton.vue'
 import UserAvatarPopover from '@/components/UserAvatarPopover.vue'
 import ConfigPanel from '@/components/config-drawer/ConfigPanel.vue'
+import type {
+  ToolbarAction,
+  ToolbarItem,
+  ProcessedToolbarItem,
+  ProcessedToolbar
+} from '@/types/toolbar'
 
 interface Emits {
   (e: 'refresh'): void
@@ -24,26 +30,13 @@ const enableShortcuts = ref(true)
 const { actions } = useHeaderToolbar()
 
 const onRefreshClick = () => emit('refresh')
-
-// 定义所有action键名
-type LocalAction = HeaderAction | 'onRefreshClick'
-
-const allActions: Record<LocalAction, () => void> = {
+const allActions: Record<ToolbarAction, () => void> = {
   ...actions,
   onRefreshClick,
 }
 
-// 定义toolbar配置项类型
-interface ToolbarItem {
-  id: string
-  iconName: string | { open?: string; close?: string; dark?: string; light?: string }
-  toolName: string | { open?: string; close?: string; dark?: string; light?: string }
-  isDynamic?: boolean
-  action?: LocalAction
-}
-
 // 解析工具项状态
-const resolveItemState = (item: ToolbarItem) => {
+const resolveItemState = (item: ToolbarItem): Pick<ProcessedToolbarItem, 'currentIcon' | 'currentToolName'> => {
   if (!item.isDynamic) {
     return {
       currentIcon: typeof item.iconName === 'string' ? item.iconName : '',
@@ -79,20 +72,17 @@ const resolveItemState = (item: ToolbarItem) => {
 }
 
 // 响应式处理
-const processedToolbar = computed(() => {
-  const safeLeft = Array.isArray(toolbarConfig.toolbarLeft)
-    ? (toolbarConfig.toolbarLeft as unknown as ToolbarItem[])
-    : []
-  const safeRight = Array.isArray(toolbarConfig.toolbarRight)
-    ? (toolbarConfig.toolbarRight as unknown as ToolbarItem[])
-    : []
+const processedToolbar = computed<ProcessedToolbar>(() => {
+  // JSON类型断言
+  const leftItems = (toolbarConfig.toolbarLeft || []) as ToolbarItem[]
+  const rightItems = (toolbarConfig.toolbarRight || []) as ToolbarItem[]
 
   return {
-    left: safeLeft.map((item) => ({
+    left: leftItems.map((item) => ({
       ...item,
       ...resolveItemState(item),
     })),
-    right: safeRight.map((item) => ({
+    right: rightItems.map((item) => ({
       ...item,
       ...resolveItemState(item),
     })),

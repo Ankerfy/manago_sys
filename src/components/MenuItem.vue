@@ -1,5 +1,6 @@
 <!-- @/components/MenuItem.vue -->
-<script setup>
+<script lang="ts" setup>
+import type { MenuItem as MenuItemType } from '@/types/menu'
 import {
   House,
   DataLine,
@@ -12,15 +13,11 @@ import {
   InfoFilled,
 } from '@element-plus/icons-vue'
 
-const props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
-})
+// 泛型 比type: Object 更精确
+const props = defineProps<{ item: MenuItemType }>()
 
 // 图标映射表
-const iconMap = {
+const iconMap: Record<string, Component> = {
   House,
   DataLine,
   Monitor,
@@ -32,7 +29,7 @@ const iconMap = {
   InfoFilled,
 }
 
-const getIconComponent = (iconName) => {
+const getIconComponent = (iconName: string): Component | null => {
   return iconMap[iconName] || null
 }
 </script>
@@ -40,8 +37,8 @@ const getIconComponent = (iconName) => {
 <template>
   <!-- 单个菜单项 -->
   <el-menu-item v-if="!item.submenu" :index="item.index">
-    <el-icon v-if="item.icon && iconMap[item.icon]">
-      <component :is="getIconComponent(item.icon)" />
+    <el-icon v-if="item.icon && getIconComponent(item.icon)">
+      <component :is="iconMap[item.icon]" />
     </el-icon>
     <template #title>{{ item.title }}</template>
   </el-menu-item>
@@ -49,12 +46,14 @@ const getIconComponent = (iconName) => {
   <!-- 子菜单 -->
   <el-sub-menu v-else :index="item.index">
     <template #title>
-      <el-icon v-if="item.icon && iconMap[item.icon]">
-        <component :is="getIconComponent(item.icon)" />
+      <!-- iconMap[item.icon] -->
+      <el-icon v-if="item.icon && getIconComponent(item.icon)">
+        <component :is="iconMap[item.icon]" />
       </el-icon>
       <span>{{ item.title }}</span>
     </template>
-    <menu-item v-for="(child, idx) in item.submenu" :key="idx" :item="child" />
+    <!-- :key="idx" -->
+    <menu-item v-for="(child, idx) in item.submenu" :key="`${item.index}-${idx}`" :item="child" />
   </el-sub-menu>
 </template>
 

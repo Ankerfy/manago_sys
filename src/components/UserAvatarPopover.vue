@@ -1,12 +1,15 @@
 <!-- @/components/UserAvatarPopover.vue -->
-<script setup>
+<script lang="ts" setup>
+// 定义合法的avatarSize值
+type AvatarSize = 'small' | 'default' | 'large' | number
+
 const props = defineProps({
   avatarUrl: {
     type: String,
     required: true,
   },
   avatarSize: {
-    type: [Number, String],
+    type: [Number, String] as PropType<string | number>,
     default: 32,
   },
   width: {
@@ -28,6 +31,16 @@ const props = defineProps({
   },
 })
 
+// 转换并规范avatarSize值
+const normalizedAvatarSize = computed(() => {
+  const vaildSizes = ['small', 'default', 'large']
+  if (typeof props.avatarSize === 'string' && vaildSizes.includes(props.avatarSize)) {
+    return props.avatarSize as AvatarSize
+  }
+  const num = parseInt(String(props.avatarSize), 10)
+  return isNaN(num) ? 32 : num
+})
+
 const popperStyle = computed(() => ({
   boxShadow: 'rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px',
   padding: '20px',
@@ -37,7 +50,7 @@ const popperStyle = computed(() => ({
 <template>
   <el-popover :width="width" :popper-style="popperStyle" trigger="click">
     <template #reference>
-      <el-avatar :size="avatarSize" :src="avatarUrl" />
+      <el-avatar :size="normalizedAvatarSize" :src="avatarUrl" />
     </template>
 
     <div class="user-avatar-popover__content">

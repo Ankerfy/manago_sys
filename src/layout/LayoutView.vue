@@ -19,7 +19,6 @@ const routeKey = ref(route.fullPath)
 const handleRefresh = async () => {
   uiStore.start()
   await new Promise((resolve) => setTimeout(resolve, 2000))
-  // routeKey.value = route.fullPath + '?t=' + Date.now()
   routeKey.value = `${route.fullPath}?t=${Date.now()}`
   console.log('routeKey', routeKey.value)
   uiStore.finish()

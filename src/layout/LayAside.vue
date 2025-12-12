@@ -1,24 +1,28 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/stores'
 import MenuItem from '@/components/MenuItem.vue'
+import type { MenuItem as MenuItemType } from '@/types/menu'
 
 // 获取折叠状态
 const appStore = useAppStore()
 const { isSidebarCollapse } = storeToRefs(appStore)
 
 // Logo 图片地址
-const logoUrl = ref('')
+const logoUrl = ref<string>('')
 const picFit = 'contain'
 
-const menuItems = ref([])
+const menuItems = ref<MenuItemType[]>([])
 // 加载菜单配置
+
 async function loadMenuConfig() {
   try {
     const module = await import('@/config/menu.json')
-    const data = JSON.parse(JSON.stringify(module.menuItems))
-    menuItems.value = data
+    // 兼容两种格式     Vite 会将 .json 作为默认导出 { default: ... }
+    const data = module.default?.menuItems || module.menuItems || []
+    menuItems.value = Array.isArray(data) ? data : []
   } catch (error) {
     console.error('Failed to load menu config:', error)
+    menuItems.value = []  // 保证默认值, 避免菜单项丢失
   }
 }
 
