@@ -1,5 +1,6 @@
 // @/stores/app-store.ts
 import { defineStore } from 'pinia'
+import type { PersistenceOptions } from 'pinia-plugin-persistedstate'
 
 // 状态接口
 interface AppState {
@@ -17,11 +18,15 @@ export const useAppStore = defineStore('AppStore', {
     language: 'zh',
   }),
 
-  // 启用持久化，指定存储
-  persist: {
-    key: 'app-settings',
-    paths: ['isSidebarCollapse', 'darkMode', 'theme', 'language'],
-    storage: localStorage,
+  getters: {
+    // 侧边栏宽度
+    sidebarWidth(): number {
+      return this.isSidebarCollapse ? 63 : 200
+    },
+    // 主内容区 margin-left
+    mainMarginLeftNumber(): number {
+      return this.isSidebarCollapse ? 63 : 200
+    },
   },
 
   actions: {
@@ -37,14 +42,10 @@ export const useAppStore = defineStore('AppStore', {
     },
   },
 
-  getters: {
-    // 侧边栏宽度
-    sidebarWidth(): number {
-      return this.isSidebarCollapse ? 63 : 200
-    },
-    // 主内容区 margin-left
-    mainMarginLeftNumber(): number {
-      return this.isSidebarCollapse ? 63 : 200
-    },
+  // 启用持久化，指定存储
+  persist: {
+    key: 'app-settings',
+    paths: ['isSidebarCollapse', 'darkMode', 'theme', 'language'],
+    storage: localStorage,
   },
 })

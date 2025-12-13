@@ -1,6 +1,6 @@
 <!-- @/components/cards/SimpleSiteStatusCard.vue -->
 <script setup>
-import api from '@/api'
+import api from '@/api/apiClient.ts'
 
 const props = defineProps({
   domain: { type: String, required: true },
@@ -109,6 +109,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   transition: background-color 0.2s;
 }
+
 .jump-btn:hover {
   background: #e5e7eb;
 }
@@ -126,19 +127,26 @@ onBeforeUnmount(() => {
   height: 12px;
   border-radius: 50%;
   position: relative;
-  transition: background-color 0.3s ease; /* 背景色平滑过渡 */
-  animation: pulse 2s infinite; /* 持续动画 */
+  transition: background-color 0.3s ease;
+  /* 背景色平滑过渡 */
+  animation: pulse 2s infinite;
+  /* 持续动画 */
 }
 
 /* 三种状态的颜色 */
 .status-dot.up {
-  background-color: #10b981; /* green-500 */
+  background-color: #10b981;
+  /* green-500 */
 }
+
 .status-dot.down {
-  background-color: #ef4444; /* red-500 */
+  background-color: #ef4444;
+  /* red-500 */
 }
+
 .status-dot.unknown {
-  background-color: #9ca3af; /* gray-500 */
+  background-color: #9ca3af;
+  /* gray-500 */
 }
 
 /* 统一脉冲动画（通过 box-shadow 的 alpha 实现淡入淡出感） */
@@ -146,9 +154,11 @@ onBeforeUnmount(() => {
   0% {
     box-shadow: 0 0 0 0 var(--pulse-color);
   }
+
   70% {
     box-shadow: 0 0 0 8px transparent;
   }
+
   100% {
     box-shadow: 0 0 0 0 transparent;
   }
@@ -158,9 +168,11 @@ onBeforeUnmount(() => {
 .status-dot.up {
   --pulse-color: rgba(16, 185, 129, 0.4);
 }
+
 .status-dot.down {
   --pulse-color: rgba(239, 68, 68, 0.4);
 }
+
 .status-dot.unknown {
   --pulse-color: rgba(156, 163, 175, 0.3);
 }
@@ -176,4 +188,4 @@ onBeforeUnmount(() => {
   color: #6b7280;
   text-align: right;
 }
-</style>
+</style>@/api/apiClient

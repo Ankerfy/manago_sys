@@ -1,6 +1,7 @@
 // https://vite.dev/config/
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import { viteMockServe } from 'vite-plugin-mock'
 import path from 'node:path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
@@ -12,6 +13,11 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   plugins: [
     vue(),
+    viteMockServe({
+      mockPath: 'mock',
+      enable: true,
+      watchFiles: true,
+    }),
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia'],
       dts: path.resolve(__dirname, 'src/auto-imports.d.ts'),
@@ -33,6 +39,16 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
+    },
+  },
+  server: {
+    port: 3736,
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8085',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ''),
+      },
     },
   },
   build: {
