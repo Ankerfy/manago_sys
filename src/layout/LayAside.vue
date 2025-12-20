@@ -8,7 +8,7 @@ const appStore = useAppStore()
 const { isSidebarCollapse } = storeToRefs(appStore)
 
 // Logo 图片地址
-const logoUrl = ref<string>('')
+const logoUrl = ref<string>(new URL('@/assets/logo.svg', import.meta.url).href)
 const picFit = 'contain'
 
 const menuItems = ref<MenuItemType[]>([])

@@ -1,4 +1,4 @@
-# blog_pics
+# ManaGo_SYS
 
 This template should help get you started developing with Vue 3 in Vite.
 
