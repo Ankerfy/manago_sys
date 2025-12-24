@@ -91,7 +91,7 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 </script>
 
 <template>
-  <div class="menu-nav flex h-12 justify-between pl-2.5">
+  <div class="menu-nav flex h-12 justify-between pl-2.5 font-mono md:font-serif antialiased">
     <div class="nav-left flex w-75 items-center gap-2.5">
       <div class="toolkits-left-icon flex items-center gap-2.5">
         <!-- 菜单折叠、刷新 -->

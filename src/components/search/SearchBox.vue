@@ -1,5 +1,5 @@
 <!-- @/components/search/SearchBox.vue -->
-<script setup>
+<script lang="ts" setup>
 // 定义点击事件
 const emit = defineEmits(['click'])
 
@@ -9,49 +9,23 @@ const handleClick = () => {
 </script>
 
 <template>
-  <div class="search-box" @click="handleClick">
-    <el-icon :size="16">
+  <div class="flex items-center justify-center 
+  gap-2 italic
+  bg-[#e6e6ff] 
+  border border-[#d0c4ff] rounded-full 
+  px-1.5 py-1 
+  cursor-pointer 
+  transition-all duration-300 ease-in-out  
+  hover:bg-[#d8d8ff] hover:-translate-y-0.5
+  " @click="handleClick">
+    <el-icon :size="16" class="text-[#9981fa]">
       <Search />
     </el-icon>
-    <span class="search-p">搜索</span>
-    <span class="search-h-k">Ctrl + K</span>
+    <span class="text-[#333] text-sm">搜索</span>
+    <span class="ml-2 border border-[#d0c4ff] rounded-md 
+    bg-[#f0f0ff] 
+    px-1.5 py-0.5 
+    text-xs text-[#666] font-bold
+    ">Ctrl + K</span>
   </div>
 </template>
-
-<style scoped>
-.search-box {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 5px;
-  gap: 8px;
-  background-color: #e6e6ff;
-  border: 1px solid #d0c4ff;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.search-box:hover {
-  background-color: #d8d8ff;
-  transform: translateY(-1px);
-}
-
-.search-box > .el-icon {
-  color: #9981fa;
-}
-
-.search-p {
-  color: #333;
-  font-size: 14px;
-}
-
-.search-h-k {
-  background-color: #f0f0ff;
-  border: 1px solid #d0c4ff;
-  border-radius: 6px;
-  padding: 2px 6px;
-  font-size: 12px;
-  color: #666;
-  margin-left: 8px;
-}
-</style>
