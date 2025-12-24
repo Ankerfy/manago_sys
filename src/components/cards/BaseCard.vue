@@ -1,23 +1,32 @@
 <!-- @/components/cards/BaseCard.vue -->
-<script setup>
-defineProps({
-  title: String,
-  tooltip: String,
-  value: Number,
-  change: Number,
-  compareText: String, // 正 增长；负 下降
-  showArrow: Boolean,
+<script lang="ts" setup>
+interface Props {
+  title?: string
+  tooltip?: string
+  value?: number
+  change?: number
+  compareText?: string
+  showArrow?: boolean
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  title: '',
+  tooltip: '',
+  value: 0,
+  change: 0,
+  compareText: '',
+  showArrow: false,
 })
 </script>
 
 <template>
-  <div class="stat-card">
+  <div class="h-full rounded-xl bg-white p-4 shadow-sm transition-shadow hover:shadow-md dark:bg-gray-800">
     <el-statistic :value="value" :title="title">
       <template #title>
-        <div class="stat-title">
+        <div class="inline-flex items-center font-medium">
           {{ title }}
           <el-tooltip v-if="tooltip" effect="dark" :content="tooltip" placement="top">
-            <el-icon :size="12" style="margin-left: 4px">
+            <el-icon :size="12" class="ml-1">
               <Warning />
             </el-icon>
           </el-tooltip>
@@ -25,10 +34,10 @@ defineProps({
       </template>
     </el-statistic>
 
-    <div class="stat-footer">
-      <div class="footer-item">
+    <div class="flex justify-between items-center mt-4 text-sm text-gray-500 dark:text-gray-400">
+      <div>
         <span>{{ compareText }}</span>
-        <span :class="change >= 0 ? 'green' : 'red'">
+        <span :class="change >= 0 ? 'text-green-500' : 'text-red-500'">
           {{ Math.abs(change) }}%
           <el-icon>
             <CaretTop v-if="change >= 0" />
@@ -37,7 +46,7 @@ defineProps({
         </span>
       </div>
 
-      <div v-if="showArrow" class="footer-item arrow">
+      <div v-if="showArrow" class="flex items-center gap-4">
         <el-icon :size="14">
           <ArrowRight />
         </el-icon>
@@ -45,50 +54,3 @@ defineProps({
     </div>
   </div>
 </template>
-
-<style scoped>
-.stat-card {
-  height: 100%;
-  padding: 16px;
-  background-color: var(--el-bg-color-overlay);
-  border-radius: 12px;
-  box-shadow: var(--color-shadow-card);
-  transition: var(--transition-box-shadow);
-}
-
-.stat-card:hover {
-  box-shadow: var(--color-shadow-card-hover);
-}
-
-.el-statistic {
-  --el-statistic-content-font-size: 28px;
-}
-
-.stat-title {
-  display: inline-flex;
-  align-items: center;
-  font-weight: 500;
-}
-
-.stat-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 16px;
-  font-size: 13px;
-  color: var(--el-text-color-regular);
-}
-
-.footer-item {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.green {
-  color: var(--el-color-success);
-}
-.red {
-  color: var(--el-color-error);
-}
-</style>

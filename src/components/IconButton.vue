@@ -1,5 +1,5 @@
 <!-- @/components/IconButton.vue -->
-<script setup>
+<script lang="ts" setup>
 defineProps({
   toolName: {
     type: String,
@@ -25,12 +25,7 @@ const emit = defineEmits(['click'])
 <template>
   <!-- 图标提示 -->
   <el-tooltip class="box-item" effect="dark" :content="toolName" placement="bottom">
-    <el-icon
-      class="icon-button"
-      :size="size"
-      :class="{ 'icon-button--disabled': disabled }"
-      @click="emit('click')"
-    >
+    <el-icon class="icon-button" :size="size" :class="{ 'icon-button--disabled': disabled }" @click="emit('click')">
       <component :is="iconName" />
     </el-icon>
   </el-tooltip>
@@ -43,14 +38,17 @@ const emit = defineEmits(['click'])
   border-radius: 4px;
   transition: all 0.3s ease;
 }
+
 .icon-button:hover:not(.icon-button--disabled) {
   color: var(--color-text-icon);
   background-color: var(--vt-c-white-bg);
 }
+
 .icon-button--disabled {
   cursor: not-allowed;
   opacity: 0.5;
 }
+
 /* 移除所有可能聚焦边框*/
 .icon-button:focus {
   outline: none !important;

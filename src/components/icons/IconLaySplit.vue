@@ -1,11 +1,5 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 56 48"
-    :width="size"
-    :height="size"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 48" :width="size" :height="size" fill="none">
     <g>
       <!-- 左上 -->
       <rect x="0" y="0" width="24" height="20" rx="2" :fill="color" fill-opacity="0.9" />
@@ -19,8 +13,13 @@
   </svg>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+interface Props {
+  color?: string
+  size: number | string
+}
+
+export default defineComponent({
   name: 'IconLayoutSplit',
   props: {
     color: {
@@ -32,5 +31,5 @@ export default {
       default: 24,
     },
   },
-}
+})
 </script>

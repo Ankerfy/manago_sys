@@ -1,11 +1,5 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 56 48"
-    :width="size"
-    :height="size"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 48" :width="size" :height="size" fill="none">
     <!-- 背景大矩形 -->
     <rect x="0" y="0" width="8" height="48" rx="1" :fill="color" fill-opacity="0.9" />
 
@@ -20,8 +14,13 @@
   </svg>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+interface Props {
+  color: string
+  size: number | string
+}
+
+export default defineComponent({
   name: 'IconLayoutSideMixed',
   props: {
     color: {
@@ -33,5 +32,5 @@ export default {
       default: 24,
     },
   },
-}
+})
 </script>

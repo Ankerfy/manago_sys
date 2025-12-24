@@ -1,6 +1,15 @@
 <!-- @/components/cards/UserCountCard.vue -->
-<script setup>
+<script lang="ts" setup>
 import BaseCard from '@/components/cards/BaseCard.vue'
+
+interface CardData {
+  title: string
+  tooltip?: string
+  value: number
+  change: number
+  compareText: string
+  showArrow: boolean
+}
 
 const mock_data = [
   {
@@ -37,26 +46,11 @@ const mock_data = [
 </script>
 
 <template>
-  <div class="card-box">
+  <div class="mb-2">
     <el-row :gutter="16">
-      <el-col
-        :xs="24"
-        :sm="12"
-        :md="6"
-        v-for="(content, index) in mock_data"
-        :key="index"
-        class="mb-4"
-      >
+      <el-col class="mt-2 mb-2" :xs="24" :sm="12" :md="6" v-for="(content, index) in mock_data" :key="index">
         <BaseCard v-bind="content" />
       </el-col>
     </el-row>
   </div>
 </template>
-
-<style scoped>
-.card-box {
-  padding-bottom: 10px;
-  margin-top: 5px;
-  margin-bottom: 40px;
-}
-</style>

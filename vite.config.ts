@@ -1,6 +1,7 @@
 // https://vite.dev/config/
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import tailwindcss from '@tailwindcss/vite'
 import { viteMockServe } from 'vite-plugin-mock'
 import path from 'node:path'
 import AutoImport from 'unplugin-auto-import/vite'
@@ -13,6 +14,7 @@ import vueDevTools from 'vite-plugin-vue-devtools'
 export default defineConfig({
   plugins: [
     vue(),
+    tailwindcss(),
     viteMockServe({
       mockPath: 'mock',
       enable: true,

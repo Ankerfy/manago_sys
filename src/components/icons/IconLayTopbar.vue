@@ -1,11 +1,5 @@
 <template>
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 56 48"
-    :width="size"
-    :height="size"
-    fill="none"
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 48" :width="size" :height="size" fill="none">
     <g>
       <!-- 最上方的短条 -->
       <rect x="0" y="0" width="56" height="10" rx="1" :fill="color" fill-opacity="0.9" />
@@ -19,7 +13,12 @@
   </svg>
 </template>
 
-<script>
+<script lang="ts">
+interface Props {
+  color?: string
+  size: number | string
+}
+
 export default {
   name: 'CustomSvgIcon',
   props: {
