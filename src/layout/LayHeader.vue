@@ -91,16 +91,16 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 </script>
 
 <template>
-  <div class="menu-nav">
-    <div class="nav-left">
-      <div class="toolkits-left-icon">
+  <div class="menu-nav flex h-12 justify-between pl-2.5">
+    <div class="nav-left flex w-75 items-center gap-2.5">
+      <div class="toolkits-left-icon flex items-center gap-2.5">
         <!-- 菜单折叠、刷新 -->
         <IconButton v-for="item in processedToolbar.left" :key="item.id" :icon-name="item.currentIcon"
           :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
       </div>
 
       <!-- 面包屑 -->
-      <div class="toolkits-left-breadcrumb">
+      <div class="toolkits-left-breadcrumb p-1.5">
         <el-breadcrumb separator="/">
           <el-breadcrumb-item>home</el-breadcrumb-item>
           <el-breadcrumb-item>user_manager</el-breadcrumb-item>
@@ -108,28 +108,27 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
       </div>
     </div>
 
-    <div class="nav-right">
+    <div class="nav-right flex justify-between gap-2.5">
       <!-- 搜索框 -->
-      <div class="toolkits-right-search">
+      <div class="toolkits-right-search w-37.5 flex items-center justify-center">
         <SearchModal />
       </div>
 
       <!-- 工具项 -->
-      <div class="toolkits-right-tools">
-        <div class="tools-l">
+      <div class="toolkits-right-tools flex w-75 gap-2.5">
+        <div class="tools-l flex w-[80%] items-center justify-evenly">
           <IconButton v-for="item in processedToolbar.right" :key="item.id" :icon-name="item.currentIcon"
             :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
         </div>
         <!-- 头像 -->
-        <div class="tools-r">
-          <!-- <el-avatar :size="32" :src="avatarUrl" /> -->
+        <div class="tools-r flex w-[20%] items-center justify-start px-2.5">
           <UserAvatarPopover :avatar-url="avatarUrl" :avatar-size="32" />
         </div>
       </div>
 
       <!-- 右侧抽屉、消息通知 -->
-      <div v-show="showPopover" class="toolkits-right-message"></div>
-      <div class="toolkits-right-drawer">
+      <div v-show="showPopover" class="shrink-0"></div>
+      <div class="shrink-0">
         <!-- 抽屉组件 -->
         <ConfigPanel v-model="showPanel" />
       </div>
@@ -139,70 +138,26 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 
 <style scoped>
 .menu-nav {
-  height: 48px;
-  /* background-color: var(--color-bg-menu-nav); */
-  display: flex;
-  justify-content: space-between;
-  padding-left: 10px;
-}
-
-/* 左侧 */
-.nav-left {
-  display: flex;
-  width: 300px;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 10px;
+  background-color: #ccc;
 }
 
 .toolkits-left-icon {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  background-color: greenyellow;
 }
 
 .toolkits-left-breadcrumb {
-  padding: 5px;
-}
-
-/* 右侧 */
-.nav-right {
-  display: flex;
-  justify-content: space-between;
-  /* background-color: #ccc; */
-  gap: 10px;
-  --toolkits-right-tools-width: 300px;
-  --toolkits-right-search-width: 150px;
+  background-color: pink;
 }
 
 .toolkits-right-search {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: var(--toolkits-right-search-width);
-  /* background-color: red; */
-}
-
-.toolkits-right-tools {
-  display: flex;
-  gap: 10px;
-  width: var(--toolkits-right-tools-width);
+  background-color: red;
 }
 
 .tools-l {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 80%;
-  /* background-color: bisque; */
+  background-color: bisque;
 }
 
 .tools-r {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 20%;
-  padding: 0 10px;
-  /* background-color: chocolate; */
+  background-color: chocolate;
 }
 </style>@/stores/app-store

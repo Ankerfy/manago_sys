@@ -11,7 +11,7 @@ defineProps({
   },
   size: {
     type: [Number, String],
-    default: 16,
+    default: 32,
   },
   disabled: {
     type: Boolean,
@@ -25,33 +25,27 @@ const emit = defineEmits(['click'])
 <template>
   <!-- 图标提示 -->
   <el-tooltip class="box-item" effect="dark" :content="toolName" placement="bottom">
-    <el-icon class="icon-button" :size="size" :class="{ 'icon-button--disabled': disabled }" @click="emit('click')">
-      <component :is="iconName" />
+    <el-icon :size="size" class="icon-button
+        cursor-pointer
+        p-2
+        rounded
+        transition-all
+        duration-300
+        focus:outline-none focus:ring-0
+        hover:bg-gray-400
+        dark:hover:bg-gray-700
+        dark:hover:text-gray-200
+      " :class="{
+        'cursor-not-allowed opacity-50 pointer-events-none': disabled,
+      }" @click="emit('click')">
+      <component class="p-0.8" :is="iconName" />
     </el-icon>
   </el-tooltip>
 </template>
 
 <style scoped>
-.icon-button {
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 4px;
-  transition: all 0.3s ease;
-}
-
 .icon-button:hover:not(.icon-button--disabled) {
   color: var(--color-text-icon);
   background-color: var(--vt-c-white-bg);
-}
-
-.icon-button--disabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-}
-
-/* 移除所有可能聚焦边框*/
-.icon-button:focus {
-  outline: none !important;
-  box-shadow: none !important;
 }
 </style>
