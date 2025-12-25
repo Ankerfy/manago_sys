@@ -4,16 +4,16 @@ import Mock from 'mockjs'
 
 // 中文热搜词库
 const HOT_SEARCH_WORDS = [
-  'AI 大模型开源',
-  '国产芯片突破',
-  '高考分数线公布',
-  '暑期旅游高峰',
-  '新能源汽车补贴',
-  '奥运会资格赛',
-  '某地暴雨预警',
-  '新电影票房破亿',
-  '高校招生政策调整',
-  '数字人民币试点扩大',
+  '夫妻俩虚假报名758次公务员考试获刑, 南博镇馆之宝金兽被指脱皮掉色',
+  '南博镇馆之宝金兽被指脱皮掉色',
+  '2025打破纪录的高光时刻',
+  '张晚意解锁新搭子奥迪E5',
+  '老板监视员工微信只需300元',
+  '支付宝有人转三千到我的账号',
+  'iPhone18Pro左上角挖孔设计',
+  '紫燕百味鸡店员偷减牛肉被抓现行',
+  '不敢想中奖的我多快乐',
+  '2025年度升咖艺人',
 ]
 
 export default [
@@ -30,27 +30,3 @@ export default [
     },
   },
 ] satisfies MockMethod[]
-
-// export default [
-//   {
-//     url: '/api/hot-search',
-//     method: 'get',
-//     response: () => {
-//       const data = Mock.mock({
-//         'list|10': [
-//           {
-//             'id|+1': 1,
-//             word: '@ctitle(8, 15)',
-//             'hot|1000-10000000': 1,
-//             icon: '@boolean',
-//           },
-//         ],
-//       }).list
-//       return {
-//         code: 200,
-//         message: 'success',
-//         data: data.map((item) => item.word),
-//       }
-//     },
-//   },
-// ] satisfies MockMethod[]

@@ -11,16 +11,16 @@ onMounted(async () => {
 
 <template>
   <!-- 热搜走马灯 -->
-  <div class="hot-search">
-    <div class="hot-search-icon">
+  <div class="flex items-center justify-start gap-1.5 px-2.5 py-0 border-b border-[#cdcdcd]">
+    <div class="p-1.5 text-[#f56c6c]">
       <el-icon>
-        <BellFilled />
+        <BellFilled class="text-sm/4" />
       </el-icon>
     </div>
-    <div class="hot-search-content">
+    <div class="hot-search-content w-75">
       <el-carousel height="40px" direction="vertical" :autoplay="true" :motion-blur="true" :interval="3800">
-        <el-carousel-item v-for="(text, index) in hotSearches" :key="index">
-          <span>{{ text }} + {{ index }}</span>
+        <el-carousel-item v-for="(text, index) in hotSearches" :key="index" class="truncate">
+          <span class="text-sm/10 text-[#475669] opacity-75 pl-1">{{ text }}</span>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -28,30 +28,8 @@ onMounted(async () => {
 </template>
 
 <style coped>
-.hot-search {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 5px;
-  padding: 0 10px;
-  border-bottom: 1px solid #cdcdcd;
-}
-
-.hot-search-icon {
-  padding: 5px;
-  color: #f56c6c;
-}
-
-.hot-search-content {
-  /* background-color: red; */
+/* .hot-search-content {
+  background-color: red;
   width: 500px;
-}
-
-.el-carousel__item span {
-  font-size: 14px;
-  color: #475669;
-  opacity: 0.75;
-  text-align: center;
-  line-height: 40px;
-}
+} */
 </style>

@@ -97,7 +97,7 @@ watch(
 
   <!-- 搜索遮罩层 + 卡片 -->
   <Teleport to="body">
-    <div v-if="isVisible" class="search-overlay fixed inset-0 z-\[9999] 
+    <div v-if="isVisible" class="search-overlay fixed inset-0 z-0 md:z-9999 
     flex items-center justify-center outline-none
     font-mono md:font-serif antialiased
     " @click="closeSearch" @keydown.esc="closeSearch" tabindex="-1" role="dialog" aria-modal="true">
@@ -147,10 +147,7 @@ watch(
               :ref="(el: any) => { if (el) resultItemRef[index] = el }" class="flex items-center gap-2 px-1 py-1.5 text-sm text-gray-500 
               rounded-xl border-b border-gray-200 
               cursor-pointer transition-all duration-200 mb-2" :class="{ selected: selectedIndex === index }"
-              @click="handleSelect(item)" 
-              @mouseenter="hoverIndex = index" 
-              @mouseleave="hoverIndex = -1" 
-              role="option"
+              @click="handleSelect(item)" @mouseenter="hoverIndex = index" @mouseleave="hoverIndex = -1" role="option"
               :aria-selected="selectedIndex === index">
               <div class="text-base min-w-4 mt-0.5">
                 <IconButton class="" :icon-name="item.icon || 'default-icon'" />
@@ -161,8 +158,7 @@ watch(
 
             <!-- 无结果，静态展示 -->
             <div v-if="filteredResults.length === 0 && query.trim()"
-            class="p-10 text-center text-gray-400 border-b border-gray-100 last:border-b-0"
-            >
+              class="p-10 text-center text-gray-400 border-b border-gray-100 last:border-b-0">
               未找到相关结果
             </div>
           </ul>

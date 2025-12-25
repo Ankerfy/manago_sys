@@ -92,7 +92,8 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 
 <template>
   <div class="menu-nav flex h-12 justify-between pl-2.5 font-mono md:font-serif antialiased">
-    <div class="nav-left flex w-75 items-center gap-2.5">
+    <!-- 左侧：在sm及以上显示 -->
+    <div class="nav-left hidden sm:flex w-75 items-center gap-2.5">
       <div class="toolkits-left-icon flex items-center gap-2.5">
         <!-- 菜单折叠、刷新 -->
         <IconButton v-for="item in processedToolbar.left" :key="item.id" :icon-name="item.currentIcon"
@@ -108,20 +109,27 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
       </div>
     </div>
 
-    <div class="nav-right flex justify-between gap-2.5">
+    <div class="nav-right flex justify-between sm:justify-center gap-2.5">
       <!-- 搜索框 -->
       <div class="toolkits-right-search w-37.5 flex items-center justify-center">
         <SearchModal />
       </div>
 
-      <!-- 工具项 -->
-      <div class="toolkits-right-tools flex w-75 gap-2.5">
-        <div class="tools-l flex w-[80%] items-center justify-evenly">
-          <IconButton v-for="item in processedToolbar.right" :key="item.id" :icon-name="item.currentIcon"
-            :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
+      <!-- 工具项 + 头像 -->
+      <div class="flex">
+        <!-- 工具项：仅在sm及以上显示 -->
+        <div class="hidden sm:flex toolkits-right-tools w-75 gap-2.5">
+          <div class="tools-l flex w-[80%] items-center justify-evenly">
+            <IconButton v-for="item in processedToolbar.right" :key="item.id" :icon-name="item.currentIcon"
+              :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
+          </div>
+          <!-- 头像 -->
+          <div class="tools-r flex w-[20%] items-center justify-start px-2.5">
+            <UserAvatarPopover :avatar-url="avatarUrl" :avatar-size="32" />
+          </div>
         </div>
-        <!-- 头像 -->
-        <div class="tools-r flex w-[20%] items-center justify-start px-2.5">
+        <!-- 移动端：仅显示头像 -->
+        <div class="sm:hidden flex items-center">
           <UserAvatarPopover :avatar-url="avatarUrl" :avatar-size="32" />
         </div>
       </div>
@@ -137,7 +145,7 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 </template>
 
 <style scoped>
-.menu-nav {
+/* .menu-nav {
   background-color: #ccc;
 }
 
@@ -159,5 +167,5 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 
 .tools-r {
   background-color: chocolate;
-}
+} */
 </style>@/stores/app-store
