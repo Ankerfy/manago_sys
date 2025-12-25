@@ -26,23 +26,24 @@ const handleRefresh = async () => {
 </script>
 
 <template>
-  <div class="common-layout" :class="{ 'sidebar-collapse': isSidebarCollapse }">
+  <div class="common-layout min-h-screen relative" :class="isSidebarCollapse ? 'sidebar-collapse' : ''">
     <!-- 侧边菜单栏（脱离文档流） -->
-    <div class="lay-sidebar">
+    <div
+      class="lay-sidebar fixed top-0 left-0 h-screen z-100 overflow-hidden bg-[#545c64] shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
       <LayAside />
     </div>
     <!-- 主容器：仅包含 header + main -->
-    <el-container class="lay-main-container">
+    <el-container class="lay-main-container min-h-screen">
       <!-- 头部 -->
-      <el-header class="lay-header">
+      <el-header class="lay-header p-0! h-12! bg-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] z-99 fixed top-0">
         <LayHeader @refresh="handleRefresh" />
       </el-header>
       <!-- 热搜走马灯 -->
-      <div class="lay-hot-search">
+      <div class="lay-hot-search fixed top-12 h-10 z-98 bg-white">
         <LayCarousel />
       </div>
       <!-- 主体内容 -->
-      <el-main class="lay-main-content">
+      <el-main class="p-2.5! mt-22.5 border-2 border-gray-300 rounded-lg overflow-y-auto overflow-x-hidden">
         <!-- 页面加载时显示骨架屏 -->
         <el-skeleton v-if="isLoading" animated :rows="10" style="padding: 20px" />
         <!-- 页面加载完成后显示真实内容 -->
@@ -55,36 +56,22 @@ const handleRefresh = async () => {
 <style scoped>
 /* 布局根容器 */
 .common-layout {
-  min-height: 100vh;
-  position: relative;
-  /* 重要：为 fixed 子元素提供上下文 */
   background-color: var(--color-bg-overlay, #f8f8f8);
   --sidebar-width: 200px;
   --sidebar-collapsed-width: 63px;
   --transition-speed: 0.3s;
 }
 
-/* 侧边栏（独立 fixed） */
 .lay-sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
   width: var(--sidebar-width);
-  height: 100vh;
-  z-index: 100;
   transition: width var(--transition-speed) ease;
-  overflow-x: hidden;
-  background-color: #545c64;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
 }
 
 .common-layout.sidebar-collapse .lay-sidebar {
   width: var(--sidebar-collapsed-width);
 }
 
-/* 主容器 el-container 默认 display:flex */
 .lay-main-container {
-  min-height: 100vh;
   margin-left: var(--sidebar-width);
   transition: margin-left var(--transition-speed) ease;
 }
@@ -93,15 +80,7 @@ const handleRefresh = async () => {
   margin-left: var(--sidebar-collapsed-width);
 }
 
-/* 头部 */
 .lay-header {
-  padding: 0;
-  height: 48px !important;
-  background-color: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-  z-index: 99;
-  position: fixed;
-  top: 0;
   left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
   transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
@@ -112,30 +91,14 @@ const handleRefresh = async () => {
   width: calc(100% - var(--sidebar-collapsed-width));
 }
 
-/* 热搜走马灯 */
 .lay-hot-search {
-  position: fixed;
-  top: 48px;
   left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
-  height: 40px;
-  background-color: var(--el-bg-color-overlay);
-  z-index: 98;
   transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
 }
 
 .common-layout.sidebar-collapse .lay-hot-search {
   left: var(--sidebar-collapsed-width);
   width: calc(100% - var(--sidebar-collapsed-width));
-}
-
-/* 主体内容区域 */
-.lay-main-content {
-  padding: 10px;
-  margin-top: 90px;
-  border: 2px solid #ccc;
-  border-radius: 8px;
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 </style>@/stores/app-store

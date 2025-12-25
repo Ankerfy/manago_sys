@@ -32,20 +32,21 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="sidebar">
-    <!-- 侧边栏头部 -->
-    <div class="sidebar-header" :class="{ 'is-collapse': isSidebarCollapse }">
-      <div class="sidebar-logo">
-        <el-image class="sidebar-logo-img" :src="logoUrl" :fit="picFit" alt="Logo" />
+  <div class="flex flex-col font-mono md:font-serif antialiased" :class="isSidebarCollapse ? 'w-16' : 'w-50'">
+    <!-- 侧边栏头部 :class="isSidebarCollapse ? 'px-4' : 'px-4'" -->
+    <div class="flex items-center h-12 px-4 py-0! transition-all duration-300 gap-3">
+      <div class="w-8 h-8">
+        <el-image class="w-full h-full object-contain" :src="logoUrl" :fit="picFit" alt="Logo" />
       </div>
-      <span v-show="!isSidebarCollapse" class="sidebar-title">ManaGo_SYS</span>
+      <span v-show="!isSidebarCollapse"
+        class="text-lg font-semibold text-white whitespace-nowrap flex-1 transition-discrete">ManaGo_SYS</span>
     </div>
 
     <!-- 菜单区域 -->
-    <div class="sidebar-menu">
+    <div class="flex-1 overflow-y-auto">
       <el-menu :default-active="$route.path" active-text-color="#ffd04b" background-color="#545c64" text-color="#fff"
-        class="el-menu-vertical-demo" :collapse="isSidebarCollapse" :collapse-transition="false" :unique-opened="true"
-        router>
+        class="el-menu-vertical-demo border-r-0!" :collapse="isSidebarCollapse" :collapse-transition="false"
+        :unique-opened="true" router>
         <MenuItem v-for="(item, index) in menuItems" :key="index" :item="item" />
       </el-menu>
     </div>
@@ -53,52 +54,6 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.sidebar {
-  width: var(--sidebar-width);
-  display: flex;
-  flex-direction: column;
-  transition: width 0.3s ease, left 0.3s ease;
-}
-
-.sidebar-header {
-  display: flex;
-  height: 48px;
-  /* background-color: red; */
-  align-items: center;
-  gap: 12px;
-  transition: padding 0.3s ease;
-  padding: 0 16px;
-}
-
-.sidebar-header.is-collapse {
-  height: 48px;
-  align-items: center;
-  padding: 0 16px;
-}
-
-.sidebar-logo {
-  width: 32px;
-  height: 32px;
-}
-
-.sidebar-logo-img {
-  width: 100%;
-  height: 100%;
-}
-
-.sidebar-title {
-  font-size: 18px;
-  font-weight: 600;
-  color: #fff;
-  white-space: nowrap;
-  flex: 1;
-}
-
-.sidebar-menu {
-  flex: 1;
-  overflow-y: auto;
-}
-
 .el-menu--collapse {
   transition: width 0.3s ease, left 0.3s ease;
 }
