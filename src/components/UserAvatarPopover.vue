@@ -1,5 +1,9 @@
 <!-- @/components/UserAvatarPopover.vue -->
 <script lang="ts" setup>
+import { useSreenSize } from '@/composables/useSreenSize'
+
+const { isMdOrLarger } = useSreenSize()
+
 // 定义合法的avatarSize值
 type AvatarSize = 'small' | 'default' | 'large' | number
 
@@ -43,52 +47,29 @@ const normalizedAvatarSize = computed(() => {
 
 const popperStyle = computed(() => ({
   boxShadow: 'rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px',
-  padding: '20px',
+  padding: '15px',
 }))
 </script>
 
 <template>
-  <el-popover :width="width" :popper-style="popperStyle" trigger="click">
+  <!-- :disabled="!isMdOrLarger" -->
+  <el-popover v-if="isMdOrLarger" :width="width" :popper-style="popperStyle" trigger="click">
     <template #reference>
       <el-avatar :size="normalizedAvatarSize" :src="avatarUrl" />
     </template>
 
-    <div class="user-avatar-popover__content">
-      <el-avatar :size="60" :src="avatarUrl" class="user-avatar-popover__big-avatar" />
-      <div class="user-avatar-popover__info">
-        <p class="user-avatar-popover__name">{{ userName }}</p>
-        <p class="user-avatar-popover__mention">{{ userMention }}</p>
+    <div class="flex flex-col gap-4 font-mono md:font-serif antialiased">
+      <el-avatar :size="60" :src="avatarUrl" class="mb-0.5!" />
+      <!-- 用户简介 -->
+      <div>
+        <p class="m-0 text-base font-medium">{{ userName }}</p>
+        <p class="m-0 text-sm text-gray-500">{{ userMention }}</p>
       </div>
-      <p class="user-avatar-popover__desc">{{ description }}</p>
+      <p class="m-0 text-gray-600">{{ description }}</p>
     </div>
   </el-popover>
+
+  <div v-else>
+    <el-avatar :size="normalizedAvatarSize" :src="avatarUrl" class="mt-1.5!" />
+  </div>
 </template>
-
-<style scoped>
-.user-avatar-popover__content {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.user-avatar-popover__big-avatar {
-  margin-bottom: 2px;
-}
-
-.user-avatar-popover__name {
-  margin: 0;
-  font-weight: 500;
-  font-size: 16px;
-}
-
-.user-avatar-popover__mention {
-  margin: 0;
-  font-size: 14px;
-  color: var(--el-color-info);
-}
-
-.user-avatar-popover__desc {
-  margin: 0;
-  line-height: 1.5;
-}
-</style>

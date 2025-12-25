@@ -91,10 +91,10 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 </script>
 
 <template>
-  <div class="menu-nav flex h-12 justify-between pl-2.5 font-mono md:font-serif antialiased">
+  <div class="transition-all duration-800 menu-nav flex h-12 justify-between pl-2.5 font-mono md:font-serif antialiased">
     <!-- 左侧：在sm及以上显示 -->
     <div class="nav-left hidden sm:flex w-75 items-center gap-2.5">
-      <div class="toolkits-left-icon flex items-center gap-2.5">
+      <div class="toolkits-left-icon flex items-center gap-0.5">
         <!-- 菜单折叠、刷新 -->
         <IconButton v-for="item in processedToolbar.left" :key="item.id" :icon-name="item.currentIcon"
           :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
@@ -118,13 +118,13 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
       <!-- 工具项 + 头像 -->
       <div class="flex">
         <!-- 工具项：仅在sm及以上显示 -->
-        <div class="hidden sm:flex toolkits-right-tools w-75 gap-2.5">
+        <div class="hidden sm:flex toolkits-right-tools w-75 gap-0.5">
           <div class="tools-l flex w-[80%] items-center justify-evenly">
             <IconButton v-for="item in processedToolbar.right" :key="item.id" :icon-name="item.currentIcon"
               :tool-name="item.currentToolName" @click="item.action && allActions[item.action]?.()" />
           </div>
           <!-- 头像 -->
-          <div class="tools-r flex w-[20%] items-center justify-start px-2.5">
+          <div class="tools-r flex w-[20%] items-center justify-start px-1.5">
             <UserAvatarPopover :avatar-url="avatarUrl" :avatar-size="32" />
           </div>
         </div>
