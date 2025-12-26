@@ -26,20 +26,27 @@ const handleRefresh = async () => {
 </script>
 
 <template>
-  <div class="common-layout min-h-screen relative" :class="isSidebarCollapse ? 'sidebar-collapse' : ''">
+  <div class="common-layout min-h-screen relative" 
+  :class="isSidebarCollapse ? 'sidebar-collapse' : ''">
     <!-- 侧边菜单栏（脱离文档流） -->
     <div
-      class="lay-sidebar fixed top-0 left-0 h-screen z-100 overflow-hidden bg-[#545c64] shadow-[2px_0_5px_rgba(0,0,0,0.05)]">
+      class="fixed top-0 left-0 h-screen z-100 overflow-hidden bg-[#545c64] shadow-[2px_0_5px_rgba(0,0,0,0.05)] transition-discrete transition-all duration-300 ease-linear"
+      :class="isSidebarCollapse ? 'w-16' : 'w-50'">
       <LayAside />
     </div>
     <!-- 主容器：仅包含 header + main -->
-    <el-container class="lay-main-container min-h-screen">
+    <el-container class="min-h-screen transition-discrete transition-all duration-300 ease-linear"
+      :class="isSidebarCollapse ? 'ml-16' : 'ml-50'">
       <!-- 头部 -->
-      <el-header class="lay-header p-0! h-12! bg-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] z-99 fixed top-0">
+      <el-header
+        class="lay-header fixed p-0! h-12! bg-white shadow-[0_1px_2px_rgba(0,0,0,0.1)] z-99 top-0 transition-discrete transition-all duration-300 ease-linear"
+        :class="isSidebarCollapse ? 'left-16' : 'left-50'">
         <LayHeader @refresh="handleRefresh" />
       </el-header>
       <!-- 热搜走马灯 -->
-      <div class="lay-hot-search fixed top-12 h-10 z-98 bg-white">
+      <div
+        class="lay-hot-search fixed top-12 left-0 h-10 z-98 bg-white transition-discrete transition-all duration-300 ease-linear"
+        :class="isSidebarCollapse ? 'left-16' : 'left-50'">
         <LayCarousel />
       </div>
       <!-- 主体内容 -->
@@ -58,47 +65,22 @@ const handleRefresh = async () => {
 .common-layout {
   background-color: var(--color-bg-overlay, #f8f8f8);
   --sidebar-width: 200px;
-  --sidebar-collapsed-width: 63px;
-  --transition-speed: 0.3s;
-}
-
-.lay-sidebar {
-  width: var(--sidebar-width);
-  transition: width var(--transition-speed) ease;
-}
-
-.common-layout.sidebar-collapse .lay-sidebar {
-  width: var(--sidebar-collapsed-width);
-}
-
-.lay-main-container {
-  margin-left: var(--sidebar-width);
-  transition: margin-left var(--transition-speed) ease;
-}
-
-.common-layout.sidebar-collapse .lay-main-container {
-  margin-left: var(--sidebar-collapsed-width);
+  --sidebar-collapsed-width: 64px;
 }
 
 .lay-header {
-  left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
-  transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
 }
 
 .common-layout.sidebar-collapse .lay-header {
-  left: var(--sidebar-collapsed-width);
   width: calc(100% - var(--sidebar-collapsed-width));
 }
 
 .lay-hot-search {
-  left: var(--sidebar-width);
   width: calc(100% - var(--sidebar-width));
-  transition: left var(--transition-speed) ease, width var(--transition-speed) ease;
 }
 
 .common-layout.sidebar-collapse .lay-hot-search {
-  left: var(--sidebar-collapsed-width);
   width: calc(100% - var(--sidebar-collapsed-width));
 }
 </style>@/stores/app-store

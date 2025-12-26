@@ -34,12 +34,12 @@ onMounted(() => {
 <template>
   <div class="flex flex-col font-mono md:font-serif antialiased" :class="isSidebarCollapse ? 'w-16' : 'w-50'">
     <!-- 侧边栏头部 :class="isSidebarCollapse ? 'px-4' : 'px-4'" -->
-    <div class="flex items-center h-12 px-4 py-0! transition-all duration-300 gap-3">
+    <div class="flex items-center h-12 px-4 py-0! transition-all duration-300 ease-linear gap-3">
       <div class="w-8 h-8">
         <el-image class="w-full h-full object-contain" :src="logoUrl" :fit="picFit" alt="Logo" />
       </div>
       <span v-show="!isSidebarCollapse"
-        class="text-lg font-semibold text-white whitespace-nowrap flex-1 transition-discrete">ManaGo_SYS</span>
+        class="text-lg font-semibold text-white whitespace-nowrap flex-1 transition-discrete transition-all duration-300 ease-linear">ManaGo_SYS</span>
     </div>
 
     <!-- 菜单区域 -->
@@ -54,7 +54,7 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.el-menu--collapse {
+/* .el-menu--collapse {
   transition: width 0.3s ease, left 0.3s ease;
-}
+} */
 </style>@/stores/app-store
