@@ -18,7 +18,7 @@ export default defineConfig({
     viteMockServe({
       mockPath: 'mock',
       enable: true,
-      watchFiles: true,
+      logger: true,
     }),
     AutoImport({
       imports: ['vue', 'vue-router', 'pinia'],
@@ -45,13 +45,13 @@ export default defineConfig({
   },
   server: {
     port: 3736,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:8085',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ''),
-      },
-    },
+    // proxy: {
+    //   '/api': {
+    //     target: 'http://localhost:8085',
+    //     changeOrigin: true,
+    //     rewrite: (path) => path.replace(/^\/api/, ''),
+    //   },
+    // },
   },
   build: {
     outDir: 'dist',

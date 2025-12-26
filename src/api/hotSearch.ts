@@ -1,4 +1,5 @@
 // @/api/hotSearch.ts
+import api from './apiClient'
 
 const mockHotSearches = () => {
   return new Promise<string[]>((resolve) => {
@@ -14,14 +15,29 @@ const mockHotSearches = () => {
   })
 }
 
-// mock工具
+// 定义API响应类型
+interface ApiResponse<T> {
+  code?: number
+  message?: string
+  data: T
+}
+
 export const fetchHotSearch = async (): Promise<string[]> => {
-  const res = await fetch('/api/hot-search')
-  const result = await res.json()
-  if (result.code === 200) {
-    return result.data
+  try {
+    // 跳过自动解包
+    const res = await api.get<ApiResponse<string[]>>('/hot-search', {
+      custom: { skipDataWrap: true },
+    })
+
+    if (res.data && res.data.data) {
+      return res.data.data
+    } else {
+      throw new Error('返回数据为空')
+    }
+  } catch (err: any) {
+    const msg = err.response?.data?.message || err.message || '获取热搜失败'
+    throw new Error(msg)
   }
-  throw new Error(result.message || '获取热搜失败')
 }
 
 // 本地模拟数据

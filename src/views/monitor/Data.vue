@@ -1,7 +1,12 @@
-<script setup>
+<script lang="ts" setup>
 import SiteStatusCard from '@/components/cards/SiteStatusCard.vue'
 
-const sites = [
+interface Site {
+  protocol: string
+  domain: string
+}
+
+const sites: Site[] = [
   { protocol: 'https', domain: 'icy.ankerfy.dpdns.org' },
   { protocol: 'https', domain: 'mine.diudue.dpdns.org' },
   { protocol: 'https', domain: 'bj.diudue.dpdns.org' },
@@ -13,13 +18,13 @@ const sites = [
 ]
 
 // 定义 refs 来引用 DOM 元素
-const uuidInput = ref(null)
-const generateBtn = ref(null)
-const copyBtn = ref(null)
-const resetBtn = ref(null)
+const uuidInput = ref<HTMLInputElement | null>(null)
+const generateBtn = ref<HTMLButtonElement | null>(null)
+const copyBtn = ref<HTMLButtonElement | null>(null)
+const resetBtn = ref<HTMLButtonElement | null>(null)
 
 // 生成 UUID 函数
-const generateUUID = () => {
+const generateUUID = (): string => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
     const r = (Math.random() * 16) | 0
     const v = c === 'x' ? r : (r & 0x3) | 0x8
@@ -30,51 +35,68 @@ const generateUUID = () => {
 // 在组件挂载后执行
 onMounted(() => {
   // 给按钮添加点击事件监听器
-  generateBtn.value.addEventListener('click', () => {
-    uuidInput.value.value = generateUUID()
-  })
+  if (generateBtn.value) {
+    generateBtn.value.addEventListener('click', () => {
+      if (uuidInput.value) {
+        uuidInput.value.value = generateUUID()
+      }
+    })
+  }
 
   // 复制节点配置
-  copyBtn.value.addEventListener('click', async () => {
-    const nodeType = document.getElementById('node-type')?.value
-    const domain = document.getElementById('domain')?.value?.trim()
-    const customDomain = document.getElementById('custom-domain')?.value?.trim()
-    const uuid = uuidInput.value?.value?.trim()
+  if (copyBtn.value) {
+    copyBtn.value.addEventListener('click', async () => {
+      const nodeTypeSelect = document.getElementById('node-type') as HTMLSelectElement | null
+      const domainInput = document.getElementById('domain') as HTMLInputElement | null
+      const customDomainInput = document.getElementById('custom-domain') as HTMLInputElement | null
 
-    // 必填项校验：订阅类型和域名始终必填
-    if (!nodeType || !domain) {
-      alert('请填写订阅类型和域名！')
-      return
-    }
+      const nodeType = nodeTypeSelect?.value?.trim()
+      const domain = domainInput?.value?.trim()
+      const customDomain = customDomainInput?.value?.trim()
+      const uuid = uuidInput.value?.value?.trim()
 
-    let fullPath
-
-    if (customDomain) {
-      // 自定义域存在：domain/customDomain/nodeType
-      fullPath = `https://${domain}/${customDomain}/${nodeType}`
-    } else {
-      // 自定义域为空：domain/uuid/nodeType
-      if (!uuid) {
-        alert('自定义域未填写时，请先生成或输入 UUID！')
+      // 必填项校验：订阅类型和域名始终必填
+      if (!nodeType || !domain) {
+        alert('请填写订阅类型和域名！')
         return
       }
-      fullPath = `https://${domain}/${uuid}/${nodeType}`
-    }
 
-    try {
-      await navigator.clipboard.writeText(fullPath)
-      alert(`已复制节点配置路径：\n${fullPath}`)
-    } catch (err) {
-      console.error('复制失败:', err)
-      alert('复制失败，请手动复制。')
-    }
-  })
+      let fullPath: string
+
+      if (customDomain) {
+        // 自定义域存在：domain/customDomain/nodeType
+        fullPath = `https://${domain}/${customDomain}/${nodeType}`
+      } else {
+        // 自定义域为空：domain/uuid/nodeType
+        if (!uuid) {
+          alert('自定义域未填写时，请先生成或输入 UUID！')
+          return
+        }
+        fullPath = `https://${domain}/${uuid}/${nodeType}`
+      }
+
+      try {
+        await navigator.clipboard.writeText(fullPath)
+        alert(`已复制节点配置路径：\n${fullPath}`)
+      } catch (err) {
+        console.error('复制失败:', err)
+        alert('复制失败，请手动复制。')
+      }
+    })
+  }
 
   // 重置表单
-  resetBtn.value.addEventListener('click', () => {
-    document.getElementById('node-config-form').reset()
-    uuidInput.value.value = ''
-  })
+  if (resetBtn.value) {
+    resetBtn.value.addEventListener('click', () => {
+      const form = document.getElementById('node-config-form') as HTMLFormElement | null
+      if (form) {
+        form.reset()
+      }
+      if (uuidInput.value) {
+        uuidInput.value.value = ''
+      }
+    })
+  }
 })
 </script>
 
@@ -83,12 +105,8 @@ onMounted(() => {
     <h4>站点监测</h4>
     <div class="site-status-card">
       <!-- 站点状态 -->
-      <SiteStatusCard
-        v-for="(item, index) in sites"
-        :key="index"
-        :domain="item.domain"
-        :protocol="item.protocol"
-      />
+      <SiteStatusCard v-for="(item, index) in sites" 
+      :key="item.domain" :domain="item.domain" :protocol="item.protocol" />
     </div>
   </div>
   <div class="node-monitor-section">
@@ -97,13 +115,7 @@ onMounted(() => {
     <div class="uuid-generator">
       <label for="uuid-input">uuid:</label>
       <div class="input-group">
-        <input
-          ref="uuidInput"
-          id="uuid-input"
-          placeholder="请输入或自动生成 UUID"
-          value=""
-          readonly
-        />
+        <input ref="uuidInput" id="uuid-input" placeholder="请输入或自动生成 UUID" value="" readonly />
         <button ref="generateBtn" id="generate-uuid-btn">生成</button>
       </div>
     </div>
@@ -125,13 +137,7 @@ onMounted(() => {
         </div>
         <div class="form-row">
           <label for="custom-domain">自定义域：</label>
-          <input
-            id="custom-domain"
-            type="text"
-            name="customDomain"
-            placeholder="如：test"
-            required
-          />
+          <input id="custom-domain" type="text" name="customDomain" placeholder="如：test" required />
         </div>
       </form>
     </div>
@@ -153,12 +159,14 @@ onMounted(() => {
   margin-top: 10px;
   border-radius: 10px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
-  /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); */
+  padding: 10px;
 }
 
 .site-status-card-container h4 {
   padding-left: 20px;
-  /* margin-bottom: 5px; */
+  font-weight: 600;
+  padding-top: 10px;
+  margin-bottom: 20px;
 }
 
 .site-status-card {
@@ -182,7 +190,7 @@ onMounted(() => {
 }
 
 .node-monitor-section h4 {
-  margin: 0 0 20px;
+  margin-bottom: 20px;
   color: #222;
   font-weight: 600;
 }
@@ -254,7 +262,8 @@ onMounted(() => {
   display: flex;
   gap: 16px;
   margin-top: 30px;
-  justify-content: flex-end; /* 按钮靠右对齐（常见于表单底部） */
+  justify-content: flex-end;
+  /* 按钮靠右对齐（常见于表单底部） */
 }
 
 .action-buttons button {
