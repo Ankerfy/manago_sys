@@ -5,8 +5,9 @@ export default [
   {
     url: '/api/status', // 不带 :domain
     method: 'get',
-    timeout: 500,
-    response: ({ query }) => { // 使用 query 获取
+    timeout: 1000,
+    response: ({ query }) => {
+      // 使用 query 获取
       console.log('Mock hit:', query.domain)
       const domain = query.domain as string
       if (!domain) {
@@ -18,9 +19,7 @@ export default [
         message: 'success',
         data: {
           status: isUp ? 'up' : 'down',
-          description: isUp 
-            ? '服务运行正常'
-            : '当前无法访问',
+          description: isUp ? '服务运行正常' : '当前无法访问',
         },
       }
     },

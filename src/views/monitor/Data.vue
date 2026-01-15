@@ -23,6 +23,34 @@ const generateBtn = ref<HTMLButtonElement | null>(null)
 const copyBtn = ref<HTMLButtonElement | null>(null)
 const resetBtn = ref<HTMLButtonElement | null>(null)
 
+// 刷新信号
+const refreshSignal = ref(0)
+provide('refreshSignal', refreshSignal)
+
+// 定时器
+let refreshTimer: number | null = null
+const startAutoRefresh = () => {
+  console.log('启动自动刷新')
+  refreshSignal.value++
+  refreshTimer = window.setInterval(() => {
+    console.log('【父组件】触发刷新，当前值:', refreshSignal.value)
+    refreshSignal.value++
+  }, 5 * 60 * 1000)
+}
+
+const stopAutoRefresh = () => {
+  if (refreshTimer !== null) {
+    clearInterval(refreshTimer)
+    refreshTimer = null
+  }
+}
+
+// 手动刷新
+const handleManualRefresh = () => {
+  console.log(refreshSignal.value);
+  refreshSignal.value++
+}
+
 // 生成 UUID 函数
 const generateUUID = (): string => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
@@ -34,6 +62,10 @@ const generateUUID = (): string => {
 
 // 在组件挂载后执行
 onMounted(() => {
+  // 启动定时器
+  startAutoRefresh()
+
+  // --- 节点配置
   // 给按钮添加点击事件监听器
   if (generateBtn.value) {
     generateBtn.value.addEventListener('click', () => {
@@ -98,17 +130,27 @@ onMounted(() => {
     })
   }
 })
+
+onUnmounted(() => {
+  stopAutoRefresh()
+})
 </script>
 
 <template>
   <div class="site-status-card-container">
-    <h4>站点监测</h4>
+    <div class="header-with-refresh">
+      <h4>站点监测</h4>
+      <!-- 刷新倒计时 5分钟一刷新 -->
+      <button @click="handleManualRefresh" class="text-sm text-blue-600 hover:underline">
+        🔄 立即刷新
+      </button>
+    </div>
     <div class="site-status-card">
       <!-- 站点状态 -->
-      <SiteStatusCard v-for="(item, index) in sites" 
-      :key="item.domain" :domain="item.domain" :protocol="item.protocol" />
+      <SiteStatusCard v-for="item in sites" :key="item.domain" :domain="item.domain" :protocol="item.protocol" />
     </div>
   </div>
+
   <div class="node-monitor-section">
     <h4>节点配置</h4>
     <!-- UUID 生成区域 -->
@@ -160,6 +202,12 @@ onMounted(() => {
   border-radius: 10px;
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.2);
   padding: 10px;
+}
+
+.header-with-refresh {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .site-status-card-container h4 {

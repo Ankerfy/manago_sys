@@ -1,11 +1,9 @@
 <!-- @/components/cards/SiteStatusCard.vue -->
 <script lang="ts" setup>
 import api from '@/api/apiClient.ts'
+import type { Ref } from 'vue'
 
-const props = defineProps<{
-  domain: string
-  protocol?: string
-}>()
+const props = defineProps<{ domain: string; protocol?: string }>()
 const protocol = props.protocol || 'http'
 
 // 状态：'up' | 'down' | 'unknown'
@@ -45,16 +43,18 @@ const fetchStatus = async () => {
   }
 }
 
-let intervalId: number | null = null
+// 注入刷新信号 - 父组件Data.vue
+const refreshSignal = inject<Ref<number>>('refreshSignal', ref(0))
+
+// 挂载时开始定时检查
 onMounted(() => {
   fetchStatus()
-  intervalId = window.setInterval(fetchStatus, 5 * 60 * 1000) // 每5分钟检查一次
 })
-onBeforeUnmount(() => {
-  if (intervalId !== null) {
-    clearInterval(intervalId)
-    intervalId = null
-  }
+
+// 刷新信号监听
+watch(refreshSignal, (val) => {
+  console.log('子组件收到刷新信号：', val);
+  fetchStatus()
 })
 </script>
 
@@ -80,5 +80,7 @@ onBeforeUnmount(() => {
 
     <!-- 底部描述 -->
     <div class="text-xs text-gray-700 text-right">{{ description }}</div>
+
+    <div class="Debug"> Debug: {{ refreshSignal }}</div>
   </div>
 </template>
