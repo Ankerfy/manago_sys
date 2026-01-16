@@ -1,4 +1,4 @@
-// @/api/apiClient.ts
+// @/api/request.ts
 import axios from 'axios'
 import type {
   AxiosInstance,
@@ -17,13 +17,14 @@ declare module 'axios' {
 }
 
 // 创建 axios 示例
-const api: AxiosInstance = axios.create({
+const service: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '/api', // 支持环境变量
   timeout: 5000,
+  headers: { 'Content-Type': 'application/json' },
 })
 
 // 请求拦截器
-api.interceptors.request.use(
+service.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
     // 添加自定义请求头
     // config.headers['X-Requested-With'] = 'XMLHttpRequest'
@@ -33,19 +34,33 @@ api.interceptors.request.use(
     // if (token && config.headers) {
     //   config.headers['Authorization'] = `Bearer ${token}`
     // }
+
+    // 时间戳 防缓存
+    // if (config.method === 'get') {
+    //   config.params = {
+    //     ...config.params,
+    //     _t: Date.now(),
+    //   }
+    // }
     return config
   },
   (error) => Promise.reject(error),
 )
 
 // 响应拦截器
-api.interceptors.response.use(
+service.interceptors.response.use(
   (response: AxiosResponse) => {
     // 若请求配置了skipDataWrap，则直接返回数据
     if (response.config.custom?.skipDataWrap) {
       return response
     }
-    return response.data // 默认返回 data
+    const res = response.data
+    if (res.code && res.code === 200) {
+      return res
+    } else {
+      // 错误处理
+      return Promise.reject(new Error(res.message || 'Error'))
+    }
   },
   (error) => {
     if (error.response) {
@@ -63,4 +78,4 @@ api.interceptors.response.use(
   },
 )
 
-export default api
+export default service

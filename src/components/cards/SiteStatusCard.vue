@@ -1,6 +1,7 @@
 <!-- @/components/cards/SiteStatusCard.vue -->
 <script lang="ts" setup>
-import api from '@/api/apiClient.ts'
+// import request from '@/api/request.ts'
+import request from '@/api'
 import type { Ref } from 'vue'
 
 const props = defineProps<{ domain: string; protocol?: string }>()
@@ -31,12 +32,15 @@ const openSite = () => {
 
 const fetchStatus = async () => {
   try {
-    const res = await api.get(`/status`, {
-      params: { domain: props.domain }  // 通过查询参数传递
-    })
-    const data = res.data
-    status.value = data.status === 'up' ? 'up' : 'down'
-    description.value = data.description || (status.value === 'up' ? '服务运行正常' : '当前无法访问')
+    // const res = await request.get(`/status`, {
+    //   params: { domain: props.domain }  // 通过查询参数传递
+    // })
+
+    const res = await request.monitor.getSiteStatus({ domain: props.domain })
+
+    // const data = res.data
+    status.value = res.data.status === 'up' ? 'up' : 'down'
+    description.value = res.data.description
   } catch (err) {
     status.value = 'down'
     description.value = '状态检测失败'
@@ -83,4 +87,4 @@ watch(refreshSignal, (val) => {
 
     <div class="Debug"> Debug: {{ refreshSignal }}</div>
   </div>
-</template>
+</template>@/api/request
