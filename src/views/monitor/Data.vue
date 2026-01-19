@@ -30,10 +30,10 @@ provide('refreshSignal', refreshSignal)
 // 定时器
 let refreshTimer: number | null = null
 const startAutoRefresh = () => {
-  console.log('启动自动刷新')
+  // console.log('启动自动刷新')
   refreshSignal.value++
   refreshTimer = window.setInterval(() => {
-    console.log('【父组件】触发刷新，当前值:', refreshSignal.value)
+    // console.log('【父组件】触发刷新，当前值:', refreshSignal.value)
     refreshSignal.value++
   }, 5 * 60 * 1000)
 }
@@ -47,7 +47,7 @@ const stopAutoRefresh = () => {
 
 // 手动刷新
 const handleManualRefresh = () => {
-  console.log(refreshSignal.value);
+  // console.log(refreshSignal.value);
   refreshSignal.value++
 }
 

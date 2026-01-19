@@ -6,7 +6,7 @@ export interface SiteStatusParams {
 }
 
 export interface SiteStatusResult {
-  status: 'up' | 'down'
+  status: 'up' | 'down' | 'unknown'
   description: string
 }
 

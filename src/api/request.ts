@@ -36,12 +36,12 @@ service.interceptors.request.use(
     // }
 
     // 时间戳 防缓存
-    // if (config.method === 'get') {
-    //   config.params = {
-    //     ...config.params,
-    //     _t: Date.now(),
-    //   }
-    // }
+    if (config.method === 'get') {
+      config.params = {
+        ...config.params,
+        _t: Date.now(),
+      }
+    }
     return config
   },
   (error) => Promise.reject(error),
@@ -50,11 +50,13 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
   (response: AxiosResponse) => {
+    const res = response.data
+
     // 若请求配置了skipDataWrap，则直接返回数据
     if (response.config.custom?.skipDataWrap) {
-      return response
+      return res
     }
-    const res = response.data
+
     if (res.code && res.code === 200) {
       return res
     } else {

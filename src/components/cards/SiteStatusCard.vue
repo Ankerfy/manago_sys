@@ -1,15 +1,16 @@
 <!-- @/components/cards/SiteStatusCard.vue -->
 <script lang="ts" setup>
-// import request from '@/api/request.ts'
 import request from '@/api'
 import type { Ref } from 'vue'
+import type { SiteStatusResult } from '@/api/modules/monitor'
 
 const props = defineProps<{ domain: string; protocol?: string }>()
 const protocol = props.protocol || 'http'
 
+const siteStatu = ref<SiteStatusResult | null>(null)
+
 // 状态：'up' | 'down' | 'unknown'
-type Status = 'up' | 'down' | 'unknown'
-const status = ref<Status>('unknown')
+const status = ref<SiteStatusResult['status']>('unknown')
 const description = ref('正在检测...')
 
 const statusText = computed(() => {
@@ -26,21 +27,18 @@ const dotClass = computed(() => ({
   'bg-gray-400': status.value === 'unknown',
 }))
 
+// 预览站点
 const openSite = () => {
   window.open(`${protocol}://${props.domain}`, '_blank', 'noopener,noreferrer')
 }
 
+// 获取站点状态
 const fetchStatus = async () => {
   try {
-    // const res = await request.get(`/status`, {
-    //   params: { domain: props.domain }  // 通过查询参数传递
-    // })
-
     const res = await request.monitor.getSiteStatus({ domain: props.domain })
-
-    // const data = res.data
-    status.value = res.data.status === 'up' ? 'up' : 'down'
-    description.value = res.data.description
+    siteStatu.value = res.data
+    status.value = siteStatu.value.status
+    description.value = siteStatu.value.description
   } catch (err) {
     status.value = 'down'
     description.value = '状态检测失败'
@@ -57,7 +55,7 @@ onMounted(() => {
 
 // 刷新信号监听
 watch(refreshSignal, (val) => {
-  console.log('子组件收到刷新信号：', val);
+  // console.log('子组件收到刷新信号：', val);
   fetchStatus()
 })
 </script>

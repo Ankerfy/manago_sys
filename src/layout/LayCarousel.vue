@@ -1,11 +1,19 @@
 <script lang="ts" setup>
-import { fetchHotSearch } from '@/api/hotSearch'
+import { getHotSearch } from '@/api/hotSearch'
 
 // 热搜 mock 数据
 const hotSearches = ref<string[]>([])
 
-onMounted(async () => {
-  hotSearches.value = await fetchHotSearch()
+// 获取热搜
+const fetchHotSearch = async () => {
+  const res = await getHotSearch()
+  console.log(res);
+
+  hotSearches.value = res.data
+}
+
+onMounted(() => {
+  fetchHotSearch()
 })
 </script>
 
@@ -26,10 +34,3 @@ onMounted(async () => {
     </div>
   </div>
 </template>
-
-<style coped>
-/* .hot-search-content {
-  background-color: red;
-  width: 500px;
-} */
-</style>
