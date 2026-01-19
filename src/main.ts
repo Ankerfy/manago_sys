@@ -8,6 +8,7 @@ import router from './router'
 import pinia from './stores/pinia'
 import ElementPlus from 'element-plus'
 import * as Icons from '@element-plus/icons-vue'
+import { Message } from '@/utils/message'
 
 import NProgress from 'nprogress'
 
@@ -25,6 +26,8 @@ const app = createApp(App)
 Object.entries(Icons).forEach(([name, component]) => {
   app.component(name, component)
 })
+
+app.config.globalProperties.$message = Message
 
 app.use(pinia)
 app.use(router)

@@ -6,6 +6,7 @@ import type {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios'
+import { Message } from '@/utils/message'
 
 // 扩展 AxiosRequestConfig
 declare module 'axios' {
@@ -61,21 +62,40 @@ service.interceptors.response.use(
       return res
     } else {
       // 错误处理
-      return Promise.reject(new Error(res.message || 'Error'))
+      Message.error(res.message || '请求失败')
+      return Promise.reject(new Error(res.message))
     }
   },
   (error) => {
+    let message = '网络异常，请稍后再试'
     if (error.response) {
       // 服务器返回错误状态码
-      const { status, data } = error.response
-      console.log(`[API ERROR] HTTP ${status}`, data)
+      const { status } = error.response
+      switch (status) {
+        case 401:
+          message = '未授权，请重新登录'
+          localStorage.removeItem('token')
+          window.location.href = '/login'
+          break
+        case 403:
+          message = '权限不足，拒绝访问'
+          break
+        case 404:
+          message = '请求的资源不存在'
+          break
+        case 500:
+          message = '服务器内部错误'
+          break
+        default:
+          message = error.response.data?.message || `请求失败(${status})`
+      }
     } else if (error.request) {
-      // 请求被取消或没有响应
-      console.log('[Network Error] No response received:', error.request)
+      message = '请求超时，请稍后再试'
     } else {
-      // 其他错误
-      console.log('[Request Setup Error]:', error.message)
+      message = error.message || '请求配置错误'
     }
+
+    Message.error(message)
     return Promise.reject(error)
   },
 )

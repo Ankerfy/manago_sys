@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import SiteStatusCard from '@/components/cards/SiteStatusCard.vue'
+import { Message } from '@/utils/message'
 
 interface Site {
   protocol: string
@@ -89,7 +90,8 @@ onMounted(() => {
 
       // 必填项校验：订阅类型和域名始终必填
       if (!nodeType || !domain) {
-        alert('请填写订阅类型和域名！')
+        Message.warning('请填写订阅类型和域名！')
+        // alert('请填写订阅类型和域名！')
         return
       }
 
@@ -101,7 +103,8 @@ onMounted(() => {
       } else {
         // 自定义域为空：domain/uuid/nodeType
         if (!uuid) {
-          alert('自定义域未填写时，请先生成或输入 UUID！')
+          Message.warning('自定义域未填写时，请先生成或输入 UUID！')
+          // alert('自定义域未填写时，请先生成或输入 UUID！')
           return
         }
         fullPath = `https://${domain}/${uuid}/${nodeType}`
@@ -109,10 +112,12 @@ onMounted(() => {
 
       try {
         await navigator.clipboard.writeText(fullPath)
-        alert(`已复制节点配置路径：\n${fullPath}`)
+        Message.success('已复制节点配置路径！')
+        // alert(`已复制节点配置路径：\n${fullPath}`)
       } catch (err) {
         console.error('复制失败:', err)
-        alert('复制失败，请手动复制。')
+        Message.error('复制失败，请手动复制。')
+        // alert('复制失败，请手动复制。')
       }
     })
   }
