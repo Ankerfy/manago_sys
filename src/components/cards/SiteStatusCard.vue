@@ -83,6 +83,6 @@ watch(refreshSignal, (val) => {
     <!-- 底部描述 -->
     <div class="text-xs text-gray-700 text-right">{{ description }}</div>
 
-    <div class="Debug"> Debug: {{ refreshSignal }}</div>
+    <!-- <div class="Debug"> Debug: {{ refreshSignal }}</div> -->
   </div>
 </template>@/api/request
