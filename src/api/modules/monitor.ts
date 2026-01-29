@@ -11,7 +11,7 @@ export interface SiteStatusResult {
 }
 
 export const getSiteStatus = (params: SiteStatusParams) => {
-  return request.get<SiteStatusResult>('/status', { params })
+  return request.get<SiteStatusResult>('/monitor/site-status', { params })
 }
 
 export default {

@@ -18,7 +18,7 @@ const HOT_SEARCH_WORDS = [
 
 export default [
   {
-    url: '/api/hot-search',
+    url: '/api/h/hot-search',
     method: 'get',
     response: () => {
       const shuffled = [...HOT_SEARCH_WORDS].sort(() => Math.random() - 0.5).slice(0, 8)

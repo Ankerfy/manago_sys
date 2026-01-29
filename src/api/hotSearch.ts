@@ -7,7 +7,7 @@ export interface HotSearchParams {
 }
 
 export const getHotSearch = (params?: HotSearchParams) => {
-  return request.get<string[]>('/hot-search', {
+  return request.get<string[]>('/h/hot-search', {
     params,
     custom: { skipDataWrap: true },
   })

@@ -3,7 +3,7 @@ import { MockMethod } from 'vite-plugin-mock'
 
 export default [
   {
-    url: '/api/status', // 不带 :domain
+    url: '/api/monitor/site-status', // 不带 :domain
     method: 'get',
     timeout: 1000,
     response: ({ query }) => {
