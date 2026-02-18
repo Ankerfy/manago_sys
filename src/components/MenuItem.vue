@@ -57,3 +57,4 @@ const getIconComponent = (iconName: string): Component | null => {
   </el-sub-menu>
 </template>
 
+@/types/components/menu

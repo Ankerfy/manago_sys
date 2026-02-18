@@ -1,4 +1,4 @@
-// @/types/api.d.ts
+// @/types/request.d.ts
 export interface ApiResponse<T> {
   code: number
   message: string

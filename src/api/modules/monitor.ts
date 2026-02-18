@@ -1,14 +1,6 @@
 // @/api/modules/monitor.ts
 import request from '@/api/request'
-
-export interface SiteStatusParams {
-  domain: string
-}
-
-export interface SiteStatusResult {
-  status: 'up' | 'down' | 'unknown'
-  description: string
-}
+import type { SiteStatusParams, SiteStatusResult } from '@/types/api'
 
 export const getSiteStatus = (params: SiteStatusParams) => {
   return request.get<SiteStatusResult>('/monitor/site-status', { params })

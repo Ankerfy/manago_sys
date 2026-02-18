@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/stores'
 import MenuItem from '@/components/MenuItem.vue'
-import type { MenuItem as MenuItemType } from '@/types/menu'
+import type { MenuItem as MenuItemType } from '@/types/components'
 
 // 获取折叠状态
 const appStore = useAppStore()
@@ -57,4 +57,4 @@ onMounted(() => {
 /* .el-menu--collapse {
   transition: width 0.3s ease, left 0.3s ease;
 } */
-</style>@/stores/app-store
+</style>@/stores/app-store@/types/components/menu

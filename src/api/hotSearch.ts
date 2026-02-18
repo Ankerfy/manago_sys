@@ -1,10 +1,6 @@
 // @/api/hotSearch.ts
 import request from './request'
-
-export interface HotSearchParams {
-  page?: number
-  size?: number
-}
+import type { HotSearchParams } from '@/types/api'
 
 export const getHotSearch = (params?: HotSearchParams) => {
   return request.get<string[]>('/h/hot-search', {

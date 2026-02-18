@@ -11,7 +11,7 @@ import type {
   ToolbarItem,
   ProcessedToolbarItem,
   ProcessedToolbar
-} from '@/types/toolbar'
+} from '@/types/components'
 
 interface Emits {
   (e: 'refresh'): void
@@ -168,4 +168,4 @@ const processedToolbar = computed<ProcessedToolbar>(() => {
 .tools-r {
   background-color: chocolate;
 } */
-</style>@/stores/app-store
+</style>@/stores/app-store@/types/components/toolbar
