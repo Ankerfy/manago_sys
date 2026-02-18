@@ -1,6 +1,6 @@
 <!-- @/components/MenuItem.vue -->
 <script lang="ts" setup>
-import type { MenuItem as MenuItemType } from '@/types/menu'
+import type { MenuItem as MenuItemType } from '@/types/components'
 import {
   House,
   DataLine,

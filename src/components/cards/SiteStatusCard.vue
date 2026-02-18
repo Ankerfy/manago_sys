@@ -2,7 +2,7 @@
 <script lang="ts" setup>
 import request from '@/api'
 import type { Ref } from 'vue'
-import type { SiteStatusResult } from '@/api/modules/monitor'
+import type { SiteStatusResult } from '@/types/api'
 
 const props = defineProps<{ domain: string; protocol?: string }>()
 const protocol = props.protocol || 'http'
