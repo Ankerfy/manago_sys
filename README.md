@@ -1,14 +1,8 @@
-# ManaGo_SYS
+# ManaGo_SYS Admin Starter
 
-This template should help get you started developing with Vue 3 in Vite.
+个人自用 Vue3 后台脚手架
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
+Vue3 + TS + Element Plus + TailwindCSS + Pinia + Vite
 
 ## Project Setup
 

@@ -1,0 +1,58 @@
+[
+  {
+    "id": 1,
+    "path": "/user",
+    "name": "User",
+    "component": "layout/index.vue",
+    "redirect": "/user/profile",
+    "meta": {
+      "title": "用户管理",
+      "icon": "user",
+      "auth": true,
+      "roles": ["admin", "user"],
+      "hidden": false
+    },
+    "children": [
+      {
+        "id": 101,
+        "path": "profile",
+        "name": "UserProfile",
+        "component": "user/profile.vue",
+        "meta": {
+          "title": "个人中心",
+          "auth": true,
+          "roles": ["admin", "user"],
+          "hidden": false,
+          "keepAlive": true
+        }
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "path": "/goods",
+    "name": "Goods",
+    "component": "layout/index.vue",
+    "meta": {
+      "title": "商品管理",
+      "icon": "goods",
+      "auth": true,
+      "roles": ["admin"],
+      "hidden": false
+    },
+    "children": [
+      {
+        "id": 201,
+        "path": "list",
+        "name": "GoodsList",
+        "component": "goods/list.vue",
+        "meta": {
+          "title": "商品列表",
+          "auth": true,
+          "roles": ["admin"],
+          "hidden": false
+        }
+      }
+    ]
+  }
+]

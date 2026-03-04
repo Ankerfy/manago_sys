@@ -14,17 +14,8 @@ const DashboardOverview = () => import('@/views/dashboard/Overview.vue')
 const DashboardUsers = () => import('@/views/dashboard/Users.vue')
 const MonitorData = () => import('@/views/monitor/Data.vue')
 const MonitorView = () => import('@/views/monitor/ViewData.vue')
-const WorkspaceTasks = () => import('@/views/workspace/Tasks.vue')
-const WorkspaceCalendar = () => import('@/views/workspace/Calendar.vue')
-const EntertainmentNews = () => import('@/views/entertainment/News.vue')
-const EntertainmentMovies = () => import('@/views/entertainment/Movies.vue')
-const MessagesAnnouncements = () => import('@/views/messages/Announcements.vue')
-const MessagesInbox = () => import('@/views/messages/Inbox.vue')
-const MediaMusic = () => import('@/views/media/Music.vue')
-const MediaVideo = () => import('@/views/media/Video.vue')
-const GeoMap = () => import('@/views/geo/Map.vue')
-const GeoWeather = () => import('@/views/geo/Weather.vue')
 const About = () => import('@/views/AboutView.vue')
+const NotFound = () => import('@/views/404.vue')
 
 // 路由配置
 const routes: RouteRecordRaw[] = [
@@ -79,110 +70,16 @@ const routes: RouteRecordRaw[] = [
     ],
   },
   {
-    path: '/workspace',
-    name: 'Workspace',
-    meta: { title: '工作台', icon: 'OfficeBuilding' } satisfies RouteMeta,
-    redirect: '/workspace/tasks',
-    children: [
-      {
-        path: 'tasks',
-        name: 'WorkspaceTasks',
-        component: WorkspaceTasks,
-        meta: { title: '任务中心', icon: '' } satisfies RouteMeta,
-      },
-      {
-        path: 'calendar',
-        name: 'WorkspaceCalendar',
-        component: WorkspaceCalendar,
-        meta: { title: '日程安排', icon: '' } satisfies RouteMeta,
-      },
-    ],
-  },
-  {
-    path: '/entertainment',
-    name: 'Entertainment',
-    meta: { title: '娱乐资讯', icon: 'Film' } satisfies RouteMeta,
-    redirect: '/entertainment/news',
-    children: [
-      {
-        path: 'news',
-        name: 'EntertainmentNews',
-        component: EntertainmentNews,
-        meta: { title: '最新资讯', icon: '' } satisfies RouteMeta,
-      },
-      {
-        path: 'movies',
-        name: 'EntertainmentMovies',
-        component: EntertainmentMovies,
-        meta: { title: '影视推荐', icon: '' } satisfies RouteMeta,
-      },
-    ],
-  },
-  {
-    path: '/messages',
-    name: 'Messages',
-    meta: { title: '公告消息', icon: 'ChatLineSquare' } satisfies RouteMeta,
-    redirect: '/messages/announcements',
-    children: [
-      {
-        path: 'announcements',
-        name: 'MessagesAnnouncements',
-        component: MessagesAnnouncements,
-        meta: { title: '公告栏', icon: '' } satisfies RouteMeta,
-      },
-      {
-        path: 'inbox',
-        name: 'MessagesInbox',
-        component: MessagesInbox,
-        meta: { title: '私信中心', icon: '' } satisfies RouteMeta,
-      },
-    ],
-  },
-  {
-    path: '/media',
-    name: 'Media',
-    meta: { title: '媒体中心', icon: 'Headset' } satisfies RouteMeta,
-    redirect: '/media/music',
-    children: [
-      {
-        path: 'music',
-        name: 'MediaMusic',
-        component: MediaMusic,
-        meta: { title: '在线音乐播放', icon: '' } satisfies RouteMeta,
-      },
-      {
-        path: 'video',
-        name: 'MediaVideo',
-        component: MediaVideo,
-        meta: { title: '随机视频播放', icon: '' } satisfies RouteMeta,
-      },
-    ],
-  },
-  {
-    path: '/geo',
-    name: 'Geo',
-    meta: { title: '地图天气', icon: 'Location' } satisfies RouteMeta,
-    redirect: '/geo/map',
-    children: [
-      {
-        path: 'map',
-        name: 'GeoMap',
-        component: GeoMap,
-        meta: { title: '地图数据', icon: '' } satisfies RouteMeta,
-      },
-      {
-        path: 'weather',
-        name: 'GeoWeather',
-        component: GeoWeather,
-        meta: { title: '天气预报', icon: '' } satisfies RouteMeta,
-      },
-    ],
-  },
-  {
     path: '/about',
     name: 'About',
     component: About,
     meta: { title: '关于', icon: 'InfoFilled' } satisfies RouteMeta,
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
+    meta: { title: '404', icon: '' } satisfies RouteMeta,
   },
 ]
 

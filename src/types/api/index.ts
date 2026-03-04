@@ -2,3 +2,4 @@
 // 导出所有接口类型
 export * from './monitor'
 export * from './system'
+export * from './router'
