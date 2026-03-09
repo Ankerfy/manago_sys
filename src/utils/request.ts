@@ -1,4 +1,4 @@
-// @/api/request.ts
+// @/utils/request.ts
 import axios from 'axios'
 import type {
   AxiosInstance,

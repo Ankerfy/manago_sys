@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1,
+    "path": "/home",
+    "name": "Home",
+    "component": "HomeView.vue",
+    "meta": {
+      "title": "首页",
+      "icon": "House",
+      "auth": false,
+      "roles": ["admin", "user"],
+      "hidden": false
+    }
+  },
+  {
+    "id": 2,
+    "path": "/dashboard",
+    "name": "Dashboard",
+    "component": "",
+    "redirect": "/dashboard/overview",
+    "meta": {
+      "title": "仪表盘",
+      "icon": "DataLine",
+      "auth": false,
+      "roles": ["admin", "user"],
+      "hidden": false
+    },
+    "children": [
+      {
+        "id": 201,
+        "path": "/dashboard/overview",
+        "name": "DashboardOverview",
+        "component": "dashboard/Overview.vue",
+        "meta": {
+          "title": "数据概览",
+          "icon": "",
+          "auth": false,
+          "roles": ["admin", "user"],
+          "hidden": false
+        }
+      },
+      {
+        "id": 202,
+        "path": "/dashboard/users",
+        "name": "DashboardUsers",
+        "component": "dashboard/Users.vue",
+        "meta": {
+          "title": "用户活跃度",
+          "icon": "",
+          "auth": false,
+          "roles": ["admin", "user"],
+          "hidden": false
+        }
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "path": "/monitor",
+    "name": "Monitor",
+    "component": "",
+    "redirect": "/monitor/data",
+    "meta": {
+      "title": "系统监控",
+      "icon": "Monitor",
+      "auth": false,
+      "roles": ["admin", "user"],
+      "hidden": false
+    },
+    "children": [
+      {
+        "id": 301,
+        "path": "/monitor/data",
+        "name": "MonitorData",
+        "component": "monitor/Data.vue",
+        "meta": {
+          "title": "数据监控",
+          "icon": "",
+          "auth": false,
+          "roles": ["admin", "user"],
+          "hidden": false
+        }
+      },
+      {
+        "id": 302,
+        "path": "/monitor/view",
+        "name": "MonitorView",
+        "component": "monitor/ViewData.vue",
+        "meta": {
+          "title": "数据可视化",
+          "icon": "",
+          "auth": false,
+          "roles": ["admin", "user"],
+          "hidden": false
+        }
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "path": "/about",
+    "name": "About",
+    "component": "AboutView.vue",
+    "meta": {
+      "title": "关于",
+      "icon": "InfoFilled",
+      "auth": false,
+      "roles": ["admin", "user"],
+      "hidden": false
+    }
+  }
+]

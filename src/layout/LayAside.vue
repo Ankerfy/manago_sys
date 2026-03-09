@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import { useAppStore } from '@/stores'
 import MenuItem from '@/components/MenuItem.vue'
-import type { MenuItem as MenuItemType } from '@/types/components'
+import type { ApiRouteRecord } from '@/types/api/router'
+import { menu } from '@/api'
+
+const route = useRoute()
 
 // 获取折叠状态
 const appStore = useAppStore()
@@ -11,15 +14,30 @@ const { isSidebarCollapse } = storeToRefs(appStore)
 const logoUrl = ref<string>(new URL('@/assets/logo.svg', import.meta.url).href)
 const picFit = 'contain'
 
-const menuItems = ref<MenuItemType[]>([])
-// 加载菜单配置
+const menuItems = ref<ApiRouteRecord[]>([])
 
-async function loadMenuConfig() {
+// 过滤菜单
+const filterMenu = (routes: ApiRouteRecord[]): ApiRouteRecord[] => {
+  return routes.filter(route => !route.meta.hidden).map(route => {
+    // 递归过滤子菜单
+    if (route.children && route.children.length) {
+      route.children = filterMenu(route.children)
+    }
+    return route
+  }).filter(route => {
+    // 无有效子菜单则隐藏
+    return !route.children || route.children.length > 0
+  })
+}
+
+// 加载菜单配置
+const loadMenuConfig = async () => {
   try {
-    const module = await import('@/config/menu.json')
-    // 兼容两种格式     Vite 会将 .json 作为默认导出 { default: ... }
-    const data = module.default?.menuItems || module.menuItems || []
-    menuItems.value = Array.isArray(data) ? data : []
+    const menuList: ApiRouteRecord[] = await menu.getMenuList()
+    // console.log('res.data:', menuList)
+
+    // 过滤隐藏菜单
+    menuItems.value = filterMenu(menuList)
   } catch (error) {
     console.error('Failed to load menu config:', error)
     menuItems.value = []  // 保证默认值, 避免菜单项丢失
@@ -47,7 +65,7 @@ onMounted(() => {
       <el-menu :default-active="$route.path" active-text-color="#ffd04b" background-color="#545c64" text-color="#fff"
         class="el-menu-vertical-demo border-r-0!" :collapse="isSidebarCollapse" :collapse-transition="false"
         :unique-opened="true" router>
-        <MenuItem v-for="(item, index) in menuItems" :key="index" :item="item" />
+        <MenuItem v-for="item in menuItems" :key="item.id || item.path" :item="item" />
       </el-menu>
     </div>
   </div>

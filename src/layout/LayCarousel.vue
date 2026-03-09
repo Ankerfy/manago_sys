@@ -1,15 +1,14 @@
 <script lang="ts" setup>
-import { getHotSearch } from '@/api/hotSearch'
+import { hotSearch } from '@/api'
 
 // 热搜 mock 数据
 const hotSearches = ref<string[]>([])
 
 // 获取热搜
 const fetchHotSearch = async () => {
-  const res = await getHotSearch()
-  console.log(res);
-
-  hotSearches.value = res.data
+  const hotSearchList = await hotSearch.getHotSearch()
+  // console.log('hotSearchList', hotSearchList);
+  hotSearches.value = hotSearchList
 }
 
 onMounted(() => {
@@ -33,4 +32,4 @@ onMounted(() => {
       </el-carousel>
     </div>
   </div>
-</template>
+</template>@/api/modules/hotSearch

@@ -1,6 +1,6 @@
 // @/stores/user-store.ts
 import { defineStore } from 'pinia'
-import request from '@/api/request'
+import request from '@/utils/request'
 
 interface UserState {
   token: string

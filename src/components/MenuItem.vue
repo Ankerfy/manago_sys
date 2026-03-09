@@ -1,59 +1,55 @@
 <!-- @/components/MenuItem.vue -->
 <script lang="ts" setup>
-import type { MenuItem as MenuItemType } from '@/types/components'
+import type { ApiRouteRecord } from '@/types/api/router'
 import {
   House,
   DataLine,
   Monitor,
-  OfficeBuilding,
-  Film,
-  ChatLineSquare,
-  Headset,
-  Location,
   InfoFilled,
 } from '@element-plus/icons-vue'
 
 // 泛型 比type: Object 更精确
-const props = defineProps<{ item: MenuItemType }>()
+const props = defineProps<{ item: ApiRouteRecord }>()
 
 // 图标映射表
 const iconMap: Record<string, Component> = {
   House,
   DataLine,
   Monitor,
-  OfficeBuilding,
-  Film,
-  ChatLineSquare,
-  Headset,
-  Location,
   InfoFilled,
 }
 
-const getIconComponent = (iconName: string): Component | null => {
-  return iconMap[iconName] || null
+// const getIconComponent = (iconName: string): Component | null => {
+//   return iconMap[iconName] || null
+// }
+
+const getIcon = (iconName?: string) => {
+  if (!iconName || !iconMap[iconName as keyof typeof iconMap]) {
+    return null
+  }
+  return iconMap[iconName as keyof typeof iconMap] || null
 }
 </script>
 
 <template>
-  <!-- 单个菜单项 -->
-  <el-menu-item v-if="!item.submenu" :index="item.index">
-    <el-icon v-if="item.icon && getIconComponent(item.icon)">
-      <component :is="iconMap[item.icon]" />
+  <!-- 无子菜单的菜单项 -->
+  <el-menu-item v-if="!item.children" :index="item.path">
+    <el-icon v-if="getIcon(item.meta.icon)">
+      <component :is="getIcon(item.meta.icon)" />
     </el-icon>
-    <template #title>{{ item.title }}</template>
+    <template #title>{{ item.meta.title }}</template>
   </el-menu-item>
 
-  <!-- 子菜单 -->
-  <el-sub-menu v-else :index="item.index">
+  <!-- 含子菜单的菜单项 -->
+  <el-sub-menu v-else :index="item.path">
     <template #title>
-      <!-- iconMap[item.icon] -->
-      <el-icon v-if="item.icon && getIconComponent(item.icon)">
-        <component :is="iconMap[item.icon]" />
+      <el-icon v-if="getIcon(item.meta.icon)">
+        <component :is="getIcon(item.meta.icon)" />
       </el-icon>
-      <span>{{ item.title }}</span>
+      <span>{{ item.meta.title }}</span>
     </template>
-    <!-- :key="idx" -->
-    <menu-item v-for="(child, idx) in item.submenu" :key="`${item.index}-${idx}`" :item="child" />
+    <!-- 递归渲染子菜单项 -->
+    <menu-item v-for="child in item.children" :key="child.id || child.path" :item="child" />
   </el-sub-menu>
 </template>
 

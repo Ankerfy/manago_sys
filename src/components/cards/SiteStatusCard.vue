@@ -1,8 +1,7 @@
 <!-- @/components/cards/SiteStatusCard.vue -->
 <script lang="ts" setup>
-import request from '@/api'
-import type { Ref } from 'vue'
 import type { SiteStatusResult } from '@/types/api'
+import { monitor } from '@/api'
 
 const props = defineProps<{ domain: string; protocol?: string }>()
 const protocol = props.protocol || 'http'
@@ -34,15 +33,9 @@ const openSite = () => {
 
 // 获取站点状态
 const fetchStatus = async () => {
-  try {
-    const res = await request.monitor.getSiteStatus({ domain: props.domain })
-    siteStatu.value = res.data
-    status.value = siteStatu.value.status
-    description.value = siteStatu.value.description
-  } catch (err) {
-    status.value = 'down'
-    description.value = '状态检测失败'
-  }
+  siteStatu.value = await monitor.getSiteStatus({ domain: props.domain })
+  status.value = siteStatu.value.status
+  description.value = siteStatu.value.description
 }
 
 // 注入刷新信号 - 父组件Data.vue

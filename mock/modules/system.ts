@@ -1,6 +1,6 @@
-// \mock\hotSearch.ts
+// \mock\modules\hotSearch.ts
 import { MockMethod } from 'vite-plugin-mock'
-import Mock from 'mockjs'
+import { mockResponse } from '../utils'
 
 // 中文热搜词库
 const HOT_SEARCH_WORDS = [
@@ -20,13 +20,13 @@ export default [
   {
     url: '/api/h/hot-search',
     method: 'get',
+    timeout: 1000,
     response: () => {
-      const shuffled = [...HOT_SEARCH_WORDS].sort(() => Math.random() - 0.5).slice(0, 8)
-      return {
-        code: 200,
-        message: 'success',
-        data: shuffled,
-      }
+      // 深拷贝，避免修改原数据
+      const shuffledHotSearch = [...HOT_SEARCH_WORDS].sort(() => Math.random() - 0.5)
+      // 截取前8个，边界兜底
+      const result = shuffledHotSearch.slice(0, Math.min(8, shuffledHotSearch.length))
+      return mockResponse(result)
     },
   },
 ] satisfies MockMethod[]
